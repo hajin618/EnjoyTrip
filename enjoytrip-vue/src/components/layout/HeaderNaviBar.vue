@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="toorbar">
-            <router-link class="blacklink" to="/home">
+            <router-link class="blacklink" to="/">
                     <img src="../../assets/img/family.png" width="60px" height="60px"></router-link>
             
             <span style="margin-left: 20px;">여행객</span>
@@ -15,7 +15,7 @@
 
             <!-- 로그인 된 경우 -->
         </div>
-        <router-link class="whitelink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
+        <router-link class="blacklink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
     </header>
 </template>
 
