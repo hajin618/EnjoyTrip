@@ -3,6 +3,6 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     port: 80,
-    proxy : "http://localhost:80/vue"
+    proxy : "http://localhost:80/api"
   }
 })

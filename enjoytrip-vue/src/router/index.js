@@ -5,7 +5,7 @@ import HomeView from '../views/HomeView.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    {
+  {
     path: '/',
     name: "HomeView",
     component: HomeView
@@ -40,6 +40,39 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/notice',
+    name: 'noticeView',
+    component: () => import("@/views/NoticeView.vue"),
+    redirect: "/notice/list",
+    children: [
+      {
+        path: "list",
+        name: "noticeList",
+        component: () => import("@/components/notice/NoticeList.vue"),
+      },
+      {
+        path: "regist",
+        name: "noticeRegister",
+        component: () => import("@/components/notice/NoticeRegister.vue"),
+      },
+      {
+        path: "datail/:notice_idx",
+        name: "noticeDetail",
+        component: () => import("@/components/notice/NoticeDetail.vue"),
+      },
+      {
+        path: "modify/:noticeIdx",
+        name: "noticeModify",
+        component: () => import("@/components/notice/NoticeModify.vue"),
+      },
+      {
+        path: "delete/:noticeIdx",
+        name: "noticeDelete",
+        component: () => import("@/components/notice/NoticeDelete.vue")
+      }
+    ]
+  }
   
 
   // {
