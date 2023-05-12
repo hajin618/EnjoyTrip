@@ -2,13 +2,13 @@
       <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+        <h3>공지사항</h3>
       </b-col>
     </b-row>
     <b-row>
       <b-col v-if="notices.length">
         <b-table-simple hover responsive>
-          <b-thead head-variant="dark">
+          <b-thead head-variant="">
             <b-tr>
               <b-th>글번호</b-th>
               <b-th>제목</b-th>
@@ -34,7 +34,6 @@
 
 <script>
 import http from "@/api/http";
-// import axios from "axios";
 import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
 
 export default {
