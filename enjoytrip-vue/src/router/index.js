@@ -38,6 +38,11 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "user" */ "../components/user/UserFindPw.vue"),
       },
+      {
+        path: "myPage",
+        name: "myPageView",
+        component: () => import(/* webpackChunkName: "user" */ "../components/user/UserMyPage.vue"),
+      },
     ],
   },
   {
