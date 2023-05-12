@@ -3,14 +3,19 @@
         <div class="toorbar">
             <router-link class="blacklink" to="/home">
                     <img src="../../assets/img/family.png" width="60px" height="60px"></router-link>
-                <!-- 로그인 안된 경우 -->
+            
             <span style="margin-left: 20px;">여행객</span>
             <router-link class="whitelink" style="margin-left: 800px;" to="/notice">공지사항</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/plan">여행 계획</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/review">여행 후기</router-link>
+
+            <!-- 로그인 안된 경우 -->
             <router-link class="whitelink" style="margin-left: 400px;" to="/user/login">로그인</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/user/join">회원가입</router-link>
+
+            <!-- 로그인 된 경우 -->
         </div>
+        <router-link class="whitelink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
     </header>
 </template>
 
