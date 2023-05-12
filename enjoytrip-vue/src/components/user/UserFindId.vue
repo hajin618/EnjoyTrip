@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="left">
-      <div class="loginBox">
-        <div class="loginBoxHeader" style="padding-top: 110px; padding-left: 300px;">
+      <div class="findId">
+        <div class="findIdHeader" style="padding-top: 110px; padding-left: 300px;">
           <span><img src="../../assets/img/family.png" width="50px" height="50px" alt=""></span>
           <router-link to="/" style="padding-left: 20px; font-weight: 550;">여행객</router-link>
         </div>
@@ -12,9 +12,9 @@
           <div style="padding-left: 40px;   font-weight: 550;">
             회원 정보에 등록된 이메일을 입력해주세요.
           </div>
-          <div class="loginform">
+          <div class="findIdform">
             <div>
-              <input style="margin-top: 20px;" class="emailBox" id="Nick" autocomplete="off" type="text" placeholder="이메일" required>
+              <input style="margin-top: 20px;" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="이메일" required>
             </div>
           </div>
           <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">이메일로 아이디 찾기</button>
@@ -68,7 +68,7 @@ a {
   border: 1px solid rgba(213, 120, 120, .2);
 }
 
-.loginBox {
+.findId {
   width: 700px;
   height: 500px;
   background-color: #F1F4F1;
