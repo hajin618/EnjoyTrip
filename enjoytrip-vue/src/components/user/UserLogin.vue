@@ -2,7 +2,28 @@
     <div class="main">
         <div class="left">
             <div class="loginBox">
+                <div class="loginBoxHeader" style="padding-top: 80px; padding-left: 300px;">
+                    <span><img src="../../assets/img/family.png"  width="50px" height="50px" alt=""></span>
+                    <span style="padding-left: 20px; font-weight: 550;">여행객</span>
+                </div>
 
+                <form style="padding-top: 20px; padding-left: 200px;">
+                    <div class="loginform">
+                        <div>
+                            <input class="idBox" id="Nick" autocomplete="off" type="text" placeholder="아이디" required>
+                        </div>
+                        <div>
+                            <input style="margin-top: 20px;" class="pwBox" id="Pw" autocomplete="off" maxlength="20" type="password" placeholder="비밀번호" required>
+                        </div>
+                    </div>
+                    <button style="margin-top: 20px;" class="loginBtn" type="submit">로그인</button>
+                </form>
+
+                <div class="linker">
+                    <router-link to="/user/findId">아이디 찾기</router-link>
+                    <router-link to="/user/findPw">비밀번호 찾기</router-link>
+                    <router-link to="/user/join">회원가입</router-link>
+                </div>
             </div>
         </div>
         <div class="right">
@@ -20,22 +41,52 @@ export default{
 }
 
 <style scoped>
+    .linker{
+        width: 40%;
+        margin-top: 40px;
+        margin-left: 200px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* 라우터 링크 처리 */
+    a {
+        color: black;
+        text-decoration: none;
+        font-weight: 550;
+    }
+    
+    .idBox, .pwBox{
+        height: 50px;
+        width: 300px;
+        background-color: #F1F4F1;
+        border-radius: 10px / 10px;
+        border: 1px solid rgba(213, 120, 120, .2);
+    }
+
+    .loginBtn{
+        height: 40px;
+        width: 300px;
+        background-color: #7aab75;
+        border-radius: 10px / 10px;
+        border: 1px solid rgba(213, 120, 120, .2);
+    }
     .loginBox{
-        width: 500px;
+        width: 700px;
         height: 500px;
         background-color : #F1F4F1;
         margin-top: 150px;
         margin-left: 150px;
 
-        border-radius: 30%;
+        border-radius: 10%;
         align-content: center;
     }
 
     .mainImage{
-        margin-left: 150px;
-        margin-top: 150px;
-        width: 500px;
-        height: 500px;
+        margin-left: 180px;
+        margin-top: 90px;
+        width: 600px;
+        height: 600px;
     }
 
     .main{

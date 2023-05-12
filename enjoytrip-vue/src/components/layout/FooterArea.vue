@@ -1,6 +1,6 @@
 <template>
     <!-- footer start -->
-    <div id="footer" class="section-content p-4 mt-3 container-fluid" style="background-color: #f9f8f8">
+    <div id="footer" class="section-content p-4 mt-3 container-fluid" style="background-color: #f9f8f8 height:80%">
         <div class="row">
         <div class="mb-4 text-center col-2">
             <img src="" alt="">
@@ -44,10 +44,4 @@ export default{
 </script>
 
 <style scoped>
-    box{
-        height: 150px;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
 </style>
