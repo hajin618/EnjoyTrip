@@ -28,14 +28,14 @@ export default{
 
 <style scoped>
     .mainTextBox{
-        width: 400px;
-        height: 400px;
+        width: 500px;
+        height: 450px;
         background-color : #C8EBCF;
         background-color:rgba(C8, EB, CF, 0.4);
         margin-top: 150px;
         margin-left: 200px;
 
-        border-radius: 30%;
+        border-radius: 50px / 50px;
         align-content: center;
     }
     .mainImage{
@@ -44,11 +44,13 @@ export default{
     }
     .main {
         width: 100%;
-        height: 700px;
+        height: 785px;
     }
     div.left {
         width: 50%;
         float: left;
+        padding-top: 30px;
+        padding-left: 200px;
         box-sizing: border-box;
     }
     div.right {

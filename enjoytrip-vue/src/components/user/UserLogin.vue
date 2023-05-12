@@ -4,7 +4,7 @@
             <div class="loginBox">
                 <div class="loginBoxHeader" style="padding-top: 80px; padding-left: 300px;">
                     <span><img src="../../assets/img/family.png"  width="50px" height="50px" alt=""></span>
-                    <span style="padding-left: 20px; font-weight: 550;">여행객</span>
+                    <router-link to="/" style="padding-left: 20px; font-weight: 550;">여행객</router-link>
                 </div>
 
                 <form style="padding-top: 20px; padding-left: 200px;">
@@ -60,8 +60,8 @@ export default{
         height: 50px;
         width: 300px;
         background-color: #F1F4F1;
-        border-radius: 10px / 10px;
         border: 1px solid rgba(213, 120, 120, .2);
+        border-radius: 10px / 10px;
     }
 
     .loginBtn{
@@ -83,15 +83,15 @@ export default{
     }
 
     .mainImage{
-        margin-left: 180px;
-        margin-top: 90px;
-        width: 600px;
-        height: 600px;
+        margin-left: 80px;
+        margin-top: 70px;
+        width: 750px;
+        height: 750px;
     }
 
     .main{
         background-color: #C8EBCF;
-        height: 800px;
+        height: 850px;
         width: 100%;
     }
     div.left {

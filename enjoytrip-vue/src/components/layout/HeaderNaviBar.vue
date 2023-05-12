@@ -1,17 +1,16 @@
 <template>
     <header>
-        <router-link to="/home" class="logo">
-                <img src="../../assets/img/family.png" width="50px" height="50px">여행객</router-link>
-            <!-- 로그인 안된 경우 -->
-        <nav>
-            <router-link to="/notice">공지사항</router-link>
-            <router-link to="/plan">여행 계획</router-link>
-            <router-link to="/review">여행 후기</router-link>
-        </nav>
-        <nav>
-            <router-link to="/user/login">로그인</router-link>
-            <router-link to="/user/join">회원가입</router-link>
-        </nav>
+        <div class="toorbar">
+            <router-link class="blacklink" to="/home">
+                    <img src="../../assets/img/family.png" width="60px" height="60px"></router-link>
+                <!-- 로그인 안된 경우 -->
+            <span style="margin-left: 20px;">여행객</span>
+            <router-link class="whitelink" style="margin-left: 800px;" to="/notice">공지사항</router-link>
+            <router-link class="whitelink" style="margin-left: 30px;" to="/plan">여행 계획</router-link>
+            <router-link class="whitelink" style="margin-left: 30px;" to="/review">여행 후기</router-link>
+            <router-link class="whitelink" style="margin-left: 400px;" to="/user/login">로그인</router-link>
+            <router-link class="whitelink" style="margin-left: 30px;" to="/user/join">회원가입</router-link>
+        </div>
     </header>
 </template>
 
@@ -24,17 +23,25 @@ export default{
 </script>
 
 <style scoped>
+    .toorbar{
+        padding-top: 7px;
+    }
+
+    /* 라우터 링크 처리 */
+    .blacklink{
+        margin-left: 50px;
+        color: black;
+        text-decoration: none;
+    }
+    .whitelink {
+        color: white;
+        text-decoration: none;
+    }
     header{
+        height: 70px;
+        width: 100%;
         background-color: #7aab85;
         border-bottom: 1px #ececec solid;
-        display: flex;
-        justify-content: space-between;
-        
-    }
-    nav, ul {
-        display: inline-block;
-    }
-    .logo{
-        margin-left: 50px;
+        box-shadow: 0 4px 4px -4px black;
     }
 </style>
