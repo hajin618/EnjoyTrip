@@ -45,12 +45,15 @@
   </div>
 </template>
 
-export default{
-    name: "UserFindPwdView",
+<script>
+export default {
+    name: "UserFindPwView",
     // components: {
         
     // }
 }
+
+</script>
 
 <style scoped>
 /* 라우터 링크 처리 */

@@ -43,8 +43,12 @@
 
 <script>
 export default {
-
+    name: "UserJoinView",
+    // components: {
+        
+    // }
 }
+
 </script>
 
 <style scoped>

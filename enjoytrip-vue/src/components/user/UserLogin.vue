@@ -33,12 +33,15 @@
     </div>
 </template>
 
-export default{
+<script>
+export default {
     name: "UserLoginView",
     // components: {
         
     // }
 }
+
+</script>
 
 <style scoped>
     .linker{

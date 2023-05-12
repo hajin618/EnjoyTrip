@@ -37,12 +37,14 @@
   </div>
 </template>
 
-export default{
+<script>
+export default {
     name: "UserFindIdView",
     // components: {
         
     // }
 }
+</script>
 
 <style scoped>
 /* 라우터 링크 처리 */
