@@ -6,18 +6,46 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    // path: '/',
-    // name: 'home',
-    // component: HomeView
-  },
-  {
-    // path: '/about',
-    // name: 'about',
-    // // route level code-splitting
-    // // this generates a separate chunk (about.[hash].js) for this route
-    // // which is lazy-loaded when the route is visited.
-    // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/notice',
+    name: 'notice',
+    component: () => import("@/views/NoticeView.vue"),
+    redirect: "/notice/list",
+    children: [
+      {
+        path: "list",
+        name: "noticeList",
+        component: () => import("@/components/notice/NoticeList.vue"),
+      },
+      {
+        path: "regist",
+        name: "noticeRegister",
+        component: () => import("@/components/notice/NoticeRegister.vue"),
+      },
+      {
+        path: "datail/:notice_idx",
+        name: "noticeDetail",
+        component: () => import("@/components/notice/NoticeDetail.vue"),
+      },
+      {
+        path: "modify/:noticeIdx",
+        name: "noticeModify",
+        component: () => import("@/components/notice/NoticeModify.vue"),
+      },
+      {
+        path: "delete/:noticeIdx",
+        name: "noticeDelete",
+        component: () => import("@/components/notice/NoticeDelete.vue")
+      }
+    ]
   }
+  // {
+  //   // path: '/about',
+  //   // name: 'about',
+  //   // // route level code-splitting
+  //   // // this generates a separate chunk (about.[hash].js) for this route
+  //   // // which is lazy-loaded when the route is visited.
+  //   // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  // }
 ]
 
 const router = new VueRouter({
