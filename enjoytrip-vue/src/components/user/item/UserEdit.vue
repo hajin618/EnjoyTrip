@@ -2,10 +2,6 @@
   <div class="main">
     <form action="">
 
-      <div class="title">
-        회원 정보 수정
-      </div>
-
       <div class="name">
         <span>이름</span>
         <input class="box" id="name" autocomplete="off" type="text" required>
@@ -42,7 +38,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .main{
       background-color: white;
       height: 720px;
@@ -76,14 +72,6 @@ export default {
       margin-top: 40px;
       margin-left: 750px;
       font-size: 20px;
-    }
-
-    .title{
-      margin-top: 40px;
-      margin-left: 930px;
-      color: black;
-      font-size: 20px;
-      font-weight: 550;
     }
 
     .box{
