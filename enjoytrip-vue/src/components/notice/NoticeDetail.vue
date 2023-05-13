@@ -1,44 +1,37 @@
 <template lang="">
-  <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <h3>공지사항</h3>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      
-      <b-col class="text-right">
-        <b-button
-          variant="outline-info"
-          size="sm"
-          @click="moveModifyNotice"
-          class="mr-2"
-          >글수정</b-button
-        >
-        <b-button variant="outline-danger" size="sm" @click="deleteNotice"
-          >글삭제</b-button
-        >
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-        <b-col>
-            <b-card
-            :header-html="`<h4>${notice.notice_idx} ${notice.notice_title} ${notice.notice_create}</h3>`"
-            class="mb-2"
-            border-variant=""
-            no-body
-            >
-              <b-card-body class="text-left">
-                  <div v-html="content"></div>
-              </b-card-body>
-            </b-card>
-        </b-col>
-    </b-row>
-    <b-row class="mb-1">
-        <b-col class="text-left">
-        <b-button variant="outline-primary" @click="listNotice">목록</b-button>
-      </b-col>
-    </b-row>
+  <b-container class="bv-example-row mt-5">
+    <div class = "topButtonDiv">
+      <button
+        v-on:click="moveModify"
+        class="Button"
+        >수정</button>
+      <button
+        v-on:click="moveDelete"
+        class="Button"
+        >삭제</button>
+    </div>
+    <div class="listDiv">
+      <b-row class="mb-1">
+          <b-col>
+              <b-table-simple class="table">
+                <b-thead>
+                  <b-th width="10%" class="tableIdx">{{notice.notice_idx}}</b-th>
+                  <b-th width="50%">{{notice.notice_title}}</b-th>
+                  <b-th width="10%" class="tableDate">{{notice.notice_create | dateFormat}}</b-th>
+                </b-thead>
+                <b-tbody>
+                  <b-td colspan="3" class="tableTd">{{notice.notice_content}}</b-td>
+                </b-tbody>
+              </b-table-simple>
+          </b-col>
+      </b-row>
+    </div>
+    <div class="listButtonDiv">
+      <button
+        v-on:click="listNotice"
+        class="Button"
+        >목록</button>
+    </div>
   </b-container>
   
 </template>
@@ -61,11 +54,12 @@ export default {
               return this.notice.notice_content.split("\n").join("<br>");
           return "";
         },
-        date(){
-          if(this.notice.notice_create)
-            return moment(new Date(this.notice.notice_create)).format("YY.MM.DD");
-          return "";
-        }
+    },
+
+    filters: {
+        dateFormat(notice_create){
+            return moment(new Date(notice_create)).format("YYYY-MM-DD");
+        },
     },
 
     created() {
@@ -79,17 +73,55 @@ export default {
         listNotice() {
             this.$router.push({ name: "noticeList" });
         },
-        moveModifyNotice(){
+        moveModify(){
 
         },
-        deleteNotice(){
+        moveDelete(){
 
         },
     },
 
-  
 };
 </script>
-<style lang="">
+
+<style scoped>
+  .table{
+    table-layout: fixed;
+  }
+  .tableIdx{
+    text-align: center;
+  }
+  .tableDate{
+    text-align: right;
+  }
+  .tableTd{
+    height: 400px;
+    border-bottom : 1px solid rgb(218, 218, 218);
+    padding-top : 5%;
+    padding-bottom : 5%;
+  }
+  .topButtonDiv{
+    padding-bottom : 15px;
+    float:right;
+  }
+  .listDiv{
+    clear:right;
+    padding-bottom: 10px;
+  }
+  .Button{
+    border-color:#98c2a182;
+    background-color : #98c2a182;
+    border-radius: 10px;
+    width: 80px;
+    height: 35px;
+    margin-right: 5px;
+  }
+  .Button:hover{
+    background-color : #c8d6cc;
+  }
+  .listButtonDiv{
+    text-align: center;
+    padding-bottom : 30px;
+  }
     
 </style>

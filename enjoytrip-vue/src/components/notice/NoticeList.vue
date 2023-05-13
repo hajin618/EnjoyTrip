@@ -1,8 +1,5 @@
 <template>
     <b-container class="bv-example-row mt-5">
-    <div class = "title">
-      <h3>공지사항</h3>
-    </div>
     <div class = "buttonDiv">
       <button
         v-on:click="moveRegist"
@@ -74,16 +71,9 @@ export default {
 </script>
 
 <style scoped>
-  .title{
-    padding-top : 60px;
-    padding-bottom: 70px;
-  }
-  h3{
-    text-align : center;
-  }
   .registButton{
-    border : none;
-    background-color : #bfc1c093;
+    border-color:#98c2a182;
+    background-color : #98c2a182;
     border-radius: 10px;
     width: 80px;
     height: 35px;
@@ -100,6 +90,6 @@ export default {
     padding-bottom: 50px;
   }
   .listTitle{
-    background-color:#e8ece8
+    background-color:#e8ece8d1
   }
 </style>
