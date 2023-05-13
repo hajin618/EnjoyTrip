@@ -43,4 +43,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+    a{
+        color : black;
+        font-weight : 500;
+    }
+</style>
