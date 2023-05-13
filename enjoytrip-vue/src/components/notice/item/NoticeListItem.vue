@@ -26,7 +26,7 @@ export default {
     },
     filters: {
         dateFormat(notice_create){
-            return moment(new Date(notice_create)).format("YY.MM.DD");
+            return moment(new Date(notice_create)).format("YYYY-MM-DD");
         },
         fixUserName(){
             return "관리자";
