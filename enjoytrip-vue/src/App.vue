@@ -1,7 +1,9 @@
 <template>
   <div id="app">    
     <router-view/>
-    <footer-area></footer-area>     
+    <div class="footer">
+      <footer-area></footer-area>
+    </div> 
   </div>
 </template>
 
@@ -31,4 +33,7 @@ export default{
   -moz-osx-font-smoothing: grayscale;
   text-align: center; */
 /* } */
+.footer{
+  clear: both;
+}
 </style>
