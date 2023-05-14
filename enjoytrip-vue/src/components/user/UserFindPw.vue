@@ -7,40 +7,48 @@
           <router-link to="/" style="padding-left: 20px; font-weight: 550;">여행객</router-link>
         </div>
 
-        <!-- 이메일 찾을 경우 -->
-        <form style="padding-top: 40px; padding-left: 150px;">
+        <!-- 이메일로 인증번호 받기 -->
+        <form v-show="!getEmail" style="padding-top: 40px; padding-left: 150px;">
           <div style="padding-left: 40px;   font-weight: 550;">
             회원 정보에 등록된 이메일을 입력해주세요.
           </div>
           <div class="findPwform">
             <div>
-              <input style="margin-top: 20px;" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="이메일"
+              <input style="margin-top: 20px;" v-model="email" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="이메일"
                 required>
             </div>
           </div>
-          <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">이메일로 비밀번호
-            찾기</button>
+          <button style="margin-top: 20px; text-align: center; color: white;" v-on:click.prevent="findEmail" class="findBtn" type="submit">이메일로 인증번호 받기</button>
         </form>
 
-        <!--  비밀번호 변경 -->
-        <!-- 버튼에 onclick 비밀번호 로직 수행후 메인으로 라우팅 -->
-          <!-- <form style="padding-top: 40px; padding-left: 150px;">
-            <div style="padding-left: 75px;   font-weight: 550;">
-              변경할 비밀번호를 작성해주세요.
+        <!--  인증번호 입력 -->
+        <form v-show="putConfirmNumber" style="padding-top: 40px; padding-left: 150px;">
+          <div style="padding-left: 75px;   font-weight: 550;">
+            {{email}}로 받은 인증번호를 입력해주세요!
+          </div>
+          <div class="findPwform">
+            <div>
+              <input style="margin-top: 20px;" v-model="userConfirmNumber" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="인증번호 입력"
+                required>
             </div>
-            <div class="findPwform">
-              <div>
-                <input style="margin-top: 20px;" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="비밀번호 입력"
-                  required>
-              </div>
+          </div>
+          <button style="margin-top: 20px; text-align: center; color: white;" v-on:click.prevent="checkConfirmNumber" class="findBtn" type="submit">인증번호 확인</button>
+        </form>
+
+                <!-- 버튼에 onclick 비밀번호 로직 수행후 메인으로 라우팅 -->
+        <form v-show="nowChangePwd" style="padding-top: 40px; padding-left: 150px;">
+          <div class="findPwform">
+            <div>
+              <input style="margin-top: 20px;" v-model="userPwdChange" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="변경할 비밀번호 입력"
+                required>
             </div>
-            <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">비밀번호 변경하기</button>
-          </form> -->
+          </div>
+          <button style="margin-top: 20px; text-align: center; color: white;" v-on:click.prevent="changePwd" class="findBtn" type="submit">비밀번호 변경</button>
+        </form>
       </div>
     </div>
     <div class="right">
       <img src="../../assets/img/userPageImg.png" class="mainImage" alt="">
-
     </div>
   </div>
 </template>
@@ -51,6 +59,62 @@ export default {
     // components: {
         
     // }
+    data() {
+      return {
+        email: '',
+        confirmNumber: '',
+        userConfirmNumber: '',
+        userPwdChange: '',
+        getEmail: false,
+        putConfirmNumber: false,
+        nowChangePwd: false,
+      }
+    },
+    created(){
+      this.getEmail = false;
+    },
+    methods: {
+      findEmail(){
+        if(this.email == ''){
+          alert("이메일을 입력해주세요!");
+        }
+        else{
+          http.get(`/findId/${this.email}`).then(({data}) => {
+            console.log(data);
+            // 이메일 찾기 실패
+            if(data == 'FAILED'){
+              alert("이메일을 찾을 수 없습니다.");
+            }
+            // 이메일 찾기 성공
+            else{
+              this.getEmail = true,
+              this.putConfirmNumber = true;
+              // 랜덤한 인증번호 생성, 이메일로 인증번호 보내기
+              // 6자리 랜덤한 인증번호 
+              // userConfirmNumber = Math.random();
+            }
+          });
+        }
+      },
+      checkConfirmNumber(){
+        // 인증번호 기억 
+        // 사용자가 입력한 인증번호와 확인
+        if(this.userConfirmNumber == this.confirmNumber){
+          // 같다면
+          this.putConfirmNumber = false;
+          this.nowChangePwd = true;
+        }
+        // 다르다면
+        else{
+          alert("인증 실패! 다시 인증번호를 받아주세요!");
+          this.putConfirmNumber = false;
+          this.getEmail = true;
+        }
+      },
+      changePwd(){
+        // 비밀번호 변경 POST 고고
+      }
+    }
 }
 
 </script>

@@ -14,6 +14,13 @@ public interface UserMapper {
 //	int modifyMember(UserDTO memberDto, String loginId) throws Exception;
 //	int deleteMember(String loginId) throws Exception;
 //	UserDTO loginMember(String memberId, String memberPwd) throws Exception;
+	
+	public UserDTO idCheck(String user_id) throws Exception;
+	
+	public UserDTO emailCheck(String user_email) throws Exception;
+	
+	public String findId(String user_email) throws Exception;
+	
 	// 회원 가입
 	public void joinUser(UserDTO userDto) throws Exception;
 	// 회원정보 수정

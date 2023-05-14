@@ -17,7 +17,22 @@ public class UserServiceImpl implements UserService {
 		super();
 		this.userMapper = userMapper;
 	}
-
+	
+	@Override
+	public UserDTO idCheck(String user_id) throws Exception {
+		return userMapper.idCheck(user_id);
+	}
+	
+	@Override
+	public UserDTO emailCheck(String user_email) throws Exception {
+		return userMapper.emailCheck(user_email);
+	}
+	
+	@Override
+	public String findId(String user_email) throws Exception {
+		return userMapper.findId(user_email);
+	}
+	
 	@Override
 	public void joinUser(UserDTO userDto) throws Exception {
 		System.out.println(userDto.toString());

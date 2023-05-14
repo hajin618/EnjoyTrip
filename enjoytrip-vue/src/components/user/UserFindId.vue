@@ -8,26 +8,26 @@
         </div>
 
         <!-- 이메일 찾을 경우 -->
-        <form style="padding-top: 40px; padding-left: 150px;">
+        <form v-if="!getId" style="padding-top: 40px; padding-left: 150px;">
           <div style="padding-left: 40px;   font-weight: 550;">
             회원 정보에 등록된 이메일을 입력해주세요.
           </div>
           <div class="findIdform">
             <div>
-              <input style="margin-top: 20px;" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="이메일" required>
+              <input style="margin-top: 20px;" v-model="email" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="이메일" required>
             </div>
           </div>
-          <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">이메일로 아이디 찾기</button>
+          <button style="margin-top: 20px; text-align: center; color: white;" v-on:click.prevent="findId" v-on:keyup.enter="findId" class="findBtn" type="submit">이메일로 아이디 찾기</button>
         </form>
 
         <!-- 이메일 찾은 경우 -->
         <!-- 버튼에 onclick 로그인페이지로 라우팅 -->
-        <!-- <div style="padding-top: 80px; padding-left: 150px;">
+        <div v-else style="padding-top: 80px; padding-left: 150px;">
           <div style="font-weight: 550;">
-              회원님의 아이디는 ~~입니다.
+              회원님의 아이디는 {{ id }}입니다.
           </div>
-          <button style="margin-top: 50px; text-align: center; color: white;" class="findBtn" type="submit">로그인하러 가기</button>
-        </div> -->
+          <button style="margin-top: 50px; text-align: center; color: white;" v-on:click.prevent="moveLogin" class="findBtn" type="submit">로그인하러 가기</button>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -38,11 +38,47 @@
 </template>
 
 <script>
+import http from "@/api/http";
+
 export default {
     name: "UserFindIdView",
     // components: {
         
     // }
+    data() {
+      return {
+        email: '',
+        getId: false,
+        id: '',
+      }
+    },
+    created(){
+      this.getId = false;
+    },
+    methods: {
+      findId(){
+        if(this.email == ''){
+          alert("이메일을 입력해주세요!");
+        }
+        else{
+          http.get(`/findId/${this.email}`).then(({data}) => {
+            console.log(data);
+            // 아이디 찾기 실패
+            if(data == 'FAILED'){
+              alert("이메일을 찾을 수 없습니다.");
+            }
+            // 아이디 찾기 성공
+            else{
+              this.getId = true;
+              this.id = data;
+            }
+          });
+        }
+      },
+      moveLogin(){
+        this.$router.push({ name: "loginView" });
+      }
+    }
 }
 </script>
 
