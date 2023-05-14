@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.enjoytrip.review.model.mapper.ReviewMapper">
+	<resultMap type="UserDTO" id="user">
+		<result column="user_name" property="user_name"/>
+	</resultMap>
+	
+	<resultMap type="ReviewDto" id="review">
+		<result column="review_idx" property="review_idx"/>
+		<result column="user_idx" property="user_idx"/>
+		<result column="sido_code" property="sido_code"/>
+		<result column="review_title" property="review_title"/>
+		<result column="review_content" property="review_content"/>
+		<result column="review_create" property="review_create"/>
+		<result column="review_update" property="review_update"/>
+		<result column="review_hit" property="review_hit"/>
+		<result column="userDto" property="user"/>
+	</resultMap>
+	
+	<select id = "listReview" resultMap="review">
+		select 	  r.review_idx
+			    , r.user_idx
+			    , r.review_title
+			    , r.review_content
+			    , r.review_create
+			    , r.review_update
+			    , r.review_hit
+			    , u.user_name
+		
+		from	review r
+		join	user u
+		on		r.user_idx = u.user_idx
+		
+	</select>
+	
+	<select id = "getReview" parameterType="int" resultMap="review">
+		select 	r.review_idx
+			  , r.user_idx
+			  , r.sido_code
+			  , r.review_title
+			  , r.review_content
+			  , r.review_create
+			  , r.review_update
+			  , u.user_name
+			  
+		from 	review r
+		join 	user u
+		on 		r.user_idx = u.user_idx
+		where 	r.review_idx = #{reviewIdx};
+	
+	</select>
+	
+	<update id = "updateHit" parameterType="int">
+		update	review
+		set		review_hit = review_hit + 1
+		where	review_idx = #{review_idx};
+	</update>
+	
+	<insert id = "createReview" parameterType="reviewDto">
+		insert into review
+			(user_idx, sido_code, review_title, review_content, review_hit)
+		values
+			(#{user_idx}, #{sido_code}, #{review_title}, #{review_content}, 0)
+		<selectKey resultType="int" keyProperty="review_idx" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id = "createReviewImage" parameterType="reviewImageDto">
+		insert into review_image
+			(review_idx, image_num, image_url, image_name)
+		values
+			(#{review_idx}, #{image_num}, #{image_url}, #{image_name})
+	</insert>
+	
+	<update id = "modifyReview" parameterType="reviewDto">
+		update	review
+		set		review_title = #{review_title}
+			  , review_content = #{review_content}
+			  , review_update = now()
+		where	review_idx = #{review_idx}
+	</update>
+	
+	<delete id = "deleteReview" parameterType="int">
+		delete from		review
+		where			review_idx = #{review_idx}
+	</delete>
+	
+	<delete id = "deleteReviewComment" parameterType="int">
+		delete from		review_comment
+		where			review_idx = #{reviewIdx}
+		<if test='review_comment_idx != 0'>
+					and comment_idx = #{review_comment_idx}
+		</if>
+	</delete>
+	
+	<delete id = "deleteReviewImage" parameterType="int">
+		delete from		review_image
+		where			review_idx = #{review_idx}
+	</delete>
+	
+	<insert id = "createReviewComment" parameterType="reviewCommentDto">
+		insert into review_comment
+			(user_idx, review_idx, review_comment_content)
+		values
+			(#{user_idx}, #{review_idx}, #{review_comment_content})
+	</insert>
+	
+	<select id = "getReviewComment" resultType="reviewCommentDto">
+		select 	  comment_idx
+				, user_idx
+				, review_idx
+				, review_comment_create
+				, review_comment_update
+				, review_comment_content
+		from	review_comment
+		where	review_idx = #{review_idx}
+		
+	</select>
+
+</mapper>
