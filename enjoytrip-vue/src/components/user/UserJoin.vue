@@ -51,6 +51,7 @@
       <button v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
     </form>
   </div>
+
 </template>
 
 <script>
@@ -151,6 +152,11 @@ export default {
             console.log(data);
             if(data == "SUCCESS"){
               alert("회원 가입 완료!");
+              // Swal.fire({
+              //   'Alert 실행!!.',  // Alert 제목
+              //   'Alert 내용이 나타나는 곳.',  // 내용
+              //   'success',  // icon
+              // });
               this.$router.push({ name: "HomeView" });
             }
             else{

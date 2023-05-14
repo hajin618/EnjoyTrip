@@ -18,8 +18,7 @@
                 required>
             </div>
           </div>
-          <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">이메일로 비밀번호
-            찾기</button>
+          <button style="margin-top: 20px; text-align: center; color: white;" class="findBtn" type="submit">이메일로 인증번호 받기</button>
         </form>
 
         <!--  비밀번호 변경 -->

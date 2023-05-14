@@ -57,6 +57,18 @@ public class UserControllerREST {
        	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
        }
    }
+	
+	@GetMapping("/findId/{user_email}")
+	 public ResponseEntity<String> findId(@PathVariable("user_email") String user_email) throws Exception{
+		String userId = null;
+       userId = service.findId(user_email);
+       if(userId != null) {
+       	return new ResponseEntity<>(userId, HttpStatus.OK);	
+       }
+       else {
+       	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
+       }
+   }
 
 	@GetMapping("/user") // userList 조회
 	public Map<String, Object> userList() {

@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public String findId(String user_email) throws Exception {
+		return userMapper.findId(user_email);
+	}
+	
+	@Override
 	public void joinUser(UserDTO userDto) throws Exception {
 		System.out.println(userDto.toString());
 		userMapper.joinUser(userDto);
