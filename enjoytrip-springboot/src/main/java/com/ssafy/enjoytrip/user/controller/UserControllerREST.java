@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.user.model.UserDTO;
@@ -30,6 +33,18 @@ public class UserControllerREST {
 		super();
 		this.service = service;
 	}
+	
+	@GetMapping("/idCheck/{user_id}")
+	 public ResponseEntity<String> checkId(@PathVariable("user_id") String user_id) throws Exception{
+		UserDTO userDto = null;
+        userDto = service.idCheck(user_id);
+        if(userDto == null) {
+        	return new ResponseEntity<>("SUCCESS", HttpStatus.OK);	
+        }
+        else {
+        	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
+        }
+    }
 
 	@GetMapping("/user") // userList 조회
 	public Map<String, Object> userList() {
@@ -64,21 +79,31 @@ public class UserControllerREST {
 		return map;
 	}
 	
-	@PostMapping("/user") // 회원가입
-	public Map<String, Object> join(@RequestBody UserDTO userDto) {
-		System.out.println("controller: " + userDto.toString());
-		Map<String, Object> map = new HashMap();
-		
+//	@PostMapping("/user") // 회원가입
+//	public Map<String, Object> join(@RequestBody UserDTO userDto) {
+//		System.out.println("controller: " + userDto.toString());
+//		Map<String, Object> map = new HashMap();
+//		
+//		try {
+//			service.joinUser(userDto);
+//			map.put("resmsg", "회원가입 성공");
+//			map.put("resdata", userDto);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			map.put("resmsg", "회원가입 실패");
+//		}
+//		
+//		return map;
+//	}
+	@PostMapping("/user")
+	public ResponseEntity<String> join(@RequestBody UserDTO userDto){
 		try {
 			service.joinUser(userDto);
-			map.put("resmsg", "회원가입 성공");
-			map.put("resdata", userDto);
-		} catch (Exception e) {
+			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);	
+		} catch(Exception e) {
 			e.printStackTrace();
-			map.put("resmsg", "회원가입 실패");
+			return new ResponseEntity<>("FAILED", HttpStatus.OK);	
 		}
-		
-		return map;
 	}
 	
 	@PutMapping("/user")

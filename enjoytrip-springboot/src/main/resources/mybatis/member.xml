@@ -18,6 +18,13 @@
 		from user
 	</select>
 	
+ 	<!-- 아이디 중복 체크  -->
+	<select id="idCheck" resultType="userDto">
+		select user_idx, user_name, user_id, user_pwd, user_email, is_admin
+		from user
+		where user_id = #{user_id}
+	</select> 
+	
 	<!-- 회원 정보 조회 -->
 	<select id="userInfo" resultType="userDto">
 		select user_idx, user_name, user_id, user_pwd, user_email, is_admin

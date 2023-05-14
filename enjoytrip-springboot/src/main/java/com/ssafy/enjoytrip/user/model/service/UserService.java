@@ -6,6 +6,9 @@ import java.util.Map;
 import com.ssafy.enjoytrip.user.model.UserDTO;
 
 public interface UserService {
+	
+	public UserDTO idCheck(String user_id) throws Exception;
+	
 	// 회원 가입
 	public void joinUser(UserDTO userDto) throws Exception;
 	// 회원정보 수정
