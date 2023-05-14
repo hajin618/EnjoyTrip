@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public UserDTO emailCheck(String user_email) throws Exception {
+		return userMapper.emailCheck(user_email);
+	}
+	
+	@Override
 	public void joinUser(UserDTO userDto) throws Exception {
 		System.out.println(userDto.toString());
 		userMapper.joinUser(userDto);

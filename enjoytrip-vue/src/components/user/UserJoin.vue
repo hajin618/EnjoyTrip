@@ -41,8 +41,12 @@
 
       <div class="email">
         <span>이메일</span>
-        <input class="box" id="email" v-model="user.user_email" autocomplete="off" type="text" required>
+        <input class="box" id="email" v-model="user.user_email" autocomplete="off" @focusout="emailCheck" type="text" required>
       </div> 
+
+      <span v-show="emailDuplicated" class="idDuplicate">
+        중복된 이메일입니다.
+      </span>
 
       <button v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
     </form>
@@ -65,11 +69,16 @@ export default {
         },
         idDuplicated: false,
         pwdNotCorrect: false,
+        emailDuplicated: false,
       }
     },
     methods: {
       idCheck() {
-        http.get(`/idCheck/${this.user.user_id}`).then(({data}) => {
+        if(this.user.user_id == ''){
+          alert("아이디를 입력해주세요!");
+        }
+        else{
+          http.get(`/idCheck/${this.user.user_id}`).then(({data}) => {
             console.log(data);
             // 사용가능 ID
             if(data == 'SUCCESS'){
@@ -82,6 +91,7 @@ export default {
               this.idDuplicated = true;
             }
         });
+        }
       },
       pwdCheck(){
         if(this.user.userPwdCheck == ''){
@@ -94,14 +104,39 @@ export default {
           this.pwdNotCorrect = false;
         }
       },
+      emailCheck(){
+        if(this.user.user_email == ''){
+          alert("이메일을 입력해주세요!");
+        }
+        else{
+          http.get(`/emailCheck/${this.user.user_email}`).then(({data}) => {
+            console.log(data);
+            // 사용가능 email
+            if(data == 'SUCCESS'){
+              // alert("사용 가능 email입니다!");
+              this.emailDuplicated = false;
+            }
+            // 사용불가 email
+            else{
+              // alert("사용 불가 email입니다!");
+              this.emailDuplicated = true;
+            }
+        });
+        }
+      },
       register(){
         if(this.idDuplicated){
-          alert("중복된 아이디로 로그인 불가!");
+          alert("중복된 아이디로 가입 불가!");
+        }
+        else if(this.emailDuplicated){
+          alert("중복된 이메일로 가입 불가!");
         }
         else if(this.user.user_name == ''){
           alert("이름을 입력해주세요!");
         }
-        // 이메일 로직 추가해야할듯
+        else if(this.user.user_id == ''){
+          alert("아이디를 입력해주세요!");
+        }
         else if(this.user.user_email == ''){
           alert("이메일을 입력해주세요!");
         }

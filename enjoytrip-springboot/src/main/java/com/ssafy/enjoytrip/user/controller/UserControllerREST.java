@@ -45,6 +45,18 @@ public class UserControllerREST {
         	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
         }
     }
+	
+	@GetMapping("/emailCheck/{user_email}")
+	 public ResponseEntity<String> checkEmail(@PathVariable("user_email") String user_email) throws Exception{
+		UserDTO userDto = null;
+       userDto = service.emailCheck(user_email);
+       if(userDto == null) {
+       	return new ResponseEntity<>("SUCCESS", HttpStatus.OK);	
+       }
+       else {
+       	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
+       }
+   }
 
 	@GetMapping("/user") // userList 조회
 	public Map<String, Object> userList() {
