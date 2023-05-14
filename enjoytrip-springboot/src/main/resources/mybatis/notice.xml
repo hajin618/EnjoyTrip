@@ -32,7 +32,7 @@
 		from	notice n
 		join	user u
 		on		n.user_idx = u.user_idx
-		limit #{listsize}
+<!-- 		limit #{listsize} -->
 
 	</select>
 	
