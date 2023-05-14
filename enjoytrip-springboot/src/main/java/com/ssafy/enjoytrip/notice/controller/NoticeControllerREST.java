@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +33,7 @@ public class NoticeControllerREST {
 	@Autowired
 	@Qualifier("NoticeServiceImpl")
 	private NoticeService service;
+	Logger LOGGER = LoggerFactory.getLogger(NoticeControllerREST.class.getName());
 
 	public NoticeControllerREST(NoticeService service) {
 		super();
@@ -88,6 +91,10 @@ public class NoticeControllerREST {
 //		 noticeDto.setUser_idx(userDto.getUser_idx());
 		Map<String, Object> map = new HashMap<>();
 //		PageNavigation pageNavigation = service.makePageNavigation(param);
+		noticeDto.setUser_idx((Integer)param.get("user_idx"));
+		noticeDto.setNotice_title((String)param.get("notice_title"));
+		noticeDto.setNotice_content((String)param.get("notice_content"));
+		//System.out.println(noticeDto.toString());
 		try {
 			service.createNotice(noticeDto);
 			map.put("isSuccess", "true");

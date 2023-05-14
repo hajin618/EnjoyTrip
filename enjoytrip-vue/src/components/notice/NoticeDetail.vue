@@ -1,5 +1,8 @@
 <template lang="">
   <b-container class="bv-example-row mt-5">
+    <div class = "title">
+          <h2>공지사항</h2>
+    </div>
     <div class = "topButtonDiv">
       <button
         v-on:click="moveModify"
@@ -85,6 +88,13 @@ export default {
 </script>
 
 <style scoped>
+  .title{
+      padding-top : 100px;
+      padding-bottom: 50px;
+    }
+  h2{
+      text-align : center;
+    }
   .table{
     table-layout: fixed;
   }
