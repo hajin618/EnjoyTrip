@@ -23,7 +23,7 @@
 
         <!--  인증번호 입력 -->
         <form v-show="putConfirmNumber" style="padding-top: 40px; padding-left: 150px;">
-          <div style="padding-left: 75px;   font-weight: 550;">
+          <div style="font-weight: 550;">
             {{email}}로 받은 인증번호를 입력해주세요!
           </div>
           <div class="findPwform">
@@ -37,6 +37,9 @@
 
                 <!-- 버튼에 onclick 비밀번호 로직 수행후 메인으로 라우팅 -->
         <form v-show="nowChangePwd" style="padding-top: 40px; padding-left: 150px;">
+          <div style="font-weight: 550;">
+            변경할 비밀번호를 입력해주세요!
+          </div>
           <div class="findPwform">
             <div>
               <input style="margin-top: 20px;" v-model="userPwdChange" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="변경할 비밀번호 입력"
@@ -55,6 +58,7 @@
 
 <script>
 import http from "@/api/http";
+// import emailjs from "emailjs-com";
 
 export default {
     name: "UserFindPwView",
@@ -81,10 +85,10 @@ export default {
           alert("이메일을 입력해주세요!");
         }
         else{
-          http.get(`/findId/${this.email}`).then(({data}) => {
-            console.log(data);
+          http.get(`/findId/${this.email}`).then((response) => {
+            console.log(response); 
             // 이메일 찾기 실패
-            if(data == 'FAILED'){
+            if(response.status == 204){
               alert("이메일을 찾을 수 없습니다.");
             }
             // 이메일 찾기 성공
@@ -93,12 +97,27 @@ export default {
               this.putConfirmNumber = true;
               // 랜덤한 인증번호 생성, 이메일로 인증번호 보내기
               // 6자리 랜덤한 인증번호 
-              // userConfirmNumber = Math.random();
+
+              //  실제 email 보내는 부분
+              // this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+              // let templateParams = {
+              //   user_email: this.email,
+              //   sys_code: this.confirmNumber,
+              // };
+              // emailjs.init("c0nz-ynLc-qYrorYn");
+              // emailjs.send("service_enjoyYourLife", "template_enjoyYourLife", templateParams);
+
+              // test 코드
+              this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+              console.log(this.confirmNumber);
             }
           });
         }
       },
       checkConfirmNumber(){
+        // 틀릴 때를 대비해 초기화
+        this.email = '';
         // 인증번호 기억 
         // 사용자가 입력한 인증번호와 확인
         if(this.userConfirmNumber == this.confirmNumber){
@@ -110,11 +129,36 @@ export default {
         else{
           alert("인증 실패! 다시 인증번호를 받아주세요!");
           this.putConfirmNumber = false;
-          this.getEmail = true;
+          this.getEmail = false;
         }
+        this.userConfirmNumber = '';
       },
       changePwd(){
-        // 비밀번호 변경 POST 고고
+        if(this.changePwd.length < 4){
+          alert("비밀번호는 4자리 이상이여야합니다!");
+        }
+        else{
+            http.post(`/chagePwd`,  {
+              user_email: this.email,
+              user_pwd: this.userPwdChange
+            }  ).then((response) => { 
+            console.log(response);
+            if(response.status == 200){
+              alert("비밀번호 변경 완료! 바뀐 비밀번호로 로그인해주세요!");
+              // Swal.fire({
+              //   'Alert 실행!!.',  // Alert 제목
+              //   'Alert 내용이 나타나는 곳.',  // 내용
+              //   'success',  // icon
+              // });
+              this.$router.push({ name: "HomeView" });
+            }
+            else{
+              alert("비밀번호 변경 실패!");
+              this.getEmail = false;
+              this.nowChangePwd = false;        
+            }
+          });
+        }
       }
     }
 }
