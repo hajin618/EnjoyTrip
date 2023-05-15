@@ -111,7 +111,7 @@ public class NoticeControllerREST {
 	}
 
 	@DeleteMapping("/notice/{notice_idx}")
-	public Map<String, Object> deleteNotice(@RequestBody Map<String, Object> param,
+	public Map<String, Object> deleteNotice(/*@RequestBody Map<String, Object> param,*/
 			@PathVariable("notice_idx") String notice_idx) {
 		Map<String, Object> map = new HashMap<>();
 //		PageNavigation pageNavigation = service.makePageNavigation(param);

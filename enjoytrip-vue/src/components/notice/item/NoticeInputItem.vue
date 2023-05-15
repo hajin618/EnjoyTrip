@@ -130,9 +130,9 @@ export default {
     padding-bottom : 5%;
 }
 #title{
-    /*
+    
     border: 0;
-    */
+    border-top : 1px solid rgb(218, 218, 218);
     width: 100%;
     height: 50px;
 }
