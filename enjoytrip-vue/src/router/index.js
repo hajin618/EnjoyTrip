@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import PlanView from '@/views/PlanView.vue'
 
 Vue.use(VueRouter)
 
@@ -10,11 +9,6 @@ const routes = [
     path: '/',
     name: "HomeView",
     component: HomeView
-  },
-  {
-    path: '/plan',
-    name: "PlanView",
-    component: PlanView
   },
   {
     path: "/user",
@@ -83,7 +77,20 @@ const routes = [
         component: () => import("@/components/notice/NoticeDelete.vue")
       }
     ]
-  }
+  },
+  {
+    path: '/plan',
+    name: "PlanView",
+    component: () => import("@/views/PlanView.vue"),
+    redirect: "/plan/list",
+    children: [
+      {
+        path: "list",
+        name: "planList",
+        component: () => import("@/components/plan/PlanList.vue"),
+      }
+    ]
+  },
   
 
   // {

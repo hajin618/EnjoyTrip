@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
+import HeaderNaviBar from "@/components/layout/HeaderNaviBar.vue";
 
 export default{
     name: "NoticeView",
