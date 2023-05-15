@@ -8,17 +8,22 @@
 </template>
 
 <script>
+
 import HeaderNaviBar from "@/components/layout/HeaderNaviBar.vue";
 
-export default{
-    name: "NoticeView",
+export default {
+    name: "PlanView",
     components: {
-        HeaderNaviBar,
-    }
-}
-
+        HeaderNaviBar
+    },
+    data() {
+        return {
+            message: '',
+        };
+    },
+    created() {},
+    methods: {},
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

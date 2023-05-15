@@ -1,6 +1,6 @@
 <template>
   <div id="app">    
-    <router-view/>
+    <router-view class="routerView"/>
     <div class="footer">
       <footer-area></footer-area>
     </div> 
@@ -33,7 +33,11 @@ export default{
   -moz-osx-font-smoothing: grayscale;
   text-align: center; */
 /* } */
+
 .footer{
   clear: both;
+}
+.routerView{
+  min-height: 850px;
 }
 </style>
