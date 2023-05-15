@@ -116,8 +116,6 @@ export default {
         }
       },
       checkConfirmNumber(){
-        // 틀릴 때를 대비해 초기화
-        this.email = '';
         // 인증번호 기억 
         // 사용자가 입력한 인증번호와 확인
         if(this.userConfirmNumber == this.confirmNumber){
@@ -130,11 +128,12 @@ export default {
           alert("인증 실패! 다시 인증번호를 받아주세요!");
           this.putConfirmNumber = false;
           this.getEmail = false;
+          this.email = '';
         }
         this.userConfirmNumber = '';
       },
       changePwd(){
-        if(this.changePwd.length < 4){
+        if(this.userPwdChange.length < 4){
           alert("비밀번호는 4자리 이상이여야합니다!");
         }
         else{

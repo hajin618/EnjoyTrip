@@ -13,6 +13,8 @@ public interface UserService {
 	
 	public String findId(String user_email) throws Exception;
 	
+	public int changePw(UserDTO userDto) throws Exception;
+	
 	// 회원 가입
 	public void joinUser(UserDTO userDto) throws Exception;
 	// 회원정보 수정

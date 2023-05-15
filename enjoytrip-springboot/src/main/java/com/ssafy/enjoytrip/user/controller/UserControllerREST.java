@@ -73,8 +73,16 @@ public class UserControllerREST {
    }
 	
 	@PostMapping("/chagePwd")
-	public ResponseEntity<String> changePwd(@RequestBody UserDTO userDto){
-		return null;
+	public ResponseEntity<String> changePwd(@RequestBody UserDTO userDto) throws Exception{
+		int result = 0;
+		result = service.changePw(userDto);
+		
+		if(result == 1) {
+			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
+		}
 		
 	}
 
