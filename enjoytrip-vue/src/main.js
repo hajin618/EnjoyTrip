@@ -16,8 +16,25 @@ Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
 
+// Vue 인스턴스 생성 전에 Kakao JavaScript SDK 로드
+var KakaoInitPromise = new Promise((resolve) => {
+  const script = document.createElement('script');
+  script.onload = () => {
+    resolve();
+  };
+  script.src = '//developers.kakao.com/sdk/js/kakao.js';
+  document.head.appendChild(script);
+});
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    KakaoInitPromise.then(() => {
+      // Kakao SDK 로드 후에 초기화 코드 실행
+      window.Kakao.init("e2b21eab2fd3c794822457b8091ad15d");
+    });
+  },
 }).$mount('#app')
+

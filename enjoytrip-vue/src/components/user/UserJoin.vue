@@ -2,7 +2,7 @@
   <div class="main">
     <div class="kakao">
       <span><img src="../../assets/img/kakaoLogo.png"  width="50px" height="50px" alt=""></span>
-      <button class="kakaoLoginBtn">카카오톡으로 간편 로그인하기</button>
+      <button v-on:click.prevent="kakaoLogin" class="kakaoLoginBtn">카카오톡으로 간편 로그인하기</button>
     </div>
 
     <form action="">
@@ -53,7 +53,6 @@
   </div>
 
 </template>
-
 <script>
 import http from "@/api/http";
 
@@ -74,15 +73,43 @@ export default {
       }
     },
     methods: {
+      kakaoLogin(){
+        console.log(window.Kakao);
+        window.Kakao.Auth.login({
+          scope: 'profile_nickname, account_email',
+          success: this.getKakaoAccount,
+        })
+      },
+      getKakaoAccount(){
+        window.Kakao.API.request({
+          url:'/v2/user/me',
+          success: (res) =>{
+            const kakao_account = res.kakao_account;
+            const nickname = kakao_account.nickname;
+            const email = kakao_account.email;
+            console.log('nickname', nickname);
+            console.log('email', email);
+
+            alert("로그인 성공!");
+
+            // 일반 로그인과 같은 로직 추가 토큰 || state || localstorage
+
+            this.$router.push({ name: "HomeView" });
+          },
+          fail: error => {
+            console.log(error);
+          }
+        })
+      },
       idCheck() {
         if(this.user.user_id == ''){
           alert("아이디를 입력해주세요!");
         }
         else{
-          http.get(`/idCheck/${this.user.user_id}`).then(({data}) => {
-            console.log(data);
+          http.get(`/idCheck/${this.user.user_id}`).then((response) => {
+            console.log(response);
             // 사용가능 ID
-            if(data == 'SUCCESS'){
+            if(response.status == 200){
               // alert("사용 가능 ID입니다!");
               this.idDuplicated = false;
             }
@@ -110,10 +137,10 @@ export default {
           alert("이메일을 입력해주세요!");
         }
         else{
-          http.get(`/emailCheck/${this.user.user_email}`).then(({data}) => {
-            console.log(data);
+          http.get(`/emailCheck/${this.user.user_email}`).then((response) => {
+            console.log(response);
             // 사용가능 email
-            if(data == 'SUCCESS'){
+            if(response.status == 200){
               // alert("사용 가능 email입니다!");
               this.emailDuplicated = false;
             }
@@ -148,7 +175,7 @@ export default {
           alert("비밀번호는 4자리 이상!!!");
         }
         else{
-          http.post(`/user`, this.user).then(({data}) => {
+          http.post(`/user`, this.user).then(({data}) => { 
             console.log(data);
             if(data == "SUCCESS"){
               alert("회원 가입 완료!");

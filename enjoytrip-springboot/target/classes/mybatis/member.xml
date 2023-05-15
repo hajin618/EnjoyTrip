@@ -46,6 +46,12 @@
 		where user_idx = #{user_idx}
 	</select>
 	
+	<update id="changePw" parameterType="userDto">
+		update user
+		set user_pwd = #{user_pwd}
+		where user_email = #{user_email}
+	</update>
+	
 	<update id="updateUser" parameterType="userDto">
 		update user 
 		<trim prefix="set" suffixOverrides=",">

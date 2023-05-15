@@ -16,6 +16,7 @@
             <!-- 로그인 된 경우 -->
         </div>
         <router-link class="blacklink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
+				<a class="blacklink" style="margin-left: 30px;" v-on:click.prevent="logout">로그아웃</a>
     </header>
 </template>
 
@@ -23,6 +24,24 @@
 
 export default{
     name: "HeaderNaviBar",
+    methods:{
+			kakaoLogout(){
+				window.Kakao.Auth.logout((res) => {
+					console.log(res);
+					// storage || state에 있는 토큰 삭제
+				});
+			},
+			logout(){
+        // 카카오 로그인 상태일 경우
+				// if(){
+				// 	this.kakaoLogout();
+				// 	alert("로그아웃 성공");
+				// }        
+				// else{
+				// 	// storage || state에 있는 토큰 삭제
+				// }
+			}
+    },
 };
 
 </script>
