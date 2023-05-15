@@ -3,7 +3,7 @@
         <div class = "inputDiv">
             <b-row class="mb-1">
                 <b-col>
-                    <form v-on:submit="registForm">
+                    <form v-on:submit.prevent="registForm">
                         <input
                         id="title"
                         v-model="notice.notice_title"
@@ -72,13 +72,14 @@ export default {
                 notice_content : this.notice.notice_content,
             })
             .then(({ res }) => {
-                //let msg = "등록시 문제 발생";
+                let msg = "등록 완료";
+                
                 console.log(res);
-                /*
-                if(data === "success"){
-                    msg = " 등록 완료";
-                }*/
-                alert("aaaa");
+                
+                // if(res === "true"){
+                //     msg = " 등록시 문제 발생";
+                // }
+                alert(msg);
                 this.moveList();
             })
         },
