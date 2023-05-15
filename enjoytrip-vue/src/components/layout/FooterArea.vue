@@ -1,6 +1,5 @@
 <template>
-
-    <div style="background-color: #f9f8f8;">
+    <div style="background-color: #f9f8f8; ">
         <div class="logos">
             <div class="leftlogo">
                 <img src="../../assets/img/ssafy-logo-black.b301994e.png" class="img-ssafy-logo" style="width:80px;" />
@@ -28,7 +27,6 @@
             <br /> 대표번호: 1588-3357 사업자번호 : 123-4567-987
         </div>
     </div>
-
 </template>
 
 <script>
