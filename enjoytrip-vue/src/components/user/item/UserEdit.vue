@@ -77,7 +77,7 @@ export default {
     .box{
         margin-left: 60px;
         height: 40px;
-        color: white;
+        color: black;
         width: 300px;
         background-color: #F1F4F1;
         border: 1px solid rgba(255, 255, 255, .2);
