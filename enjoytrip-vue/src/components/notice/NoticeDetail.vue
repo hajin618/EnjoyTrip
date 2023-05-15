@@ -77,7 +77,10 @@ export default {
             this.$router.push({ name: "noticeList" });
         },
         moveModify(){
-
+            this.$router.replace({
+              name: "noticeModify",
+              params: { notice_idx : this.notice.notice_idx },
+            });
         },
         moveDelete(){
 

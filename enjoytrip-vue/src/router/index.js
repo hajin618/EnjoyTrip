@@ -67,12 +67,12 @@ const routes = [
         component: () => import("@/components/notice/NoticeDetail.vue"),
       },
       {
-        path: "modify/:noticeIdx",
+        path: "modify/:notice_idx",
         name: "noticeModify",
         component: () => import("@/components/notice/NoticeModify.vue"),
       },
       {
-        path: "delete/:noticeIdx",
+        path: "delete/:notice_idx",
         name: "noticeDelete",
         component: () => import("@/components/notice/NoticeDelete.vue")
       }

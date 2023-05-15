@@ -22,8 +22,15 @@
                         <div class = "ButtonDiv">
                             <button
                             type="submit"
+                            v-if="this.type === 'register'"
                             >등록</button>
+
                             <button
+                            type="submit"
+                            v-else
+                            >수정</button>
+
+                            <button v-on:click="onReset"
                             type="reset"
                             >취소</button>
                         </div>
@@ -53,11 +60,13 @@ export default {
         type: {type: String},
     },
     created(){
-        /*
         if(this.type === "modify"){
-
+            http.get(`/notice/${this.$route.params.notice_idx}`).then(({data}) => {
+                this.notice = data.notice;
+                console.log(data);
+            });
         }
-        */
+        
     },
 
     methods:{
@@ -83,8 +92,29 @@ export default {
                 this.moveList();
             })
         },
+        modifyNotice(){
+            http.put(`/notice/${this.notice.notice_idx}`, {
+                user_idx : this.notice.user_idx,
+                notice_title : this.notice.notice_title,
+                notice_content : this.notice.notice_content,
+            })
+            .then(({ res }) => {
+                let msg = "수정 완료";
+                console.log(res);
+                alert(msg);
+                this.$router.push({name: "noticeDetail", params: { notice_idx: this.notice.notice_idx}});
+            })
+        },
         moveList() {
             this.$router.push({ name: "noticeList" });
+        },
+        onReset(event){
+            event.preventDefault();
+            this.notice.notice_idx = 0;
+            this.notice.notice_title = "";
+            this.notice.notice_content = "";
+            //this.$router.push({ name: "noticeList" });
+            this.moveList();
         },
     }
 }

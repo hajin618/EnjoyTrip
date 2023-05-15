@@ -135,6 +135,9 @@ public class NoticeControllerREST {
 			@PathVariable("notice_idx") String notice_idx, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 //		PageNavigation pageNavigation = service.makePageNavigation(param);
+		noticeDto.setUser_idx((Integer)param.get("user_idx"));
+		noticeDto.setNotice_title((String)param.get("notice_title"));
+		noticeDto.setNotice_content((String)param.get("notice_content"));
 		try {
 			service.modifyNotice(noticeDto);
 			map.put("isSuccess", "true");
