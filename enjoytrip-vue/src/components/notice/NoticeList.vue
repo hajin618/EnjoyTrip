@@ -49,7 +49,7 @@ export default {
     },
     data() {
         return {
-            notices: [],
+            notices: [], 
         };
     },
     created() {
