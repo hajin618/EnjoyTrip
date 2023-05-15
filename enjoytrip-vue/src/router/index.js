@@ -79,6 +79,41 @@ const routes = [
     ]
   },
   {
+    path: "/review",
+    name: "reviewBoardView",
+    component: () => import(/* webpackChunkName: "review" */ "../views/ReviewBoardView.vue"),
+    redirect: "/review/list",
+    children: [
+      {
+        path: "list",
+        name: "reviewList",
+        // component: () => import("@/components/reviewboard/ReviewList.vue"),
+        //test
+        component: () => import("@/components/reviewboard/ReviewDetail.vue"),
+      },
+      {
+        path: "regist",
+        name: "reviewRegister",
+        component: () => import("@/components/reviewboard/ReviewRegister.vue"),
+      },
+      {
+        path: "datail/:review_idx",
+        name: "reviewDetail",
+        component: () => import("@/components/reviewboard/ReviewDetail.vue"),
+      },
+      {
+        path: "modify/:review_idx",
+        name: "reviewModify",
+        component: () => import("@/components/reviewboard/ReviewModify.vue"),
+      },
+      {
+        path: "delete/:review_idx",
+        name: "reviewDelete",
+        component: () => import("@/components/reviewboard/ReviewDelete.vue")
+      }
+    ]
+  },
+  {
     path: '/plan',
     name: "PlanView",
     component: () => import("@/views/PlanView.vue"),
@@ -91,17 +126,6 @@ const routes = [
       }
     ]
   },
-  
-
-  // {
-  //   // path: '/about',
-  //   // name: 'about',
-  //   // // route level code-splitting
-  //   // // this generates a separate chunk (about.[hash].js) for this route
-  //   // // which is lazy-loaded when the route is visited.
-  //   // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
-
 ]
 
 
