@@ -87,7 +87,9 @@ const routes = [
       {
         path: "list",
         name: "reviewList",
-        component: () => import("@/components/reviewboard/ReviewList.vue"),
+        // component: () => import("@/components/reviewboard/ReviewList.vue"),
+        //test
+        component: () => import("@/components/reviewboard/ReviewDetail.vue"),
       },
       {
         path: "regist",
