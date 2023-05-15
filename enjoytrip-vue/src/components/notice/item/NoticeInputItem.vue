@@ -3,7 +3,7 @@
         <div class = "inputDiv">
             <b-row class="mb-1">
                 <b-col>
-                    <form v-on:submit="registForm">
+                    <form v-on:submit.prevent="registForm">
                         <input
                         id="title"
                         v-model="notice.notice_title"
@@ -21,9 +21,20 @@
 
                         <div class = "ButtonDiv">
                             <button
+                            class="Button"
                             type="submit"
+                            v-if="this.type === 'register'"
                             >등록</button>
+
                             <button
+                            class="Button"
+                            type="submit"
+                            v-else
+                            >수정</button>
+
+                            <button 
+                            class="Button"
+                            v-on:click="onReset"
                             type="reset"
                             >취소</button>
                         </div>
@@ -53,11 +64,13 @@ export default {
         type: {type: String},
     },
     created(){
-        /*
         if(this.type === "modify"){
-
+            http.get(`/notice/${this.$route.params.notice_idx}`).then(({data}) => {
+                this.notice = data.notice;
+                console.log(data);
+            });
         }
-        */
+        
     },
 
     methods:{
@@ -72,18 +85,40 @@ export default {
                 notice_content : this.notice.notice_content,
             })
             .then(({ res }) => {
-                //let msg = "등록시 문제 발생";
+                let msg = "등록 완료";
+                
                 console.log(res);
-                /*
-                if(data === "success"){
-                    msg = " 등록 완료";
-                }*/
-                alert("aaaa");
+                
+                // if(res === "true"){
+                //     msg = " 등록시 문제 발생";
+                // }
+                alert(msg);
                 this.moveList();
+            })
+        },
+        modifyNotice(){
+            http.put(`/notice/${this.notice.notice_idx}`, {
+                user_idx : this.notice.user_idx,
+                notice_title : this.notice.notice_title,
+                notice_content : this.notice.notice_content,
+            })
+            .then(({ res }) => {
+                let msg = "수정 완료";
+                console.log(res);
+                alert(msg);
+                this.$router.push({name: "noticeDetail", params: { notice_idx: this.notice.notice_idx}});
             })
         },
         moveList() {
             this.$router.push({ name: "noticeList" });
+        },
+        onReset(event){
+            event.preventDefault();
+            this.notice.notice_idx = 0;
+            this.notice.notice_title = "";
+            this.notice.notice_content = "";
+            //this.$router.push({ name: "noticeList" });
+            this.moveList();
         },
     }
 }
@@ -99,9 +134,10 @@ export default {
     padding-bottom : 5%;
 }
 #title{
-    /*
+    
     border: 0;
-    */
+    border-top : 1px solid rgb(218, 218, 218);
+    border-bottom : 1px solid rgb(218, 218, 218);
     width: 100%;
     height: 50px;
 }
@@ -109,9 +145,9 @@ export default {
    outline:none;
 }   
 #content{
-    /*
+    padding-top : 5%;
     border: 0;
-    */
+    border-bottom : 1px solid rgb(218, 218, 218);
     width: 100%;
     height: 400px;
 }

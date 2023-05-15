@@ -77,10 +77,18 @@ export default {
             this.$router.push({ name: "noticeList" });
         },
         moveModify(){
-
+            this.$router.replace({
+              name: "noticeModify",
+              params: { notice_idx : this.notice.notice_idx },
+            });
         },
         moveDelete(){
-
+            if(confirm("정말 삭제하시겠습니까?")){
+              this.$router.replace({
+                name: "noticeDelete",
+                params: {notice_idx : this.notice.notice_idx},
+              });
+            }
         },
     },
 
