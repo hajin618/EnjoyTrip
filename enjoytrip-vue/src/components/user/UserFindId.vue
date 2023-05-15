@@ -55,22 +55,22 @@ export default {
     created(){
       this.getId = false;
     },
-    methods: {
+    methods: { 
       findId(){
         if(this.email == ''){
           alert("이메일을 입력해주세요!");
         }
         else{
-          http.get(`/findId/${this.email}`).then(({data}) => {
-            console.log(data);
+          http.get(`/findId/${this.email}`).then((response) => {
+            console.log(response);
             // 아이디 찾기 실패
-            if(data == 'FAILED'){
+            if(response.status == 204){
               alert("이메일을 찾을 수 없습니다.");
             }
             // 아이디 찾기 성공
             else{
               this.getId = true;
-              this.id = data;
+              this.id = response.data;
             }
           });
         }

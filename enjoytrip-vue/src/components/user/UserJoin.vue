@@ -79,10 +79,10 @@ export default {
           alert("아이디를 입력해주세요!");
         }
         else{
-          http.get(`/idCheck/${this.user.user_id}`).then(({data}) => {
-            console.log(data);
+          http.get(`/idCheck/${this.user.user_id}`).then((response) => {
+            console.log(response);
             // 사용가능 ID
-            if(data == 'SUCCESS'){
+            if(response.status == 200){
               // alert("사용 가능 ID입니다!");
               this.idDuplicated = false;
             }
@@ -110,10 +110,10 @@ export default {
           alert("이메일을 입력해주세요!");
         }
         else{
-          http.get(`/emailCheck/${this.user.user_email}`).then(({data}) => {
-            console.log(data);
+          http.get(`/emailCheck/${this.user.user_email}`).then((response) => {
+            console.log(response);
             // 사용가능 email
-            if(data == 'SUCCESS'){
+            if(response.status == 200){
               // alert("사용 가능 email입니다!");
               this.emailDuplicated = false;
             }
@@ -148,7 +148,7 @@ export default {
           alert("비밀번호는 4자리 이상!!!");
         }
         else{
-          http.post(`/user`, this.user).then(({data}) => {
+          http.post(`/user`, this.user).then(({data}) => { 
             console.log(data);
             if(data == "SUCCESS"){
               alert("회원 가입 완료!");

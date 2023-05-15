@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public int changePw(UserDTO userDto) throws Exception {
+		return userMapper.changePw(userDto);
+	}
+	
+	@Override
 	public void joinUser(UserDTO userDto) throws Exception {
 		System.out.println(userDto.toString());
 		userMapper.joinUser(userDto);

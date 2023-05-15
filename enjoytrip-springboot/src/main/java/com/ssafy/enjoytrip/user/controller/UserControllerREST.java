@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.user.model.UserDTO;
@@ -62,6 +63,7 @@ public class UserControllerREST {
 	 public ResponseEntity<String> findId(@PathVariable("user_email") String user_email) throws Exception{
 		String userId = null;
        userId = service.findId(user_email);
+       
        if(userId != null) {
        	return new ResponseEntity<>(userId, HttpStatus.OK);	
        }
@@ -69,6 +71,20 @@ public class UserControllerREST {
        	return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
        }
    }
+	
+	@PostMapping("/chagePwd")
+	public ResponseEntity<String> changePwd(@RequestBody UserDTO userDto) throws Exception{
+		int result = 0;
+		result = service.changePw(userDto);
+		
+		if(result == 1) {
+			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
+		}
+		
+	}
 
 	@GetMapping("/user") // userList 조회
 	public Map<String, Object> userList() {
