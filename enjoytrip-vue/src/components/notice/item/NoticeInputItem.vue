@@ -21,16 +21,20 @@
 
                         <div class = "ButtonDiv">
                             <button
+                            class="Button"
                             type="submit"
                             v-if="this.type === 'register'"
                             >등록</button>
 
                             <button
+                            class="Button"
                             type="submit"
                             v-else
                             >수정</button>
 
-                            <button v-on:click="onReset"
+                            <button 
+                            class="Button"
+                            v-on:click="onReset"
                             type="reset"
                             >취소</button>
                         </div>
@@ -133,6 +137,7 @@ export default {
     
     border: 0;
     border-top : 1px solid rgb(218, 218, 218);
+    border-bottom : 1px solid rgb(218, 218, 218);
     width: 100%;
     height: 50px;
 }
@@ -140,9 +145,9 @@ export default {
    outline:none;
 }   
 #content{
-    /*
+    padding-top : 5%;
     border: 0;
-    */
+    border-bottom : 1px solid rgb(218, 218, 218);
     width: 100%;
     height: 400px;
 }
