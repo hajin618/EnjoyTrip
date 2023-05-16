@@ -1,29 +1,5 @@
 <template>
   <div>
-
-    <div class = "title">
-      <h2>여행 후기 게시판</h2>
-    </div>
-
-    <div class="searchBar">
-      <select class="areaSelectbar" v-model="selectedArea">
-        <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-          {{ item.name }}
-        </option>
-      </select>
-
-      <select class="typeSelectbar" v-model="selectedType">
-        <option v-for="(item, index) in selectType" :key="index" :value="item.value">
-          {{ item.name }}
-        </option>
-      </select>
-
-      <button class="searchBtn">검색</button>
-      <div>
-        <button class="registerBtn">등록</button>
-      </div>
-    </div>
-
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
       <div class="box">

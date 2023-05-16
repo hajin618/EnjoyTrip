@@ -4,9 +4,18 @@
     <div class="main">
       <!-- 회원 정보 수정이 눌려있다면 초기값은 좋아요임 -->
       <div class="tabBar">
+        <button class="tabBarBtn">나의 계획들 보기</button>
         <button class="tabBarBtn">회원 정보 수정</button>
-        <button class="tabBarBtn">좋아요 목록 보기</button>
+        <button class="tabBarBtn">나의 후기들 보기</button>
       </div>
+
+
+        <!-- 나의 계획들 눌려있다면 -->
+    <!-- <div class="title">
+        나의 계획들
+    </div>
+    <user-plan-list></user-plan-list> -->
+
 
       <!-- 회원 정보 수정이 눌려있다면 -->
     <!-- <div class="titleEdit">
@@ -15,11 +24,12 @@
     <user-edit></user-edit> -->
     
     
-      <!-- 좋아요가 눌려있다면 -->
-      <div class="title">
-        좋아요한 목록
-      </div>
-      <user-review-list></user-review-list>
+      <!-- 나의 후기들 눌려있다면 -->
+    <div class="title">
+        나의 후기들
+    </div>
+    <user-review-list></user-review-list>
+
     </div>
     
   </div>
@@ -52,7 +62,7 @@ export default {
   .tabBarBtn{
     height: 40px;
     color: black;
-    width: 300px;
+    width: 240px;
     background-color: #C8EBCF;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 20px / 20px;
@@ -67,6 +77,7 @@ export default {
     .title{
     margin-top: 40px;
     margin-left: 900px;
+    margin-bottom: 40px;
     color: black;
     font-size: 20px;
     font-weight: 550;
