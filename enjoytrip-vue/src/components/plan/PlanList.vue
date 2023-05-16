@@ -1,4 +1,5 @@
 <template lang="">
+  <div>
     <b-container class="bv-example-row mt-5">
         <div class = "title">
           <h2>여행 계획</h2>
@@ -9,7 +10,7 @@
                 class="registButton"
                 >등록</button>
         </div>
-        <div class="listDiv">
+        <!-- <div class="listDiv">
             <div v-if="plans.length" id="listItem">
                 <plan-list-item
                     v-for="plan in plans"
@@ -17,8 +18,17 @@
                     v-bind="plan"
                 />
             </div>
-        </div>
+        </div> -->
+
+      <b-card-group deck v-if="plans.length" id="listItem">
+        <plan-list-item
+            v-for="plan in plans"
+            :key="plan.plan_idx"
+            v-bind="plan"
+        />
+      </b-card-group>
     </b-container>
+  </div>
 </template>
 
 <script>
@@ -49,6 +59,25 @@ export default {
 </script>
 
 <style scoped>
+/*
+  .card-deck .card {
+    
+    flex: none;
+ 
+  }
+*/
+  .card-deck{
+    clear:right;
+    justify-content: left;
+    padding-top :20px;
+    padding-bottom: 20px;
+  }
+  .card{
+    width:18vw;
+    height: 22vw;
+    margin-bottom: 20px;
+    margin-right: 50px;
+  }
   .title{
       padding-top : 100px;
       padding-bottom: 50px;
@@ -77,5 +106,6 @@ export default {
   }
   #listItem{
     display: flex;
+    width: 110%;
   }
 </style>
