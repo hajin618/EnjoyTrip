@@ -69,40 +69,52 @@
         <!-- for 돌릴 녀석 -->
         <div class="rememberItem">
           <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div class="itemInfo">
+          <div>
             <span class="itemName">
               여행지명
             </span>
+          </div>
+          <div class="itemInfo">
+            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
             <button class="itemDeleteBtn">X</button>
           </div>
         </div>
 
         <div class="rememberItem">
           <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div class="itemInfo">
+          <div>
             <span class="itemName">
               여행지명
             </span>
+          </div>
+          <div class="itemInfo">
+            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
             <button class="itemDeleteBtn">X</button>
           </div>
         </div>
 
         <div class="rememberItem">
           <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div class="itemInfo">
+          <div>
             <span class="itemName">
               여행지명
             </span>
+          </div>
+          <div class="itemInfo">
+            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
             <button class="itemDeleteBtn">X</button>
           </div>
         </div>
 
         <div class="rememberItem">
           <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div class="itemInfo">
+          <div>
             <span class="itemName">
               여행지명
             </span>
+          </div>
+          <div class="itemInfo">
+            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
             <button class="itemDeleteBtn">X</button>
           </div>
         </div>
@@ -325,6 +337,7 @@ export default {
 
   .rememberSpotZone{
     width: 350px;
+    padding-bottom: 20px;
     background-color: rgba(200, 235, 207, 0.5);
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 30px / 30px;
@@ -337,13 +350,44 @@ export default {
     font-size: 20px;
   }
   .rememberItem{
-    width: 70%;
+    width: 100%;
     margin-top: 10px;
-    display: inline-block;
+    /* display: inline-block; */
   }
 
   .searchedArea{
     position: absolute; left: 432px; top: 870px;
     width: 1000px;
+  }
+
+  .btn{
+    width: 70px;
+    height: 37px;
+    background-color: #F1F4F1;
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .findChildSpotBtn{
+    margin-left: 20px;
+    width: 150px;
+    height: 30px;
+    font-size: 12px;
+    background-color: #F1F4F1;
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .itemDeleteBtn{
+    margin-left: 20px;
+    height: 30px;
+    font-size: 10px;
+    background-color: #F1F4F1;
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .itemInfo{
+    margin-top: 10px;
   }
 </style>

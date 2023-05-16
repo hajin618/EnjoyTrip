@@ -89,7 +89,7 @@ const routes = [
     name: "reviewBoardView",
     component: () => import(/* webpackChunkName: "review" */ "../views/ReviewBoardView.vue"),
     redirect: "/review/list",
-    children: [
+    children: [ 
       {
         path: "list",
         name: "reviewList",

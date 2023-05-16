@@ -47,7 +47,7 @@
               <template #img >
                 <img
                   class="d-block img-fluid w-100"
-                  src="https://picsum.photos/1024/480/?image=55"
+                  src="../../assets/img/userPageImg.png"
                   alt="image slot"
                   style="height:100%; object-fit:cover;"
                 >
@@ -57,7 +57,7 @@
               <template #img >
                 <img
                   class="d-block img-fluid w-100"
-                  src="https://picsum.photos/1024/480/?image=55"
+                  src="../../assets/img/family.png"
                   alt="image slot"
                   style="height:100%; object-fit:cover;"
                 >
@@ -67,7 +67,7 @@
               <template #img >
                 <img
                   class="d-block img-fluid w-100"
-                  src="https://picsum.photos/1024/480/?image=55"
+                  src="../../assets/img/mainPageImg.png"
                   alt="image slot"
                   style="height:100%; object-fit:cover;"
                 >
@@ -106,10 +106,10 @@
 
     <div class="buttonBox">
       <div class="listBox">
-        <button class="listBtn">목록</button>
+        <button v-on:click.prevent="moveList" class="listBtn">목록</button>
       </div>
       <div>
-        <button class="editBtn">수정</button>
+        <button v-on:click.prevent="edit" class="editBtn">수정</button>
         <button class="deleteBtn">삭제</button>
       </div>
     </div>
@@ -119,6 +119,7 @@
 
 <script>
 export default {
+  name: "ReviewDetailView",
   data(){
     return{
       selectedArea: '',
@@ -131,6 +132,14 @@ export default {
   },
   mounted(){
     document.getElementsByClassName("carousel-inner")[0].style.height="100%";
+  },
+  methods:{
+    moveList(){
+      this.$router.push({ name: "reviewBoardView" });
+    },
+    edit(){
+      this.$router.push({ name: 'reviewModify', params: { review_idx: 1 } }); 
+    }
   }
 }
 
