@@ -23,7 +23,7 @@
                 {{ item.name }}
                 </option>
             </select>
-          </div>h
+          </div>
 
         <div class="postContentArea">
             <input class="postContentBox" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
@@ -32,9 +32,13 @@
         <div class="imageArea">
             <button class="imageBtn">이미지 업로드</button>
 
+            <!-- 이미지 업로드 성공되면 안에 하나씩 채워져야함 -->
             <div class="imageTextArea">
-                <!-- 이미지 url 생성 -->
-                <!-- 이미지 삭제도 -->
+                <div>
+                  <span>http://localhost:8080</span>
+                  <button class="itemDeleteBtn">삭제</button>
+                </div>
+                
             </div>
         </div>
 
@@ -44,7 +48,7 @@
 
     <div class="buttonArea">
         <button class="registerBtn">등록</button>
-        <button class="cancelBtn">취소</button>
+        <button v-on:click.prevent="cancel" class="cancelBtn">취소</button>
     </div>
   </div>
 </template>
@@ -71,6 +75,11 @@ export default {
                     ],
         }
     },
+    methods:{
+      cancel(){
+        this.$router.push({ name: "reviewBoardView" });
+      }
+    }
 }
 </script>
 
@@ -181,10 +190,21 @@ export default {
   }
 
   .imageTextArea{
-    margin-left: 50px;
+    margin-left: 60px;
     width: 720px;
     height: 120px;
     background-color: #D9D9D9;
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .itemDeleteBtn{
+    float: right;
+    margin-right: 10px;
+    width: 50px;
+    height: 25px;
+    font-size: 10px;
+    background-color: #F1F4F1;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }

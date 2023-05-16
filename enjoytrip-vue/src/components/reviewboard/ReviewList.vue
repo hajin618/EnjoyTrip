@@ -19,7 +19,7 @@
 
       <button class="searchBtn">검색</button>
       <div>
-        <button class="registerBtn">등록</button>
+        <button v-on:click.prevent="register" class="registerBtn">등록</button> 
       </div>
     </div>
 
@@ -29,7 +29,9 @@
         <div class="imageBox">
           <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
         </div>
-        <div class="boxTitle">제목</div>
+        <div class="boxTitle">
+          <router-link class="blacklink" :to="{ name: 'reviewDetail', params: { review_idx: 1 } }">제목</router-link>  
+        </div>
         <div class="boxArea">지역</div>
       </div>
       
@@ -90,36 +92,6 @@
       </div>
     </div>
 
-    <!-- <b-card-group deck>
-    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-      <b-card-text>
-        This is a wider card with supporting text below as a natural lead-in to additional content.
-        This content is a little bit longer.
-      </b-card-text>
-      <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </template>
-    </b-card>
-
-    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-      <b-card-text>
-        This card has supporting text below as a natural lead-in to additional content.
-      </b-card-text>
-      <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </template>
-    </b-card>
-
-    <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-      <b-card-text>
-        This is a wider card with supporting text below as a natural lead-in to additional content.
-        This card has even longer content than the first to show that equal height action.
-      </b-card-text>
-      <template #footer>
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </template>
-    </b-card>
-  </b-card-group> -->
    </div>
  </template>
  
@@ -149,7 +121,9 @@ export default {
 
   },
   methods: {
-
+    register(){
+      this.$router.push({ name: "reviewRegister" });
+    }
   },
 }
  </script>
@@ -240,5 +214,9 @@ export default {
     font-size: 20px;
     float: right;
     margin-right: 30px;
+  }
+
+  .blacklink{
+      color: black;
   }
  </style>

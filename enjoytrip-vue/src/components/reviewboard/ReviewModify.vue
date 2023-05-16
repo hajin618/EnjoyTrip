@@ -44,7 +44,7 @@
 
     <div class="buttonArea">
         <button class="registerBtn">수정</button>
-        <button class="cancelBtn">취소</button>
+        <button v-on:click.prevent="cancel" class="cancelBtn">취소</button>
     </div>
   </div>
 </template>
@@ -70,6 +70,11 @@ export default {
                     ],
         }
     },
+    methods:{
+      cancel(){
+        this.$router.push({ name: "reviewBoardView" });
+      }
+    }
 }
 </script>
 
