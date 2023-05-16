@@ -205,7 +205,6 @@ export default {
     width: 80px;
     height: 35px;
     margin-right: 5px;
-
   }
   .planButtonDiv{
     display: flex; 
