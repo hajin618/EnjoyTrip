@@ -11,8 +11,9 @@
 </template>
 
 <script>
-import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
+import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue";
 import FooterArea from "../components/layout/FooterArea.vue";
+
 
 export default{
     name: "NoticeView",

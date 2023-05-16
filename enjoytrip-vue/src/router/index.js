@@ -121,6 +121,19 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/plan',
+    name: "PlanView",
+    component: () => import("@/views/PlanView.vue"),
+    redirect: "/plan/list",
+    children: [
+      {
+        path: "list",
+        name: "planList",
+        component: () => import("@/components/plan/PlanList.vue"),
+      }
+    ]
+  },
 ]
 
 
