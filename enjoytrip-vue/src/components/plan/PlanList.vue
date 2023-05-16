@@ -1,33 +1,25 @@
 <template lang="">
   <div>
-    <b-container class="bv-example-row mt-5">
-        <div class = "title">
-          <h2>여행 계획</h2>
-        </div>
-        <div class = "buttonDiv">
+      <div class = "title">
+        <h2>여행 계획</h2>
+      </div>
+
+      <div class = "buttonDiv">
             <button
                 v-on:click="moveRegist"
                 class="registButton"
                 >등록</button>
-        </div>
-        <!-- <div class="listDiv">
-            <div v-if="plans.length" id="listItem">
-                <plan-list-item
-                    v-for="plan in plans"
-                    :key="plan.plan_idx"
-                    v-bind="plan"
-                />
-            </div>
-        </div> -->
+      </div>
 
-      <b-card-group deck v-if="plans.length" id="listItem">
-        <plan-list-item
-            v-for="plan in plans"
-            :key="plan.plan_idx"
-            v-bind="plan"
-        />
-      </b-card-group>
-    </b-container>
+      <div class = "contentDiv" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
+        <b-card-group deck v-if="plans.length" id="listItem">
+          <plan-list-item
+              v-for="plan in plans"
+              :key="plan.plan_idx"
+              v-bind="plan"
+          />
+        </b-card-group>
+      </div>
   </div>
 </template>
 
@@ -59,13 +51,13 @@ export default {
 </script>
 
 <style scoped>
-/*
+
   .card-deck .card {
     
     flex: none;
  
   }
-*/
+
   .card-deck{
     clear:right;
     justify-content: left;
@@ -96,16 +88,20 @@ export default {
     background-color : #c8d6cc;
   }
   .buttonDiv{
+    padding-right : 200px;
     padding-bottom : 15px;
     float:right;
   }    
-  .listDiv{
-    clear:right;
-    padding-bottom: 50px;
-    display: flex;
-  }
   #listItem{
     display: flex;
     width: 110%;
   }
+  .contentDiv{
+    text-align : center;
+    clear:both;
+    padding-bottom: 50px;
+    display: flex;
+    padding-left : 200px;
+  }
+
 </style>

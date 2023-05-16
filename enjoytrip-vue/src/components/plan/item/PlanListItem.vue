@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
     .card{
-    width: 13vw;
+    width: 17vw;
     /*
     height: 16vw;
     */
