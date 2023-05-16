@@ -131,6 +131,16 @@ const routes = [
         path: "list",
         name: "planList",
         component: () => import("@/components/plan/PlanList.vue"),
+      },
+      {
+        path: "datail/:plan_idx",
+        name: "planDetail",
+        component: () => import("@/components/plan/PlanDetail.vue"),
+      },
+      {
+        path: "regist",
+        name: "planRegister",
+        component: () => import("@/components/plan/PlanRegister.vue"),
       }
     ]
   },
