@@ -275,6 +275,9 @@ export default {
 
   .findKidZone{
     margin-left: 40px;
+    position: sticky;
+    top: 200px;
+    right: 300px;
     width: 350px;
     height: 500px;
     background-color: rgba(200, 235, 207, 0.5);
