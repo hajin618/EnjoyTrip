@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         moveRegist(){
-
+          this.$router.push({ name: "planRegister" });
         },
     }
 }
