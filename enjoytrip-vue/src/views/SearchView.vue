@@ -53,7 +53,7 @@
           <span>마른 편</span>
         </div>
 
-        <div class="findInfoBox">
+        <div class="findInfoBox"> 
           <label>인적사항 2 : </label>
           <span>눈이 이쁨</span>
         </div>
