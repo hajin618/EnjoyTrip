@@ -87,9 +87,11 @@ const routes = [
       {
         path: "list",
         name: "reviewList",
-        // component: () => import("@/components/reviewboard/ReviewList.vue"),
+        component: () => import("@/components/reviewboard/ReviewList.vue"),
         //test
-        component: () => import("@/components/reviewboard/ReviewDetail.vue"),
+        // component: () => import("@/components/reviewboard/ReviewDetail.vue"),
+        // component: () => import("@/components/reviewboard/ReviewRegister.vue"),
+        // component: () => import("@/components/reviewboard/ReviewModify.vue"),
       },
       {
         path: "regist",
