@@ -11,16 +11,21 @@
                 </div>
             </div>
         </div>
+        <div class="footer">
+            <footer-area></footer-area>
+        </div> 
     </div>
 </template>
 
 <script>
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
+import FooterArea from "../components/layout/FooterArea.vue";
 
 export default{
     name: "HomeView",
     components: {
         HeaderNaviBar,
+        FooterArea,
     }
 }
 
@@ -57,5 +62,9 @@ export default{
         width: 50%;
         float: right;
         box-sizing: border-box;
+    }
+
+    .footer{
+        clear: both;
     }
 </style>
