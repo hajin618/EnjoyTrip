@@ -6,7 +6,7 @@
 
     <div class="InfoArea">
         <div class="postTitleBox">
-            <input class="titleBox" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." required>
+            <input class="titleBox" v-model="title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." required>
             <!-- <select class="areaSelectbar" v-model="selectedArea">
               <option v-for="(item, index) in selectList" :key="index" :value="item.value">
                 {{ item.name }}
@@ -23,7 +23,7 @@
                 {{ item.name }}
                 </option>
             </select>
-          </div>
+          </div>h
 
         <div class="postContentArea">
             <input class="postContentBox" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
@@ -57,6 +57,7 @@ export default {
     },
     data(){
         return{
+        title: '',
         selectedArea: '',
         selectList: [{name: "시도 선택", value: ""},
                         {name: "name1", value: "a"},

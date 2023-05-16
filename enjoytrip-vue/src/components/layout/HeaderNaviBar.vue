@@ -16,6 +16,7 @@
             <!-- 로그인 된 경우 -->
         </div>
         <router-link class="blacklink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
+        <router-link class="blacklink" style="margin-left: 30px;" to="/search">검색</router-link>
 				<a class="blacklink" style="margin-left: 30px;" v-on:click.prevent="logout">로그아웃</a>
     </header>
 </template>
