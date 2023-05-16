@@ -60,7 +60,7 @@
       </div>
 
       <div class="mapZone">
-
+        <kakao-map></kakao-map>
       </div>
 
       <div class="rememberSpotZone">
@@ -186,12 +186,14 @@
 <script>
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 // import SearchViewItem from "../components/layout/SearchViewItem.vue"
+import KakaoMap from "@/components/layout/KakaoMap.vue";
 
 export default {
   name: "SearchView",
   components: {
     HeaderNaviBar,
     // SearchViewItem,
+    KakaoMap,
   },
   data(){
     return{
