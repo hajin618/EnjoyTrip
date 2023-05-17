@@ -35,6 +35,9 @@
 		<typeAlias
 			type="com.ssafy.enjoytrip.attraction.model.GugunDTO"
 			alias="gugunDto" />
+		<typeAlias
+			type="com.ssafy.enjoytrip.data.model.ChildAttractionDTO"
+			alias="childAttractionDto" />
 	</typeAliases>
 
 	<mappers>
@@ -43,6 +46,7 @@
 		<mapper resource="mybatis/notice.xml" />
 		<mapper resource="mybatis/review.xml"/>
 		<mapper resource="mybatis/attraction.xml"/>
+		<mapper resource="mybatis/data.xml" />
 	</mappers>
 
 </configuration>
