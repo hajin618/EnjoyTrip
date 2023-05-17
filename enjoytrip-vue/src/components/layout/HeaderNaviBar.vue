@@ -19,7 +19,7 @@
             <span v-else>
                 <router-link class="whitelink" style="margin-left: 400px;" to="/user/mypage">마이페이지</router-link>
                 <router-link class="whitelink" style="margin-left: 30px;" to="/search">검색</router-link>
-				<button class="whitelink" style="margin-left: 30px;" v-on:click.prevent="logout">로그아웃</button>
+				<button class="btnlogout" style="margin-left: 30px;" v-on:click.prevent="logout">로그아웃</button>
             </span>
         </div>
         
@@ -80,5 +80,11 @@ export default{
         background-color: #7aab85;
         border-bottom: 1px #ececec solid;
         box-shadow: 0 4px 4px -4px black;
+    }
+    .btnlogout{
+        background-color:transparent;
+        color: white;
+        text-decoration: none;
+        border: none;
     }
 </style>

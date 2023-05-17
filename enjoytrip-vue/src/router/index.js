@@ -116,6 +116,7 @@ const routes = [
       {
         path: "list",
         name: "reviewList",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/reviewboard/ReviewList.vue"),
         //test
         // component: () => import("@/components/reviewboard/ReviewDetail.vue"),
@@ -153,6 +154,7 @@ const routes = [
       {
         path: "list",
         name: "planList",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/plan/PlanList.vue"),
       },
       {
