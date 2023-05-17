@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.user.model.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,9 +31,16 @@ public interface UserMapper {
 	// 회원정보 삭제
 	public void deleteUser(int userIdx) throws Exception;
 	// 회원정보 조회
-	public UserDTO userInfo(int userIdx) throws Exception;
-	// 로그인 확인
-	public UserDTO loginCheck(Map<String, String> map) throws Exception;
+	public UserDTO userInfo(String userId) throws Exception;
 	//회원 목록 조회
 	public List<UserDTO> userList();
+	
+	// 로그인 확인
+	public UserDTO login(UserDTO userDto) throws Exception;
+	
+	// 토큰 관련
+	public void saveRefreshToken(Map<String, String> map) throws SQLException;
+	public Object getRefreshToken(String userid) throws SQLException;
+	public void deleteRefreshToken(Map<String, String> map) throws SQLException;
+	
 }

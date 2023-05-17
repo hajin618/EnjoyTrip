@@ -39,13 +39,6 @@
 		where user_email = #{user_email}
 	</select> 
 	
-	<!-- 회원 정보 조회 -->
-	<select id="userInfo" resultType="userDto">
-		select user_idx, user_name, user_id, user_pwd, user_email, is_admin
-		from user
-		where user_idx = #{user_idx}
-	</select>
-	
 	<update id="changePw" parameterType="userDto">
 		update user
 		set user_pwd = #{user_pwd}
@@ -68,9 +61,39 @@
 		where user_idx = #{user_idx}
 	</delete>
 	
-	<select id="loginCheck" resultType="userDto">
+	<!-- 로그인 -->
+	<select id="login" parameterType="userDto" resultType="userDto">
 		select user_idx, user_name, user_id, user_pwd, user_email, is_admin
 		from user
-		where user_id = #{login_id} and user_pwd = #{login_pw};
+		where user_id = #{user_id} and user_pwd = #{user_pwd};
 	</select>
+	
+	<!-- 회원 정보 조회 -->
+	<select id="userInfo" resultType="userDto">
+		select user_idx, user_name, user_id, user_pwd, user_email, is_admin
+		from user
+		where user_id = #{user_id}
+	</select>
+	
+	<!-- 아래부터 토큰 관련 -->
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where user_id = #{user_id}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{user_id}
+	</update>
+	
+	
+	
 </mapper>

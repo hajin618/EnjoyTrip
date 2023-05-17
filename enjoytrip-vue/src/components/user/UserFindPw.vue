@@ -137,7 +137,7 @@ export default {
           alert("비밀번호는 4자리 이상이여야합니다!");
         }
         else{
-            http.post(`/chagePwd`,  {
+            http.post(`/changePwd`,  {
               user_email: this.email,
               user_pwd: this.userPwdChange
             }  ).then((response) => { 

@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.user.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,8 +56,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO loginCheck(Map<String, String> map) throws Exception {
-		return userMapper.loginCheck(map);
+	public UserDTO login(UserDTO userDto) throws Exception {
+		return userMapper.login(userDto);
 	}
 
 	@Override
@@ -65,7 +66,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO userInfo(int userIdx) throws Exception {
-		return userMapper.userInfo(userIdx);
+	public UserDTO userInfo(String userId) throws Exception {
+		return userMapper.userInfo(userId);
+	}
+	
+	@Override
+	public void saveRefreshToken(String userid, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", refreshToken);
+		userMapper.saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userid) throws Exception {
+		return userMapper.getRefreshToken(userid);
+	}
+
+	@Override
+	public void deleRefreshToken(String userid) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", null);
+		userMapper.deleteRefreshToken(map);
 	}
 }
