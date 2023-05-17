@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.enjoytrip.data.model.mapper.DataMapper">
+	
+	<insert id = "insertChildAttraction">
+		insert into child_attraction
+			(
+			 attraction_name,
+			 category1,
+			 category2,
+			 category3,
+			 latitude,
+			 longitude,
+			 road_address,
+			 address,
+			 phone_number,
+			 homepage,
+			 closed_day,
+			 operating_time,
+			 nursing_room,
+			 stroller,
+			 kid_zone
+			)
+		values
+			(
+			 #{attraction_name},
+			 #{category1},
+			 #{category2},
+			 #{category3},
+			 #{latitude},
+			 #{longitude},
+			 #{road_address},
+			 #{address},
+			 #{phone_number},
+			 #{homepage},
+			 #{closed_day},
+			 #{operating_time},
+			 #{nursing_room},
+			 #{stroller},
+			 #{kid_zone}
+			);
+	</insert>
+
+</mapper>
