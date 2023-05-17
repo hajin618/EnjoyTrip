@@ -21,7 +21,7 @@
 			 operating_time,
 			 nursing_room,
 			 stroller,
-			 kid_zone,
+			 kid_zone
 			)
 		values
 			(
