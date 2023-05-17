@@ -96,6 +96,7 @@
  </template>
  
  <script>
+import http from "@/api/http";
 
 export default {
   name: "ReviewList",
@@ -118,7 +119,10 @@ export default {
     }
   },
   created(){
-
+      http.get(`/review`).then(({data}) => {
+          // console.log(data);
+          this.notices = data.notices;
+      });
   },
   methods: {
     register(){

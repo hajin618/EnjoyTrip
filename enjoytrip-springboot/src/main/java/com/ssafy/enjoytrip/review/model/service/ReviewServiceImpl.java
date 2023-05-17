@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.enjoytrip.review.model.ReviewCommentDTO;
 import com.ssafy.enjoytrip.review.model.ReviewDTO;
 import com.ssafy.enjoytrip.review.model.ReviewImageDTO;
+import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 import com.ssafy.enjoytrip.review.model.mapper.ReviewMapper;
 import com.ssafy.enjoytrip.util.SizeConstant;
 
@@ -33,23 +34,16 @@ public class ReviewServiceImpl implements ReviewService{
 				reviewMapper.createReviewImage(ri);
 			}
 		}
-		
+	}
+	
+	@Override
+	public List<ReviewDTO> listReview() throws Exception {
+		return reviewMapper.listReview();
 	}
 
 	@Override
-	public List<ReviewDTO> listReview(Map<String, String> map) throws Exception {
-		Map<String, Object> param = new HashMap<String, Object>();
-		String key = map.get("key");
-		if("userid".equals(key))
-			key = "b.user_id";
-		param.put("key", key == null ? "" : key);
-		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
-		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
-		param.put("start", start);
-		param.put("listsize", SizeConstant.LIST_SIZE);
-		
-		return reviewMapper.listReview(param);
+	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception {
+		return reviewMapper.listReviewSort(reviewSelectDTO);
 	}
 
 	@Override
@@ -92,5 +86,4 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<ReviewCommentDTO> getReviewComment(int reviewIdx) {
 		return reviewMapper.getReviewComment(reviewIdx);
 	}
-
 }

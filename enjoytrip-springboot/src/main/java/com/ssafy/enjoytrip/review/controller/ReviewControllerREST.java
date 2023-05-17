@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.review.model.ReviewCommentDTO;
 import com.ssafy.enjoytrip.review.model.ReviewDTO;
+import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 import com.ssafy.enjoytrip.review.model.service.ReviewService;
 import com.ssafy.enjoytrip.user.model.UserDTO;
 
@@ -70,24 +73,43 @@ public class ReviewControllerREST {
 	
 	
 	// 리스트 조회
+//	@GetMapping("/review")
+//	public Map<String, Object> reviewList() throws Exception{
+//		List<ReviewDTO> list = null;
+//		Map<String, Object> resultMap = new HashMap<>();
+//		try {
+//			list = service.listReview();
+//			resultMap.put("isSuccess", "true");
+//			resultMap.put("notices", list);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			resultMap.put("isSuccess", "false");
+//		}
+//		return resultMap;
+//	}
+	
 	@GetMapping("/review")
-	public Map<String, Object> reviewList(@RequestParam Map<String, String> param) throws Exception{
+	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
 		List<ReviewDTO> list = null;
-		Map<String, Object> resultMap = new HashMap<>();
-//		PageNavigation pageNavigation = service.makePageNavigation(map);
-		try {
-			list = service.listReview(param);
-			resultMap.put("isSuccess", "true");
-			resultMap.put("notices", list);
-//			resultMap.put("navigation", pageNavigation);
-//			resultMap.put("pgno", map.get("pgno"));
-//			resultMap.put("key", map.get("key"));
-//			resultMap.put("word", map.get("word"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
+		list = service.listReview();
+		if(list == null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
-		return resultMap;
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@GetMapping("/review")
+	public ResponseEntity<List<ReviewDTO>> reviewList(@RequestBody ReviewSelectDTO reviewSelectDTO) throws Exception{
+		List<ReviewDTO> list = null;
+		list = service.listReviewSort(reviewSelectDTO);
+		if(list == null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
 	}
 	
 	// 리뷰 작성

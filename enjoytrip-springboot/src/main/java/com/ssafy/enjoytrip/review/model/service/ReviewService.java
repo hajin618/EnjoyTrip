@@ -5,13 +5,17 @@ import java.util.Map;
 
 import com.ssafy.enjoytrip.review.model.ReviewCommentDTO;
 import com.ssafy.enjoytrip.review.model.ReviewDTO;
+import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 
 public interface ReviewService {
 	// 리뷰 작성
 	public void createReview(ReviewDTO reviewDto) throws Exception;
 
 	// 리뷰 리스트 조회
-	public List<ReviewDTO> listReview(Map<String, String> param) throws Exception;
+	public List<ReviewDTO> listReview() throws Exception;
+	
+	// 리뷰 리스트 정제 조회
+	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception;
 	
 	// 공지사항 조회
 	public ReviewDTO getReview(int reviewIdx) throws Exception;
