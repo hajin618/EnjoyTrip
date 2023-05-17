@@ -55,6 +55,9 @@
 </template>
 <script>
 import http from "@/api/http";
+import { mapState, mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
     name: "UserJoinView",
@@ -67,12 +70,35 @@ export default {
           userPwdCheck: "",
           user_email: "",
         },
+        kakaoUser: {
+          user_id: "",
+        },
         idDuplicated: false,
         pwdNotCorrect: false,
         emailDuplicated: false,
       }
     },
+    computed: {
+        ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+    },
     methods: {
+      ...mapActions(userStore, ["userConfirm", "getUserInfo", "kakaoUserConfirm"]),
+        async confirm() {
+            await this.userConfirm(this.user);
+            let token = sessionStorage.getItem("access-token");
+            if (this.isLogin) {
+                await this.getUserInfo(token);
+                this.$router.push({ name: "HomeView" });
+            }
+        },
+        async kakaoConfirm() {
+          await this.kakaoUserConfirm(this.kakaoUser);
+          let token = sessionStorage.getItem("access-token");
+          if (this.isLogin) {
+            await this.getUserInfo(token);
+            // this.$router.push({ name: "HomeView" });
+          }
+        },
       kakaoLogin(){
         console.log(window.Kakao);
         window.Kakao.Auth.login({
@@ -83,18 +109,22 @@ export default {
       getKakaoAccount(){
         window.Kakao.API.request({
           url:'/v2/user/me',
-          success: (res) =>{
+          success: async (res) =>{
             const kakao_account = res.kakao_account;
             const nickname = kakao_account.nickname;
             const email = kakao_account.email;
             console.log('nickname', nickname);
             console.log('email', email);
 
-            alert("로그인 성공!");
-
-            // 일반 로그인과 같은 로직 추가 토큰 || state || localstorage
-
-            this.$router.push({ name: "HomeView" });
+            this.kakaoUser.user_id = email;
+            await this.kakaoConfirm(this.kakaoUser);
+            let token = sessionStorage.getItem("access-token");
+            if (this.isLogin) {
+                await this.getUserInfo(token);
+                // console.log("4. confirm() userInfo :: ", this.userInfo);
+                // console.log("성공했다 선진아");
+                this.$router.push({ name: "HomeView" });
+            }
           },
           fail: error => {
             console.log(error);

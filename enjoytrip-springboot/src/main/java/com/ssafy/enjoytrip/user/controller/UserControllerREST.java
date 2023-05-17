@@ -36,6 +36,8 @@ public class UserControllerREST {
 	private UserService service;
 	
 	public static final Logger logger = LoggerFactory.getLogger(UserControllerREST.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -62,12 +64,12 @@ public class UserControllerREST {
 				service.saveRefreshToken(userDto.getUser_id(), refreshToken);
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
-				resultMap.put("message", "SUCCESS");
+				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
 			}
 			// 로그인 실패했을 경우
 			else {
-				resultMap.put("message", "FAILED");
+				resultMap.put("message", FAIL);
 				status = HttpStatus.ACCEPTED;
 			}
 		}
@@ -88,16 +90,19 @@ public class UserControllerREST {
 		
 		// 카카오 로그인 했다면 DB에 실제 데이터 삽입 회원가입 개념
 		UserDTO joinDto = new UserDTO();
+//		kakao => userid  (varchar 늘리면)
+		joinDto.setUser_name("kakao");
 		joinDto.setUser_id(userDto.getUser_id());
+		joinDto.setUser_pwd(userDto.getUser_id());
 		joinDto.setUser_email(userDto.getUser_id());
 		service.joinUser(joinDto);
 		
-		String accessToken = jwtService.createAccessToken("userid", userDto.getUser_id());
-		String refreshToken = jwtService.createRefreshToken("userid", userDto.getUser_id());
-		service.saveRefreshToken(userDto.getUser_email(), refreshToken);
+		String accessToken = jwtService.createAccessToken("userid", joinDto.getUser_id());
+		String refreshToken = jwtService.createRefreshToken("userid", joinDto.getUser_id());
+		service.saveRefreshToken(joinDto.getUser_email(), refreshToken);
 		resultMap.put("access-token", accessToken);
 		resultMap.put("refresh-token", refreshToken);
-		resultMap.put("message", "SUCCESS");
+		resultMap.put("message", SUCCESS);
 		status = HttpStatus.ACCEPTED;
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
@@ -111,7 +116,8 @@ public class UserControllerREST {
 		
 		try {
 			service.deleRefreshToken(userid);
-			resultMap.put("message", "SUCCESS");
+			resultMap.put("message", SUCCESS);
+			logger.info("logout success");
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			resultMap.put("message", e.getMessage());
@@ -126,13 +132,14 @@ public class UserControllerREST {
 		logger.info("into info logic");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		logger.info(userid);
 		
 		if(jwtService.checkToken(request.getHeader("access-token"))) {
 			logger.info("토큰 검증 완료");
 			try {
 				UserDTO userDto = service.userInfo(userid);
 				resultMap.put("userInfo", userDto);
-				resultMap.put("message", "SUCCESS");
+				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
 				logger.info(userDto.toString());
 				logger.info("유저 정보 담아서 프론트로 전송");
@@ -142,7 +149,7 @@ public class UserControllerREST {
 			}
 		}
 		else {
-			resultMap.put("message", "FAILED");
+			resultMap.put("message", FAIL);
 			status = HttpStatus.UNAUTHORIZED;
 		}
 		
@@ -161,7 +168,7 @@ public class UserControllerREST {
 			if(token.equals(service.getRefreshToken(userDto.getUser_id()))) {
 				String accessToken = jwtService.createAccessToken("userid", userDto.getUser_id());
 				resultMap.put("access-token", accessToken);
-				resultMap.put("message", "SUCCESS");
+				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
 			}
 		}

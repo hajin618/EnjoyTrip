@@ -14,6 +14,9 @@ Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 
+// Vue 개발자 도구를 활성화합니다.
+Vue.config.devtools = true;
+
 Vue.config.productionTip = false;
 
 // Vue 인스턴스 생성 전에 Kakao JavaScript SDK 로드

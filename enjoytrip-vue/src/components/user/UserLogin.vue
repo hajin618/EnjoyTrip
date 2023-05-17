@@ -16,7 +16,7 @@
                             <input style="margin-top: 20px;" v-model="user.user_pwd" class="pwBox" id="Pw" autocomplete="off" maxlength="20" type="password" placeholder="비밀번호" required>
                         </div>
                     </div>
-                    <button style="margin-top: 20px;" class="loginBtn" @click="login" type="submit">로그인</button>
+                    <button style="margin-top: 20px;" class="loginBtn" v-on:click.prevent="confirm" type="submit">로그인</button>
                 </form>
 
                 <div class="linker">
@@ -48,7 +48,7 @@ export default {
         return {
             user:{
                 user_id: null,
-                user_pwd: null
+                user_pwd: null,
             }
         }
     },
@@ -57,17 +57,17 @@ export default {
     },
     methods: {
         ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
-        async login() {
-            console.log("로그인 버튼 클릭 -> login 메소드 실행");
-            console.log("인자 : " + this.user);
+        async confirm() {
+            // console.log("로그인 버튼 클릭 -> login 메소드 실행");
+            // console.log("인자 : " + this.user);
             await this.userConfirm(this.user);
             let token = sessionStorage.getItem("access-token");
-            console.log("1. confirm() token >> " + token);
+            // console.log("1. confirm() token >> " + token);
             if (this.isLogin) {
                 await this.getUserInfo(token);
-                console.log("4. confirm() userInfo :: ", this.userInfo);
-                console.log("성공했다 선진아");
-                this.$router.push({ name: "SearchView" });
+                // console.log("4. confirm() userInfo :: ", this.userInfo);
+                // console.log("성공했다 선진아");
+                this.$router.push({ name: "HomeView" });
             }
         },
     },

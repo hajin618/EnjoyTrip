@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/api/user.js";
+import { login, kakaoLogin, findById, tokenRegeneration, logout } from "@/api/user";
 
 const userStore = {
     namespaced: true,
@@ -11,6 +11,9 @@ const userStore = {
       isValidToken: false,
     },
     getters: {
+      checkIsLogin: function(state){
+        return state.isLogin;
+      },
       checkUserInfo: function (state) {
         return state.userInfo;
       },
@@ -35,11 +38,36 @@ const userStore = {
     },
     actions: {
       async userConfirm({ commit }, user) {
-        console.log("UserStore의 userConfirm 메소드 진입");
+        // console.log("UserStore의 userConfirm 메소드 진입");
         await login(
           user,
           ({ data }) => {
-            if (data.message == "SUCCESS") {
+            if (data.message === "success") {
+              let accessToken = data["access-token"];
+              let refreshToken = data["refresh-token"];
+              // console.log("login success token created!!!! >> ", accessToken, refreshToken);
+              commit("SET_IS_LOGIN", true);
+              commit("SET_IS_LOGIN_ERROR", false);
+              commit("SET_IS_VALID_TOKEN", true);
+              sessionStorage.setItem("access-token", accessToken);
+              sessionStorage.setItem("refresh-token", refreshToken);
+            } else {
+              commit("SET_IS_LOGIN", false);
+              commit("SET_IS_LOGIN_ERROR", true);
+              commit("SET_IS_VALID_TOKEN", false);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      async kakaoUserConfirm({ commit }, user) {
+        // console.log("UserStore의 userConfirm 메소드 진입");
+        await kakaoLogin(
+          user,
+          ({ data }) => {
+            if (data.message === "success") {
               let accessToken = data["access-token"];
               let refreshToken = data["refresh-token"];
               // console.log("login success token created!!!! >> ", accessToken, refreshToken);
@@ -65,7 +93,7 @@ const userStore = {
         await findById(
           decodeToken.userid,
           ({ data }) => {
-            if (data.message == "SUCCESS") {
+            if (data.message === "success") {
               commit("SET_USER_INFO", data.userInfo);
               // console.log("3. getUserInfo data >> ", data);
             } else {
@@ -84,7 +112,7 @@ const userStore = {
         await tokenRegeneration(
           JSON.stringify(state.userInfo),
           ({ data }) => {
-            if (data.message === "SUCCESS") {
+            if (data.message === "success") {
               let accessToken = data["access-token"];
               console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
               sessionStorage.setItem("access-token", accessToken);
@@ -99,7 +127,7 @@ const userStore = {
               await logout(
                 state.userInfo.userid,
                 ({ data }) => {
-                  if (data.message === "SUCCESS") {
+                  if (data.message === "success") {
                     console.log("리프레시 토큰 제거 성공");
                   } else {
                     console.log("리프레시 토큰 제거 실패");
@@ -124,7 +152,7 @@ const userStore = {
         await logout(
           userid,
           ({ data }) => {
-            if (data.message === "SUCCESS") {
+            if (data.message === "success") {
               commit("SET_IS_LOGIN", false);
               commit("SET_USER_INFO", null);
               commit("SET_IS_VALID_TOKEN", false);
