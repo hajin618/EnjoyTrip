@@ -54,7 +54,7 @@ public class AttractionControllerRest {
 		try {
 			list = service.searchGugun(Integer.parseInt(sido_code));
 			resultMap.put("isSuccess", "true");
-			resultMap.put("sidoList", list);
+			resultMap.put("gugunList", list);
 		} catch(Exception e) {
 			e.printStackTrace();
 			resultMap.put("isSuccess", "false");

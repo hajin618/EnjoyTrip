@@ -7,22 +7,33 @@
     </div>
 
     <div class="searchBar">
-      <select class="sidoSelect" v-model="sidoSelect">
-        <option v-for="(item, index) in sidoSelectList" :key="index" :value="item.value">
-        {{ item.name }}
+      <select class="sidoSelect" v-model="sidoSelected" @change="getGuGun()">
+        <option value="" selected>시/도 선택</option>
+        <option v-for="(item, index) in sidoList" :key="index" :value="item.sido_code">
+        {{ item.sido_name }}
         </option>
       </select>
 
       <select class="gugunSelect" v-model="gugunSelect">
-        <option v-for="(item, index) in gugunSelectList" :key="index" :value="item.value">
-        {{ item.name }}
+        <option value="" selected>구/군 선택</option>
+        <option v-for="(item, index) in gugunList" :key="index" :value="item.gugun_code">
+        {{ item.gugun_name }}
         </option>
       </select>
 
       <select class="attractionSelect" v-model="attractionSelect">
-        <option v-for="(item, index) in attractionSelectList" :key="index" :value="item.value">
+        <option value="" selected>관광지 유형</option>
+        <option value="12">관광지</option>
+        <option value="14">문화시설</option>
+        <option value="15">축제공연행사</option>
+        <option value="25">여행코스</option>
+        <option value="28">레포츠</option>
+        <option value="32">숙박</option>
+        <option value="38">쇼핑</option>
+        <option value="39">음식점</option>
+        <!-- <option v-for="(item, index) in attractionSelectList" :key="index" :value="item.value">
         {{ item.name }}
-        </option>
+        </option> -->
       </select>
 
       <input class="searchWord" v-model="searchWord" id="title" autocomplete="off" type="text" placeholder="검색어 입력" required>
@@ -196,6 +207,8 @@
 </template>
 
 <script>
+import http from "@/api/http";
+
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 // import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
@@ -210,24 +223,32 @@ export default {
   data(){
     return{
       searchWord: '',
-      sidoSelect: '',
-      sidoSelectList: [{name: "시도 선택", value: ""},
-                      {name: "name1", value: "a"},
-                      {name: "name2", value: "b"},
-                      {name: "name3", value: "c"},
-                  ],
+      sidoSelected: '',
+      sidoList: [],
       gugunSelect: '',
-      gugunSelectList: [{name: "구군 선택", value: ""},
-                      {name: "name1", value: "a"},
-                      {name: "name2", value: "b"},
-                      {name: "name3", value: "c"},
-                  ],
+      gugunList: [],
+      
       attractionSelect: '',
       attractionSelectList: [{name: "관광지 선택", value: ""},
                       {name: "name1", value: "a"},
                       {name: "name2", value: "b"},
                       {name: "name3", value: "c"},
                   ],
+    }
+  },
+  created(){
+    http.get(`/sido`).then(({ data }) => {
+      //console.log(data.sidoList);
+      this.sidoList = data.sidoList;
+    });
+  },
+
+  methods: {
+    getGuGun(){
+      http.get(`/${this.sidoSelected}/gugun`).then(({data}) => {
+        //console.log(data.gugunList);
+        this.gugunList = data.gugunList;
+      })
     }
   }
 }
