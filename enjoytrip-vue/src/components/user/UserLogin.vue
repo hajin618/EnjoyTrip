@@ -10,13 +10,13 @@
                 <form style="padding-top: 20px; padding-left: 200px;">
                     <div class="loginform">
                         <div>
-                            <input class="idBox" id="Nick" autocomplete="off" type="text" placeholder="아이디" required>
+                            <input class="idBox" id="Nick" v-model="user.user_id" autocomplete="off" type="text" placeholder="아이디" required>
                         </div>
                         <div>
-                            <input style="margin-top: 20px;" class="pwBox" id="Pw" autocomplete="off" maxlength="20" type="password" placeholder="비밀번호" required>
+                            <input style="margin-top: 20px;" v-model="user.user_pwd" class="pwBox" id="Pw" autocomplete="off" maxlength="20" type="password" placeholder="비밀번호" required>
                         </div>
                     </div>
-                    <button style="margin-top: 20px;" class="loginBtn" type="submit">로그인</button>
+                    <button style="margin-top: 20px;" class="loginBtn" @click="login" type="submit">로그인</button>
                 </form>
 
                 <div class="linker">
@@ -34,11 +34,43 @@
 </template>
 
 <script>
+
+import { mapState, mapActions } from "vuex";
+
+const userStore = "userStore";
+
 export default {
     name: "UserLoginView",
     // components: {
         
     // }
+    data(){
+        return {
+            user:{
+                user_id: null,
+                user_pwd: null
+            }
+        }
+    },
+    computed: {
+        ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+    },
+    methods: {
+        ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
+        async login() {
+            console.log("로그인 버튼 클릭 -> login 메소드 실행");
+            console.log("인자 : " + this.user);
+            await this.userConfirm(this.user);
+            let token = sessionStorage.getItem("access-token");
+            console.log("1. confirm() token >> " + token);
+            if (this.isLogin) {
+                await this.getUserInfo(token);
+                console.log("4. confirm() userInfo :: ", this.userInfo);
+                console.log("성공했다 선진아");
+                this.$router.push({ name: "SearchView" });
+            }
+        },
+    },
 }
 
 </script>

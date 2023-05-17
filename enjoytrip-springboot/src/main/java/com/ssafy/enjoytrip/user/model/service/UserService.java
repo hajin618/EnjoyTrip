@@ -23,11 +23,14 @@ public interface UserService {
 	public void deleteUser(int userIdx) throws Exception;
 	
 	// 회원정보 조회
-	public UserDTO userInfo(int userIdx) throws Exception;
-	
-	// 로그인 확인
-	public UserDTO loginCheck(Map<String, String> map) throws Exception;
+	public UserDTO userInfo(String userId) throws Exception;
 	
 	// 회원 리스트 조회
 	public List<UserDTO> userList();
+	
+	// 로그인 확인
+	public UserDTO login(UserDTO userDto) throws Exception;
+	public void saveRefreshToken(String userid, String refreshToken) throws Exception;
+	public Object getRefreshToken(String userid) throws Exception;
+	public void deleRefreshToken(String userid) throws Exception;
 }
