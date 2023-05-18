@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
+import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
 import com.ssafy.enjoytrip.attraction.model.mapper.AttractionMapper;
@@ -20,11 +21,9 @@ public class AttractionServiceImpl implements AttractionService{
 		this.attractionMapper = attractionMapper;
 	}
 	
-
 	@Override
-	public List<AttractionInfoDTO> searchAttraction(Map<String, Object> param) throws Exception {
-
-		return null;
+	public List<AttractionInfoDTO> searchAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception {
+		return attractionMapper.searchAttraction(attractionSelectDTO);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
+import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
 
@@ -18,5 +19,5 @@ public interface AttractionMapper {
 	public List<GugunDTO> searchGugun(int sido_code) throws Exception;
 
 	// 여행지 검색
-	public List<AttractionInfoDTO> searchAttraction(Map<String, Object> param) throws Exception;
+	public List<AttractionInfoDTO> searchAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception;
 }

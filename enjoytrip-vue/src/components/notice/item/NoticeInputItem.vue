@@ -47,18 +47,24 @@
 </template>
 <script>
 import http from "@/api/http";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
     name: "NoticeInputItem",
     data(){
         return{
             notice:{
-                // user_idx 수정하기
-                user_idx: 1,
+                user_idx: "",
                 notice_title: "",
                 notice_content: "",
             }
         };
+    },
+    computed: {
+        ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+        ...mapGetters(["checkisLogin", "checkUserInfo"]),
     },
     props: {
         type: {type: String},
@@ -74,13 +80,14 @@ export default {
     },
 
     methods:{
+        ...mapActions(userStore, ["userLogout"]),
         registForm: function(){
             //console.log(this.notice.notice_title, this.notice.notice_content);
             this.type === "register" ? this.registNotice() : this.modifyNotice();
         },
         registNotice(){
             http.post(`/notice`, {
-                user_idx : this.notice.user_idx,
+                user_idx : this.userInfo.user_idx,
                 notice_title : this.notice.notice_title,
                 notice_content : this.notice.notice_content,
             })
@@ -98,7 +105,7 @@ export default {
         },
         modifyNotice(){
             http.put(`/notice/${this.notice.notice_idx}`, {
-                user_idx : this.notice.user_idx,
+                user_idx : this.userInfo.user_idx,
                 notice_title : this.notice.notice_title,
                 notice_content : this.notice.notice_content,
             })

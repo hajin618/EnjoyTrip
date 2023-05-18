@@ -3,7 +3,7 @@
     <div class = "title">
           <h2>공지사항</h2>
     </div>
-    <div class = "buttonDiv">
+    <div v-if="this.userInfo.is_admin === 'Y'" class = "buttonDiv">
       <button
         v-on:click="moveRegist"
         class="registButton"
@@ -39,11 +39,18 @@
 <script>
 import http from "@/api/http";
 import NoticeListItem from "@/components/notice/item/NoticeListItem.vue";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
     name: "NoticeList",
     components: {
         NoticeListItem,
+    },
+    computed: {
+        ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+        ...mapGetters(["checkisLogin", "checkUserInfo"]),
     },
     data() {
         return {
@@ -62,11 +69,14 @@ export default {
         //     console.log(res.data);
         //     this.notices = res.data.notices;
         // })
+
     },
     methods: {
         moveRegist(){
             this.$router.push({ name: "noticeRegister" });
         },
+
+        ...mapActions(userStore, ["userLogout"]),
     },
 };
 </script>

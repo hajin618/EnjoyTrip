@@ -8,21 +8,20 @@
 
     <div class="searchBar">
       <select class="sidoSelect" v-model="sidoSelected" @change="getGuGun()">
-        <option value="" selected>시/도 선택</option>
-        <option v-for="(item, index) in sidoList" :key="index" :value="item.sido_code">
-        {{ item.sido_name }}
+        <option value="null">시/도 선택</option>
+        <option v-for="(sido, index) in sidoList" :key="index" :value="sido.sido_code">
+          {{ sido.sido_name }}</option>
+      </select>
+
+      <select class="gugunSelect" v-model="gugunSelected">
+        <option value="null">구/군 선택</option>
+        <option v-for="(gugun, index) in gugunList" :key="index" :value="gugun.gugun_code">
+        {{ gugun.gugun_name }}
         </option>
       </select>
 
-      <select class="gugunSelect" v-model="gugunSelect">
-        <option value="" selected>구/군 선택</option>
-        <option v-for="(item, index) in gugunList" :key="index" :value="item.gugun_code">
-        {{ item.gugun_name }}
-        </option>
-      </select>
-
-      <select class="attractionSelect" v-model="attractionSelect">
-        <option value="" selected>관광지 유형</option>
+      <select class="attractionSelect" v-model="content_type_id">
+        <option value="null">관광지 유형</option>
         <option value="12">관광지</option>
         <option value="14">문화시설</option>
         <option value="15">축제공연행사</option>
@@ -31,14 +30,12 @@
         <option value="32">숙박</option>
         <option value="38">쇼핑</option>
         <option value="39">음식점</option>
-        <!-- <option v-for="(item, index) in attractionSelectList" :key="index" :value="item.value">
-        {{ item.name }}
-        </option> -->
+
       </select>
 
       <input class="searchWord" v-model="searchWord" id="title" autocomplete="off" type="text" placeholder="검색어 입력" required>
 
-      <button class="searchBtn">검색</button>
+      <button class="searchBtn" v-on:click="searchAtt">검색</button>
     </div>
 
     <div style="display: flex; flex-direction: row; margin-bottom: 50px;">
@@ -136,7 +133,7 @@
 
     <div class="searchedArea">
       <b-row>
-        <b-col>
+        <b-col v-if="attractions.length">
           <b-table-simple hover responsive>
             <b-thead>
               <b-tr class="listTitle">
@@ -147,11 +144,16 @@
               </b-tr>
             </b-thead>
             <tbody>
+              <search-view-item
+                v-for="att in attractions"
+                :key="att.content_id"
+                v-bind="att"/>
+                
               <!-- <search-view-item>
                 
               </search-view-item> -->
 
-              <b-tr>
+              <!-- <b-tr>
                 <b-td>
                   <img width="100px" height="100px" src="../assets/img/mainPageImg.png" alt="">
                 </b-td>
@@ -194,7 +196,7 @@
                 <b-td>
                   <button class="btn">저장</button>
                 </b-td>
-              </b-tr>
+              </b-tr> -->
 
             </tbody>
           </b-table-simple>
@@ -210,30 +212,31 @@
 import http from "@/api/http";
 
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
-// import SearchViewItem from "../components/layout/SearchViewItem.vue"
+import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 
 export default {
   name: "SearchView",
   components: {
     HeaderNaviBar,
-    // SearchViewItem,
+    SearchViewItem,
     KakaoMap,
   },
   data(){
     return{
-      searchWord: '',
-      sidoSelected: '',
+      searchWord: null,
+      sidoSelected: null,
       sidoList: [],
-      gugunSelect: '',
+      gugunSelected: null,
       gugunList: [],
-      
-      attractionSelect: '',
-      attractionSelectList: [{name: "관광지 선택", value: ""},
-                      {name: "name1", value: "a"},
-                      {name: "name2", value: "b"},
-                      {name: "name3", value: "c"},
-                  ],
+      content_type_id: null,
+      // attractionSelectList: [{name: "관광지 선택", value: ""},
+      //                 {name: "name1", value: "a"},
+      //                 {name: "name2", value: "b"},
+      //                 {name: "name3", value: "c"},
+      //             ],
+      attractions : [],
+
     }
   },
   created(){
@@ -245,9 +248,28 @@ export default {
 
   methods: {
     getGuGun(){
+      // console.log("시도 : "+this.sidoSelected);
+
       http.get(`/${this.sidoSelected}/gugun`).then(({data}) => {
         //console.log(data.gugunList);
         this.gugunList = data.gugunList;
+      })
+    },
+
+    searchAtt(){
+      console.log("시도 : "+this.sidoSelected);
+      console.log("구군 : "+this.gugunSelected);
+      console.log("유형 : "+this.content_type_id)
+      console.log("단어 : "+this.searchWord);
+      http.post(`/attraction`, {
+        sido_code : this.sidoSelected,
+        gugun_code : this.gugunSelected,
+        content_type_id : this.content_type_id,
+        searchWord : this.searchWord,
+      })
+      .then(({ data }) => {
+        console.log(data);
+        this.attractions = data;
       })
     }
   }
