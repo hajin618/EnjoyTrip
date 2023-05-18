@@ -23,7 +23,6 @@
               </b-tr>
             </b-thead>
             <tbody>
-              <!-- 하위 component인 ListRow에 데이터 전달(props) -->
               <notice-list-item
                 v-for="notice in notices"
                 :key="notice.notice_idx"
@@ -32,7 +31,6 @@
             </tbody>
           </b-table-simple>
         </b-col>
-        <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
       </b-row>
     </div>
   </b-container>

@@ -24,72 +24,13 @@
     </div>
 
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">
-          <router-link class="blacklink" :to="{ name: 'reviewDetail', params: { review_idx: 1 } }">제목</router-link>  
-        </div>
-        <div class="boxArea">지역</div>
-      </div>
+    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
       
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
+      <review-list-item
+        v-for="review in reviews"
+        :key="review.review_idx"
+        v-bind="review"
+      />
     </div>
 
    </div>
@@ -97,11 +38,12 @@
  
  <script>
 import http from "@/api/http";
+import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
 
 export default {
   name: "ReviewList",
   components: {
-
+    ReviewListItem,
   },
   data(){
     return{
@@ -200,33 +142,6 @@ export default {
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 10px / 10px;
   }
-
-  .box{
-    width: 400px;
-    height: 500px;
-    background-color: #F1F4F1;
-    text-align: center;
-  }
-
-  .imageBox{
-    display: inline-block;
-    width: 80%;
-    height: 300px;
-    background-color: rgba(200, 235, 207, 0.5);
-  }
-
-  .boxTitle{
-    margin-top: 30px;
-    font-size: 30px;
-  }
-
-  .boxArea{
-    margin-top: 30px;
-    font-size: 20px;
-    float: right;
-    margin-right: 30px;
-  }
-
   .blacklink{
       color: black;
   }
