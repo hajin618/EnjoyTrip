@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, kakaoLogin, findById, tokenRegeneration, logout } from "@/api/user";
+import { login, kakaoLogin, findById, tokenRegeneration, logout, deleteKakao } from "@/api/user";
 
 const userStore = {
     namespaced: true,
@@ -9,6 +9,7 @@ const userStore = {
       isLoginError: false,
       userInfo: null,
       isValidToken: false,
+      isKakaoLogin : false,
     },
     getters: {
       checkIsLogin: function(state){
@@ -35,6 +36,9 @@ const userStore = {
         state.isLogin = true;
         state.userInfo = userInfo;
       },
+      SET_IS_KAKAO_LOGIN: (state, isKakaoLogin) => {
+        state.isKakaoLogin = isKakaoLogin;
+      }
     },
     actions: {
       async userConfirm({ commit }, user) {
@@ -74,12 +78,14 @@ const userStore = {
               commit("SET_IS_LOGIN", true);
               commit("SET_IS_LOGIN_ERROR", false);
               commit("SET_IS_VALID_TOKEN", true);
+              commit("SET_IS_KAKAO_LOGIN", true);
               sessionStorage.setItem("access-token", accessToken);
               sessionStorage.setItem("refresh-token", refreshToken);
             } else {
               commit("SET_IS_LOGIN", false);
               commit("SET_IS_LOGIN_ERROR", true);
               commit("SET_IS_VALID_TOKEN", false);
+              commit("SET_IS_KAKAO_LOGIN", false);
             }
           },
           (error) => {
@@ -148,7 +154,7 @@ const userStore = {
           }
         );
       },
-      async userLogout({ commit }, userid) {
+      async userLogout({ commit, state }, userid) {  
         await logout(
           userid,
           ({ data }) => {
@@ -156,6 +162,19 @@ const userStore = {
               commit("SET_IS_LOGIN", false);
               commit("SET_USER_INFO", null);
               commit("SET_IS_VALID_TOKEN", false);
+
+              if(state.isKakaoLogin){
+                commit("SET_IS_KAKAO_LOGIN", false);
+                deleteKakao(
+                  userid,
+                  ({data}) => {
+                    console.log(data);
+                  },
+                  (error) =>{
+                    console.log(error);
+                  }
+                )
+              }
             } else {
               console.log("유저 정보 없음!!!!");
             }
