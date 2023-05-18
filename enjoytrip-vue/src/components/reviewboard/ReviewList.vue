@@ -105,6 +105,7 @@ export default {
   },
   data(){
     return{
+      reviews: [],
       selectedArea: '',
       selectList: [{name: "시도 선택", value: ""},
                     {name: "name1", value: "a"},
@@ -113,15 +114,21 @@ export default {
                   ],
       selectedType: '',
       selectType: [{name: "선택", value: ""},
-                    {name: "아이", value: "a"},
-                    {name: "어른", value: "b"},
+                    {name: "아이", value: "아이"},
+                    {name: "어른", value: "어른"},
                   ],
     }
   },
   created(){
-      http.get(`/review`).then(({data}) => {
-          // console.log(data);
-          this.notices = data.notices;
+      http.get(`/review`).then((response) => {
+          console.log(response.status);
+          console.log(response);
+          if(response.status == 200){
+            this.reviews = response.data;
+          }
+          else{
+            alert("후기들 불러오기 실패!!!");
+          }
       });
   },
   methods: {

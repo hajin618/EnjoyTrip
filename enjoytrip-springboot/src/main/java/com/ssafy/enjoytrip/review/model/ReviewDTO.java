@@ -13,6 +13,7 @@ public class ReviewDTO {
 	private String review_create;
 	private String review_update;
 	private int review_hit;
+	private String review_type;
 	private UserDTO userDto;
 	private List<ReviewCommentDTO> review_comment;
 	private List<ReviewImageDTO> review_image;
@@ -21,8 +22,9 @@ public class ReviewDTO {
 	public String toString() {
 		return "ReviewDTO [review_idx=" + review_idx + ", user_idx=" + user_idx + ", sido_code=" + sido_code
 				+ ", review_title=" + review_title + ", review_content=" + review_content + ", review_create="
-				+ review_create + ", review_update=" + review_update + ", review_hit=" + review_hit + ", userDto="
-				+ userDto + ", review_comment=" + review_comment + ", review_image=" + review_image + "]";
+				+ review_create + ", review_update=" + review_update + ", review_hit=" + review_hit + ", review_type="
+				+ review_type + ", userDto=" + userDto + ", review_comment=" + review_comment + ", review_image="
+				+ review_image + "]";
 	}
 
 	public List<ReviewCommentDTO> getReview_comment() {
@@ -77,6 +79,14 @@ public class ReviewDTO {
 	public void setReview_create(String review_create) {
 		this.review_create = review_create;
 	}
+	public String getReview_type() {
+		return review_type;
+	}
+
+	public void setReview_type(String review_type) {
+		this.review_type = review_type;
+	}
+
 	public String getReview_update() {
 		return review_update;
 	}
@@ -95,6 +105,4 @@ public class ReviewDTO {
 	public void setUserDto(UserDTO userDto) {
 		this.userDto = userDto;
 	}
-	
-	
 }

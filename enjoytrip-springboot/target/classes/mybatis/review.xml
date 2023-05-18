@@ -7,6 +7,13 @@
 		<result column="user_name" property="user_name"/>
 	</resultMap>
 	
+	<resultMap type="ReviewImageDTO" id="image">
+		<result column="review_idx" property="review_idx"/>
+		<result column="image_num" property="image_num"/>
+		<result column="image_url" property="image_url"/>
+		<result column="image_name" property="image_name"/>
+	</resultMap>
+	
 	<resultMap type="ReviewDto" id="review">
 		<result column="review_idx" property="review_idx"/>
 		<result column="user_idx" property="user_idx"/>
@@ -16,23 +23,29 @@
 		<result column="review_create" property="review_create"/>
 		<result column="review_update" property="review_update"/>
 		<result column="review_hit" property="review_hit"/>
-		<result column="userDto" property="user"/>
+		<result column="review_type" property="review_type"/>
 	</resultMap>
 	
 	<select id = "listReview" resultMap="review">
-		select 	  r.review_idx
-			    , r.user_idx
-			    , r.review_title
-			    , r.review_content
-			    , r.review_create
-			    , r.review_update
-			    , r.review_hit
-			    , u.user_name
-		
-		from	review r
-		join	user u
-		on		r.user_idx = u.user_idx
-		
+		select 	  review_idx
+			    , user_idx
+			    , sido_code
+			    , review_title
+			    , review_content
+			    , review_create
+			    , review_update
+			    , review_hit
+			    , review_type
+		from	review
+	</select>
+	
+	<select id = "getImages" parameterType="int" resultMap="image">
+		select review_idx,
+				image_num,
+				image_url,
+				image_name
+		from review_image
+		where review_idx = #{reviewIdx};
 	</select>
 	
 	<select id = "getReview" parameterType="int" resultMap="review">
