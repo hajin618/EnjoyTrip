@@ -48,8 +48,7 @@ public class ReviewControllerREST {
 			@PathVariable("review_idx") String review_idx){
 		ReviewDTO reviewDto = null;
 		List<ReviewCommentDTO> reviewCommentDto = null;
-		Map<String, Object> resultMap = new HashMap<>();
-//		PageNavigation pageNavigation = service.makePageNavigation(map);	
+		Map<String, Object> resultMap = new HashMap<>();	
 		
 		try {
 			service.updateHit(Integer.parseInt(review_idx));
@@ -58,10 +57,6 @@ public class ReviewControllerREST {
 			resultMap.put("isSuccess", "true");
 			resultMap.put("review", reviewDto);
 			resultMap.put("reviewComment", reviewCommentDto);
-//			resultMap.put("navigation", pageNavigation);
-//			resultMap.put("pgno", param.get("pgno"));
-//			resultMap.put("key", param.get("key"));
-//			resultMap.put("word", param.get("word"));
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -71,36 +66,19 @@ public class ReviewControllerREST {
 		return resultMap;
 	}
 	
-	
-	// 리스트 조회
-//	@GetMapping("/review")
-//	public Map<String, Object> reviewList() throws Exception{
-//		List<ReviewDTO> list = null;
-//		Map<String, Object> resultMap = new HashMap<>();
-//		try {
-//			list = service.listReview();
-//			resultMap.put("isSuccess", "true");
-//			resultMap.put("notices", list);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			resultMap.put("isSuccess", "false");
-//		}
-//		return resultMap;
-//	}
-	
-//	@GetMapping("/review")
-//	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
-//		List<ReviewDTO> list = null;
-//		list = service.listReview();
-//		if(list == null) {
-//			return new ResponseEntity<>(list, HttpStatus.OK);
-//		}
-//		else {
-//			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-//		}
-//	}
-	
 	@GetMapping("/review")
+	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
+		List<ReviewDTO> list = null;
+		list = service.listReview();
+		if(list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@GetMapping("/reviewsort")
 	public ResponseEntity<List<ReviewDTO>> reviewList(@RequestBody ReviewSelectDTO reviewSelectDTO) throws Exception{
 		List<ReviewDTO> list = null;
 		list = service.listReviewSort(reviewSelectDTO);
