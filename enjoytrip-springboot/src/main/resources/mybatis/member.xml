@@ -56,9 +56,9 @@
 		where user_id = #{user_id}		
 	</update>
 	
-	<delete id="deleteUser" parameterType="int">
+	<delete id="deleteUser" parameterType="String">
 		delete from user
-		where user_idx = #{user_idx}
+		where user_id = #{user_id}
 	</delete>
 	
 	<!-- 로그인 -->

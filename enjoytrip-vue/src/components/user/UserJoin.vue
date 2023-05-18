@@ -72,6 +72,7 @@ export default {
         },
         kakaoUser: {
           user_id: "",
+          user_name: "",
         },
         idDuplicated: false,
         pwdNotCorrect: false,
@@ -111,12 +112,13 @@ export default {
           url:'/v2/user/me',
           success: async (res) =>{
             const kakao_account = res.kakao_account;
-            const nickname = kakao_account.nickname;
+            const nickname = res.properties.nickname;
             const email = kakao_account.email;
             console.log('nickname', nickname);
             console.log('email', email);
 
             this.kakaoUser.user_id = email;
+            this.kakaoUser.user_name = nickname;
             await this.kakaoConfirm(this.kakaoUser);
             let token = sessionStorage.getItem("access-token");
             if (this.isLogin) {
