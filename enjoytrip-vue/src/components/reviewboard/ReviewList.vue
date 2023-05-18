@@ -18,7 +18,7 @@
       </select>
 
       <button class="searchBtn">검색</button>
-      <div>
+      <div> 
         <button v-on:click.prevent="register" class="registerBtn">등록</button> 
       </div>
     </div>

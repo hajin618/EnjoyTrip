@@ -12,7 +12,7 @@
 </template>
 
 <script>
-export default {
+export default { 
     name: "ReviewListItem",
     props: {
         review_idx: Number,

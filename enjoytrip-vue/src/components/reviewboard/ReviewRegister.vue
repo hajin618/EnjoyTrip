@@ -13,12 +13,14 @@
               </option>
             </select> -->
             <select class="areaSelectbar" v-model="selectedArea">
-                <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-                {{ item.name }}
+                <option value="" selected>시/도 선택</option>
+                <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">
+                {{ item.sido_name }}
                 </option>
             </select>
 
             <select class="typeSelectbar" v-model="selectedType">
+                <option value='' selected>여행 타입 선택</option>
                 <option v-for="(item, index) in selectType" :key="index" :value="item.value">
                 {{ item.name }}
                 </option>
@@ -26,34 +28,46 @@
           </div>
 
         <div class="postContentArea">
-            <input class="postContentBox" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+            <input class="postContentBox" v-model="content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
         </div>
         
         <div class="imageArea">
-            <button class="imageBtn">이미지 업로드</button>
+          <div>
+            <input class="imageBtn" type="file" multiple @change="handleFileUpload">
+            <!-- <button class="imageRegistBtn" @click="uploadFiles">사진 첨부 완료하기</button> -->
+          </div>
 
+          <!-- <form action="fileupload" id="fileupload" method="post"
+            enctype="multipart/form-data">
+            파일 : <input type="file" name="upfile" multiple="multiple"> 
+            <input v-model="review_idx">
+            <input type="submit" value="업로드" id="upfile">
+
+          </form> -->
             <!-- 이미지 업로드 성공되면 안에 하나씩 채워져야함 -->
-            <div class="imageTextArea">
+            <!-- <div class="imageTextArea">
                 <div>
                   <span>http://localhost:8080</span>
                   <button class="itemDeleteBtn">삭제</button>
                 </div>
-                
-            </div>
+            </div> -->
         </div>
-
-        
     </div>
-
-
+    
     <div class="buttonArea">
-        <button class="registerBtn">등록</button>
+        <button v-on:click.prevent="confirm" class="registerBtn">등록</button>
         <button v-on:click.prevent="cancel" class="cancelBtn">취소</button>
     </div>
   </div>
 </template>
 
 <script>
+import http from "@/api/http";
+
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
     name: "ReviewRegisterView",
     components: {
@@ -62,23 +76,108 @@ export default {
     data(){
         return{
         title: '',
+        content: '',
         selectedArea: '',
-        selectList: [{name: "시도 선택", value: ""},
-                        {name: "name1", value: "a"},
-                        {name: "name2", value: "b"},
-                        {name: "name3", value: "c"},
-                    ],
+        selectList: [],
         selectedType: '',
-        selectType: [{name: "선택", value: ""},
-                        {name: "아이", value: "a"},
-                        {name: "어른", value: "b"},
+        selectType: [
+                        {name: '아이', value: "아이"},
+                        {name: '어른', value: "어른"},
                     ],
+        selectedFiles: [],
+        review_idx: 0,
         }
+    },
+    computed: {
+      ...mapState(userStore, ["userInfo"]),
+    },
+    created(){
+      http.get(`/sido`).then(({ data }) => {
+        console.log(data.sidoList);
+        this.selectList = data.sidoList;
+      });
     },
     methods:{
       cancel(){
         this.$router.push({ name: "reviewBoardView" });
-      }
+      },
+      handleFileUpload(event) {
+        this.selectedFiles = Array.from(event.target.files);
+      },
+      confirm(){
+        if(this.title == ''){
+          alert("제목을 입력해주세요!");
+        }
+        else if(this.content == ''){
+          alert("내용을 입력해주세요!");
+        }
+        else if(this.selectedArea == ''){
+          alert("지역을 선택해주세요!");
+        }
+        else if(this.selectedType == ''){
+          alert("여행 타입을 선택해주세요!");
+        }
+        else if(this.selectedFiles.length == 0){
+          alert("후기 게시판은 사진 한 장 이상이 필수입니다!");
+        }
+        else{
+          console.log(this.selectedFiles);
+          this.register();
+        }
+      },
+      register() {
+        console.log(this.selectedType);
+        // 데이터 실제 등록
+        http.post(`/review`, {
+          user_idx: this.userInfo.user_idx,
+          sido_code: this.selectedArea,
+          review_title: this.title,
+          review_content: this.content,
+          review_hit: 0,
+          review_type: this.selectedType,
+          // review_image: this.selectFiles
+        }).then((response) => { 
+            console.log(response.status);
+            if(response.status == 200){
+              alert("리뷰 등록 성공!!");
+              this.review_idx = response.data;
+              // Swal.fire({
+              //   'Alert 실행!!.',  // Alert 제목
+              //   'Alert 내용이 나타나는 곳.',  // 내용
+              //   'success',  // icon
+              // });
+              // 파일 등록하자
+              // 파일 업로드 처리 로직 작성
+              // this.selectedFiles를 서버로 전송하거나 필요한 작업을 수행합니다.
+
+              const formData = new FormData();
+              formData.append('review_idx', this.review_idx);
+              for (let i = 0; i < this.selectedFiles.length; i++) {
+                formData.append('upfile', this.selectedFiles[i]);
+              }
+
+              http.post(`/fileUpload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data' // 멀티파트 요청을 위해 설정
+                }
+              })
+              .then((response) => {
+                console.log(response.status);
+                if(response.status == 200){
+                  alert("사진 또한 등록 성공!!");
+                  this.$router.push({ name: "reviewBoardView" });
+                }
+                else{
+                  alert("사진 등록 실패!!");
+                }
+              })
+              
+            }
+            else{
+              alert("리뷰 등록 실패!");
+            }
+          });
+      },
     }
 }
 </script>
@@ -177,7 +276,16 @@ export default {
 
   .imageBtn{
     margin-left: 280px;
-    width: 180px;
+    width: 950px;
+    height: 40px;
+    background-color: #D9D9D9;
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .imageRegistBtn{
+    margin-left: 120px;
+    width: 200px;
     height: 40px;
     background-color: #D9D9D9;
     border: 1px solid rgba(213, 120, 120, .2);

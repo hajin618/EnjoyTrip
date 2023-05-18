@@ -73,9 +73,9 @@
 	
 	<insert id = "createReview" parameterType="reviewDto">
 		insert into review
-			(user_idx, sido_code, review_title, review_content, review_hit)
+			(user_idx, sido_code, review_title, review_content, review_hit, review_type)
 		values
-			(#{user_idx}, #{sido_code}, #{review_title}, #{review_content}, 0)
+			(#{user_idx}, #{sido_code}, #{review_title}, #{review_content}, 0, #{review_type})
 		<selectKey resultType="int" keyProperty="review_idx" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -83,9 +83,9 @@
 	
 	<insert id = "createReviewImage" parameterType="reviewImageDto">
 		insert into review_image
-			(review_idx, image_num, image_url, image_name)
+			(review_idx, image_url, image_name)
 		values
-			(#{review_idx}, #{image_num}, #{image_url}, #{image_name})
+			(#{review_idx}, #{image_url}, #{image_name})
 	</insert>
 	
 	<update id = "modifyReview" parameterType="reviewDto">
