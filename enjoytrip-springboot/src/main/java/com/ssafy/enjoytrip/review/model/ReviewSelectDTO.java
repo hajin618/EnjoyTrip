@@ -1,18 +1,25 @@
 package com.ssafy.enjoytrip.review.model;
 
 public class ReviewSelectDTO {
-	String area;
-	String type;
-	public String getArea() {
-		return area;
+	int sido_code;
+	String review_type;
+	
+	@Override
+	public String toString() {
+		return "ReviewSelectDTO [sido_code=" + sido_code + ", review_type=" + review_type + "]";
 	}
-	public void setArea(String area) {
-		this.area = area;
+	public int getSido_code() {
+		return sido_code;
 	}
-	public String getType() {
-		return type;
+	public void setSido_code(int sido_code) {
+		this.sido_code = sido_code;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public String getReview_type() {
+		return review_type;
 	}
+	public void setReview_type(String review_type) {
+		this.review_type = review_type;
+	}
+	
+
 }

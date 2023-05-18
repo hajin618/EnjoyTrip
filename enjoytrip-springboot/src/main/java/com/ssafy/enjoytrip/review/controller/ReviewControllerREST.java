@@ -1,9 +1,16 @@
 package com.ssafy.enjoytrip.review.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.enjoytrip.review.model.ReviewCommentDTO;
 import com.ssafy.enjoytrip.review.model.ReviewDTO;
+import com.ssafy.enjoytrip.review.model.ReviewImageDTO;
 import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 import com.ssafy.enjoytrip.review.model.service.ReviewService;
 import com.ssafy.enjoytrip.user.model.UserDTO;
@@ -29,6 +38,9 @@ import com.ssafy.enjoytrip.user.model.UserDTO;
 @RestController
 @RequestMapping("/api")
 public class ReviewControllerREST {
+	
+	@Autowired
+	ServletContext servletContext;
 	
 	@Autowired
 	@Qualifier("ReviewServiceImpl")
@@ -79,10 +91,20 @@ public class ReviewControllerREST {
 	}
 	
 	@GetMapping("/reviewsort")
-	public ResponseEntity<List<ReviewDTO>> reviewList(@RequestBody ReviewSelectDTO reviewSelectDTO) throws Exception{
+	public ResponseEntity<List<ReviewDTO>> reviewListSort(@RequestParam("sido_code") int sido_code, @RequestParam("review_type") String review_type) throws Exception{
+		
+		ReviewSelectDTO reviewSelectDTO = new ReviewSelectDTO();
+		reviewSelectDTO.setSido_code(sido_code);
+		if(review_type.equals("")) {
+			reviewSelectDTO.setReview_type(null);
+		}
+		else {
+			reviewSelectDTO.setReview_type(review_type);	
+		}
+		
 		List<ReviewDTO> list = null;
 		list = service.listReviewSort(reviewSelectDTO);
-		if(list == null) {
+		if(list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
 		else {
@@ -92,27 +114,72 @@ public class ReviewControllerREST {
 	
 	// 리뷰 작성
 	//@PostMapping(value = "review", headers = "content-type=application/json")
-	@PostMapping("/review")
-	public Map<String, Object> writeReview(@RequestBody ReviewDTO reviewDto, @RequestParam Map<String, String> param, HttpSession session){
-		
-		Map<String, Object> resultMap = new HashMap<>();
-//		UserDTO userDto = (UserDTO)session.getAttribute("userInfo");
-//		reviewDto.setUser_idx(userDto.getUser_idx());
-//		PageNavigation pageNavigation = service.makePageNavigation(param);
+//	@PostMapping("/review")
+//	public Map<String, Object> writeReview(@RequestBody ReviewDTO reviewDto, @RequestParam Map<String, String> param, HttpSession session){
+//		
+//		Map<String, Object> resultMap = new HashMap<>();
+////		UserDTO userDto = (UserDTO)session.getAttribute("userInfo");
+////		reviewDto.setUser_idx(userDto.getUser_idx());
+////		PageNavigation pageNavigation = service.makePageNavigation(param);
+//
+//		try {
+//			service.createReview(reviewDto);
+//			resultMap.put("isSuccess", "true");
+////			map.put("navigation", pageNavigation);
+////			map.put("pgno", param.get("pgno"));
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			resultMap.put("isSuccess", "false");
+//		}
+//		return resultMap;
+//	}
 
+	@PostMapping("/review")
+	public ResponseEntity<Integer> postReview(@RequestBody ReviewDTO reviewDto){
+		int result = -1;
 		try {
-			service.createReview(reviewDto);
-			resultMap.put("isSuccess", "true");
-//			map.put("navigation", pageNavigation);
-//			map.put("pgno", param.get("pgno"));
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
+			result = service.createReview(reviewDto);
 		}
-		return resultMap;
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
 	}
 	
+	@PostMapping("/fileUpload")
+	public ResponseEntity<String> postImage(@RequestParam("upfile") MultipartFile[] files, @RequestParam("review_idx") int reviewIdx) throws Exception{
+		String realPath = servletContext.getRealPath("/upload");
+		String today = new SimpleDateFormat("yyMMdd").format(new Date());
+		String saveFolder = realPath + File.separator + today;
+		System.out.println(saveFolder);
+		File folder = new File(saveFolder);
+		if (!folder.exists())
+			folder.mkdirs();
+		
+		for(MultipartFile mfile : files) {
+			String originalFileName = mfile.getOriginalFilename();
+			if(!originalFileName.isEmpty()) {
+				// 디비에 저장
+				ReviewImageDTO reviewImageDto = new ReviewImageDTO();
+				reviewImageDto.setReview_idx(reviewIdx);
+				reviewImageDto.setImage_name(originalFileName);
+				reviewImageDto.setImage_url(folder.toString() + File.separator + originalFileName);
+				service.createReviewImage(reviewImageDto);
+				// 서버에 저장 
+				mfile.transferTo(new File(folder, originalFileName));
+			}
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
+
 	// 리뷰 수정
 	@PutMapping("/review/{review_idx}")
 	public Map<String, Object> modifyReview(@RequestBody ReviewDTO reviewDto, @RequestParam Map<String, String> param,

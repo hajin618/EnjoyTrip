@@ -13,7 +13,7 @@ import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 @Mapper
 public interface ReviewMapper {
 	// 리뷰 작성
-	public void createReview(ReviewDTO reviewDto) throws Exception;
+	public int createReview(ReviewDTO reviewDto) throws Exception;
 
 	// 리뷰 이미지 추가
 	public void createReviewImage(ReviewImageDTO reviewImageDto) throws Exception;
