@@ -88,17 +88,17 @@ public class ReviewControllerREST {
 //		return resultMap;
 //	}
 	
-	@GetMapping("/review")
-	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
-		List<ReviewDTO> list = null;
-		list = service.listReview();
-		if(list == null) {
-			return new ResponseEntity<>(list, HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-		}
-	}
+//	@GetMapping("/review")
+//	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
+//		List<ReviewDTO> list = null;
+//		list = service.listReview();
+//		if(list == null) {
+//			return new ResponseEntity<>(list, HttpStatus.OK);
+//		}
+//		else {
+//			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+//		}
+//	}
 	
 	@GetMapping("/review")
 	public ResponseEntity<List<ReviewDTO>> reviewList(@RequestBody ReviewSelectDTO reviewSelectDTO) throws Exception{
