@@ -9,7 +9,25 @@ export default {
     data(){
         return{
             map: null,
+            positions: [],
+            markers: [],
         };
+    },
+    props: {
+        attractions: [],
+    },
+    watch: {
+        attractions(){
+            // console.log("attraction change", this.attractions);
+            this.positions = [];
+            this.attractions.forEach((attraction) => {
+                let obj = {};
+                obj.title = attraction.title;
+                obj.latlng = new window.kakao.maps.LatLng(attraction.latitude, attraction.longitude);
+                this.positions.push(obj);
+            });
+            this.loadMarker();
+        }  
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
@@ -41,23 +59,55 @@ export default {
             this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
 
             // 지도 로드되면서 마커 생성
-            this.loadMarker();
+            //this.loadMarker();
         },
 
         loadMarker(){
+            // console.log("load Marker start");
+            // 현재 마커 제거
+            this.deleteMarker();
             // 마커 표시 위치
-            const markerPosition = new window.kakao.maps.LatLng(
-                33.450701, 126.570667
-            );
+            // const markerPosition = new window.kakao.maps.LatLng(
+            //     33.450701, 126.570667
+            // );
 
             // 마커 생성
-            const marker = new window.kakao.maps.Marker({
-                position: markerPosition
+            // const marker = new window.kakao.maps.Marker({
+            //     position: markerPosition
+            // })
+
+            // 마커 생성
+            this.markers = [];
+            // console.log("positions: " + this.positions);
+            this.positions.forEach((position) => {
+                const marker = new window.kakao.maps.Marker({
+                    map: this.map,
+                    position: position.latlng,
+                    title: position.title,
+                });
+                this.markers.push(marker);
             })
 
-            // 마커 표시
-            marker.setMap(this.map);
-        }
+            // // 마커 표시
+            // marker.setMap(this.map);
+            // 지동 이동시키기
+            const bounds = this.positions.reduce(
+                (bounds, position) => bounds.extend(position.latlng),
+                new window.kakao.maps.LatLngBounds()
+            );
+
+            this.map.setBounds(bounds);
+        },
+
+        deleteMarker(){
+            // console.log("delete marker start");
+            if(this.markers.length > 0){
+                this.markers.forEach((item) => {
+                    console.log("item : " + item);
+                    item.setMap(null);
+                });
+            }
+        },
 
     
     },
