@@ -91,7 +91,7 @@ public class UserControllerREST {
 		// 카카오 로그인 했다면 DB에 실제 데이터 삽입 회원가입 개념
 		UserDTO joinDto = new UserDTO();
 //		kakao => userid  (varchar 늘리면)
-		joinDto.setUser_name("kakao");
+		joinDto.setUser_name(userDto.getUser_name());
 		joinDto.setUser_id(userDto.getUser_id());
 		joinDto.setUser_pwd(userDto.getUser_id());
 		joinDto.setUser_email(userDto.getUser_id());
@@ -100,6 +100,7 @@ public class UserControllerREST {
 		String accessToken = jwtService.createAccessToken("userid", joinDto.getUser_id());
 		String refreshToken = jwtService.createRefreshToken("userid", joinDto.getUser_id());
 		service.saveRefreshToken(joinDto.getUser_email(), refreshToken);
+		logger.info("kakao login success");
 		resultMap.put("access-token", accessToken);
 		resultMap.put("refresh-token", refreshToken);
 		resultMap.put("message", SUCCESS);
@@ -125,6 +126,42 @@ public class UserControllerREST {
 		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@GetMapping("/kakaoLogout/{userid}")
+	public ResponseEntity<?> kakaoRemoveToken(@PathVariable("userid") String userid){
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		
+		try {
+			service.deleRefreshToken(userid);
+			service.deleteUser(userid); 
+			resultMap.put("message", SUCCESS);
+			logger.info("logout success");
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@DeleteMapping("/user/{user_id}")
+	public Map<String, Object> deleteUser(@PathVariable("user_id") String userId) {
+		logger.info(userId);
+		Map<String, Object> map = new HashMap();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			service.deleRefreshToken(userId);
+			service.deleteUser(userId);
+			map.put("message", SUCCESS);
+			logger.info("kakao logout success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("message", "회원정보 삭제 실패");
+		}
+		return map;
 	}
 	
 	@GetMapping("/info/{userid}")
@@ -285,21 +322,6 @@ public class UserControllerREST {
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("resmsg", "회원정보 수정 실패");
-		}
-		return map;
-	}
-	
-	@DeleteMapping("/user/{user_idx}")
-	public Map<String, Object> deleteUser(@PathVariable("user_idx") int userIdx) {
-		System.out.println("controller>> " + userIdx);
-		Map<String, Object> map = new HashMap();
-		
-		try {
-			service.deleteUser(userIdx);
-			map.put("resmsg", "회원 삭제 완료");
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.put("resmsg", "회원정보 삭제 실패");
 		}
 		return map;
 	}

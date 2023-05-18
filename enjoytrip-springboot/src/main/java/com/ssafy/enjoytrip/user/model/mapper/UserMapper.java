@@ -29,7 +29,7 @@ public interface UserMapper {
 	// 회원정보 수정
 	public void updateUser(UserDTO userDto) throws Exception;
 	// 회원정보 삭제
-	public void deleteUser(int userIdx) throws Exception;
+	public void deleteUser(String user_id) throws Exception;
 	// 회원정보 조회
 	public UserDTO userInfo(String userId) throws Exception;
 	//회원 목록 조회

@@ -24,4 +24,8 @@ async function logout(userid, success, fail) {
   await api.get(`/logout/${userid}`).then(success).catch(fail);
 }
 
-export { login, kakaoLogin, findById, tokenRegeneration, logout };
+async function deleteKakao(user_id, success, fail) {
+  await api.delete(`/user/${user_id}`).then(success).catch(fail);
+}
+
+export { login, kakaoLogin, findById, tokenRegeneration, logout, deleteKakao };
