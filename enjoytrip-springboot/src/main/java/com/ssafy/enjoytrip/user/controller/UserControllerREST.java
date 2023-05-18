@@ -264,8 +264,16 @@ public class UserControllerREST {
 		}
 		else {
 			return new ResponseEntity<>("FAILED", HttpStatus.NO_CONTENT);
-		}
-		
+		}	
+	}
+	
+	
+	// 일단 무조건 수정 된다고 생각,,
+	@PutMapping("/user")
+	public ResponseEntity<String> updateUser(@RequestBody UserDTO userDto) throws Exception{
+		logger.info(userDto.toString());
+		service.updateUser(userDto);
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	
 	@PostMapping("/user")
@@ -292,36 +300,6 @@ public class UserControllerREST {
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("resmsg", "조회실패");
-		}
-		return map;
-	}
-	
-//	@GetMapping("/user/{user_idx}")
-//	public Map<String, Object> userInfo(@PathVariable("user_idx") int userIdx) {
-//		Map<String, Object> map = new HashMap();
-//		
-//		try {
-//			UserDTO userDto = service.userInfo(userIdx);
-//			
-//			map.put("resmsg", "조회성공");
-//			map.put("resdata", userDto);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			map.put("resmsg", "조회실패");
-//		}
-//		return map;
-//	}
-	
-	@PutMapping("/user")
-	public Map<String, Object> updateUser(@RequestBody UserDTO userDto) {
-		Map<String, Object> map = new HashMap();
-		try {
-			service.updateUser(userDto);
-			map.put("resmsg", "회원정보 수정 성공");
-			map.put("resdata", userDto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.put("resmsg", "회원정보 수정 실패");
 		}
 		return map;
 	}

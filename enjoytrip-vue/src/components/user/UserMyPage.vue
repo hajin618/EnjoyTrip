@@ -18,17 +18,17 @@
 
 
       <!-- 회원 정보 수정이 눌려있다면 -->
-    <!-- <div class="titleEdit">
+    <div class="titleEdit">
       회원 정보 수정
     </div>
-    <user-edit></user-edit> -->
+    <user-edit></user-edit>
     
     
       <!-- 나의 후기들 눌려있다면 -->
-    <div class="title">
+    <!-- <div class="title">
         나의 후기들
     </div>
-    <user-review-list></user-review-list>
+    <user-review-list></user-review-list> -->
 
     </div>
     
@@ -36,17 +36,17 @@
 </template>
 
 <script>
-// import UserEdit from './item/UserEdit.vue';
+import UserEdit from './item/UserEdit.vue';
 // import UserPlanList from './item/UserPlanList.vue';
-import UserReviewList from './item/UserReviewList.vue';
+// import UserReviewList from './item/UserReviewList.vue';
 import HeaderNaviBar from "../layout/HeaderNaviBar.vue";
 
 export default {
   name: "UserMyPage",
   components: {
-    // UserEdit,
+    UserEdit,
     // UserPlanList,
-    UserReviewList,
+    // UserReviewList,
     HeaderNaviBar,    
   }
 }
