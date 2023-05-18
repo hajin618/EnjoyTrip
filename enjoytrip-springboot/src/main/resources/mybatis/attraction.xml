@@ -4,6 +4,38 @@
 	
 <mapper namespace="com.ssafy.enjoytrip.attraction.model.mapper.AttractionMapper">
 
+	<resultMap type="attractionDescriptionDto" id="aD">
+		<result column="homepage" property="homepage"/>
+		<result column="overview" property="overview"/>
+		<result column="telname" property="telname"/>
+	</resultMap>
+	
+	<resultMap type="attractionSelectDto" id="aS">
+		<result column="sido_code" property="sido_code"/>
+		<result column="gugun_code" property="gugun_code"/>
+		<result column="content_type_id" property="content_type_id"/>
+		<result column="searchWord" property="searchWord"/>
+	</resultMap>
+	
+	<resultMap type="attractionInfoDto" id="aI">
+		<result column="content_id" property="content_id"/>
+		<result column="content_type_id" property="content_type_id"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="tel" property="tel"/>
+		<result column="first_image" property="first_image"/>
+		<result column="first_image2" property="first_image2"/>
+		<result column="readcount" property="readcount"/>
+		<result column="sido_code" property="sido_code"/>
+		<result column="gugun_code" property="gugun_code"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="mlevel" property="mlevel"/>
+		<collection property="attractionDescriptionDto" resultMap="aD"/>
+	</resultMap>
+
 	<select id = "searchSido" resultType="sidoDto">
 		select 	*
 		from	sido;
@@ -14,5 +46,52 @@
 		from	gugun
 		where	sido_code = #{sido_code}
 	</select>
-
+	
+	<select id = "searchAttraction" parameterType="attractionSelectDto" resultMap="aI">
+		select	
+				info.content_id,
+				info.content_type_id,
+				info.title,
+				info.addr1,
+				info.addr2,
+				info.zipcode,
+				info.tel,
+				info.first_image,
+				info.first_image2,
+				info.readcount,
+				info.sido_code,
+				info.gugun_code,
+				info.latitude,
+				info.longitude,
+				info.mlevel,
+				
+				descr.homepage,
+				descr.overview,
+				descr.telname
+		from
+				attraction_info info
+		join
+				attraction_description descr 
+		on
+				info.content_id = descr.content_id
+		where	
+				1=1
+		<if test='sido_code != 0'>
+			and info.sido_code = #{sido_code}
+			
+			<if test='gugun_code != 0'>
+				and info.gugun_code = #{gugun_code}
+			</if>
+			
+		</if>
+		
+		<if test='content_type_id != 0'>
+			and info.content_type_id = #{content_type_id}
+		</if>
+		
+		<if test='searchWord != null'>
+			and info.title like concat('%', #{searchWord}, '%')
+		</if>
+		
+	</select>
 </mapper>

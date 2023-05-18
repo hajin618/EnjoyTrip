@@ -56,7 +56,6 @@ export default {
     data(){
         return{
             notice:{
-                // user_idx 수정하기
                 user_idx: "",
                 notice_title: "",
                 notice_content: "",

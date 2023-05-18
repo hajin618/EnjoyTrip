@@ -14,6 +14,149 @@ public class AttractionInfoDTO {
 	private int sido_code;
 	private int gugun_code;
 	private double latitude;
-	private double longtitude;
+	private double longitude;
 	private char mlevel;
+	private AttractionDescriptionDTO attractionDescriptionDto;
+	
+	@Override
+	public String toString() {
+		return "AttractionInfoDTO [content_id=" + content_id + ", content_type_id=" + content_type_id + ", title="
+				+ title + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", tel=" + tel
+				+ ", first_image=" + first_image + ", first_image2=" + first_image2 + ", readcount=" + readcount
+				+ ", sido_code=" + sido_code + ", gugun_code=" + gugun_code + ", latitude=" + latitude + ", longtitude="
+				+ longitude + ", mlevel=" + mlevel + ", attractionDescriptionDto=" + attractionDescriptionDto + "]";
+	}
+
+	public int getContent_id() {
+		return content_id;
+	}
+
+	public void setContent_id(int content_id) {
+		this.content_id = content_id;
+	}
+
+	public int getContent_type_id() {
+		return content_type_id;
+	}
+
+	public void setContent_type_id(int content_type_id) {
+		this.content_type_id = content_type_id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAddr1() {
+		return addr1;
+	}
+
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+
+	public String getAddr2() {
+		return addr2;
+	}
+
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getFirst_image() {
+		return first_image;
+	}
+
+	public void setFirst_image(String first_image) {
+		this.first_image = first_image;
+	}
+
+	public String getFirst_image2() {
+		return first_image2;
+	}
+
+	public void setFirst_image2(String first_image2) {
+		this.first_image2 = first_image2;
+	}
+
+	public int getReadcount() {
+		return readcount;
+	}
+
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+
+	public int getSido_code() {
+		return sido_code;
+	}
+
+	public void setSido_code(int sido_code) {
+		this.sido_code = sido_code;
+	}
+
+	public int getGugun_code() {
+		return gugun_code;
+	}
+
+	public void setGugun_code(int gugun_code) {
+		this.gugun_code = gugun_code;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public char getMlevel() {
+		return mlevel;
+	}
+
+	public void setMlevel(char mlevel) {
+		this.mlevel = mlevel;
+	}
+
+	public AttractionDescriptionDTO getAttractionDescriptionDto() {
+		return attractionDescriptionDto;
+	}
+
+	public void setAttractionDescriptionDto(AttractionDescriptionDTO attractionDescriptionDto) {
+		this.attractionDescriptionDto = attractionDescriptionDto;
+	}
+	
+	
+	
 }

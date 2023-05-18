@@ -1,13 +1,13 @@
 <template>
   <b-tr>
     <b-td>
-      <img width="100px" height="100px" src="../assets/img/mainPageImg.png" alt="">
+      <img width="100px" height="100px" src="/assets/img/mainPageImg.png" alt="">
     </b-td>
     <b-td>
-      관광지1
+      {{title}}
     </b-td>
     <b-td>
-      대전 유성구 동서대로 98-39
+      {{addr1}}
     </b-td>
     <b-td>
       <button class="btn">저장</button>
@@ -18,6 +18,11 @@
 <script>
 export default {
   name: "SearchViewItem",
+  props: {
+    first_image: String,
+    title: String,
+    addr1: String,
+  },
 }
 </script>
 
