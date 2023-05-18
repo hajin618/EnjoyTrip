@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ssafy.enjoytrip.review.model.ReviewCommentDTO;
 import com.ssafy.enjoytrip.review.model.ReviewDTO;
 import com.ssafy.enjoytrip.review.model.ReviewImageDTO;
+import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 
 @Mapper
 public interface ReviewMapper {
@@ -18,7 +19,10 @@ public interface ReviewMapper {
 	public void createReviewImage(ReviewImageDTO reviewImageDto) throws Exception;
 	
 	// 리뷰 리스트 조회
-	public List<ReviewDTO> listReview(Map<String, Object> param) throws Exception;
+	public List<ReviewDTO> listReview() throws Exception;
+	
+	// 리뷰 리스트 정제 조회
+	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception;
 
 	// 리뷰 조회
 	public ReviewDTO getReview(int reviewIdx) throws Exception;

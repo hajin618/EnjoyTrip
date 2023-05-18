@@ -69,6 +69,9 @@ export default {
                 // console.log("성공했다 선진아");
                 this.$router.push({ name: "HomeView" });
             }
+            else{
+                alert("로그인 실패! 다시 로그인해주세요!");
+            }
         },
     },
 }

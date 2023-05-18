@@ -2,10 +2,8 @@
     <header>
         <div class="toorbar">
             <router-link class="blacklink" to="/">
-                    <img src="../../assets/img/family.png" width="60px" height="60px"></router-link>
-            
-            <span style="margin-left: 20px;">여행객</span>
-            <router-link class="whitelink" style="margin-left: 800px;" to="/notice">공지사항</router-link>
+                    <img src="../../assets/img/logo.png" width="60px" height="60px"></router-link>
+            <router-link class="whitelink" style="margin-left: 700px;" to="/notice">공지사항</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/plan">여행 계획</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/review">여행 후기</router-link>
 
@@ -17,7 +15,8 @@
             
             <!-- 로그인 된 경우 -->
             <span v-else>
-                <router-link class="whitelink" style="margin-left: 400px;" to="/user/mypage">마이페이지</router-link>
+                <span style="margin-left: 300px;">{{userInfo.user_name}}님 안녕하세요!</span>
+                <router-link class="whitelink" style="margin-left: 30px;" to="/user/mypage">마이페이지</router-link>
                 <router-link class="whitelink" style="margin-left: 30px;" to="/search">검색</router-link>
 				<button class="btnlogout" style="margin-left: 30px;" v-on:click.prevent="logout">로그아웃</button>
             </span>
@@ -49,7 +48,7 @@ export default{
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
             console.log(this.isLogin);
-            if (this.$route.path != "/") this.$router.push({ name: "homeView" });
+            if (this.$route.path != "/") this.$router.push({ name: "HomeView" });
             // else{
             //     this.$router.go();
             // }

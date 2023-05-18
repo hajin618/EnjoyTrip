@@ -3,8 +3,7 @@
     <div class="left">
       <div class="findId">
         <div class="findIdHeader" style="padding-top: 110px; padding-left: 300px;">
-          <span><img src="../../assets/img/family.png" width="50px" height="50px" alt=""></span>
-          <router-link to="/" style="padding-left: 20px; font-weight: 550;">여행객</router-link>
+          <router-link to="/" style="padding-left: 20px; font-weight: 550;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
         </div>
 
         <!-- 이메일 찾을 경우 -->
