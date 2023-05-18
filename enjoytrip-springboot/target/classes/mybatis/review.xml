@@ -39,6 +39,23 @@
 		from	review
 	</select>
 	
+	<select id = "listReviewSort" resultMap="review">
+		select 	  review_idx
+			    , user_idx
+			    , sido_code
+			    , review_title
+			    , review_content
+			    , review_create
+			    , review_update
+			    , review_hit
+			    , review_type
+		from	review
+		where
+		<if test="sido_code != 0 and review_type == null">sido_code = #{sido_code}</if>
+		<if test="sido_code == 0 and review_type != null">review_type = #{review_type}</if>
+		<if test="sido_code != 0 and review_type != null">sido_code = #{sido_code} and review_type = #{review_type}</if>
+	</select>
+	
 	<select id = "getImages" parameterType="int" resultMap="image">
 		select review_idx,
 				image_num,

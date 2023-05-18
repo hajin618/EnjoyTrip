@@ -7,11 +7,6 @@
     <div class="InfoArea">
         <div class="postTitleBox">
             <input class="titleBox" v-model="title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." required>
-            <!-- <select class="areaSelectbar" v-model="selectedArea">
-              <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-                {{ item.name }}
-              </option>
-            </select> -->
             <select class="areaSelectbar" v-model="selectedArea">
                 <option value="" selected>시/도 선택</option>
                 <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">

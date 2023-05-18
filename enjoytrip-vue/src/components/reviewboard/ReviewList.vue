@@ -6,18 +6,20 @@
 
     <div class="searchBar">
       <select class="areaSelectbar" v-model="selectedArea">
-        <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-          {{ item.name }}
-        </option>
+          <option value=0 selected>시/도 선택</option>
+          <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">
+          {{ item.sido_name }}
+          </option>
       </select>
 
       <select class="typeSelectbar" v-model="selectedType">
-        <option v-for="(item, index) in selectType" :key="index" :value="item.value">
+          <option value="" selected>여행 타입 선택</option>
+          <option v-for="(item, index) in selectType" :key="index" :value="item.value">
           {{ item.name }}
-        </option>
+          </option>
       </select>
 
-      <button class="searchBtn">검색</button>
+      <button v-on:click.prevent="sort" class="searchBtn">검색</button>
       <div> 
         <button v-on:click.prevent="register" class="registerBtn">등록</button> 
       </div>
@@ -48,17 +50,13 @@ export default {
   data(){
     return{
       reviews: [],
-      selectedArea: '',
-      selectList: [{name: "시도 선택", value: ""},
-                    {name: "name1", value: "a"},
-                    {name: "name2", value: "b"},
-                    {name: "name3", value: "c"},
-                  ],
-      selectedType: '',
-      selectType: [{name: "선택", value: ""},
-                    {name: "아이", value: "아이"},
-                    {name: "어른", value: "어른"},
-                  ],
+        selectedArea: 0,
+        selectList: [],
+        selectedType: '',
+        selectType: [
+                        {name: '아이', value: "아이"},
+                        {name: '어른', value: "어른"},
+                    ],
     }
   },
   created(){
@@ -72,10 +70,32 @@ export default {
             alert("후기들 불러오기 실패!!!");
           }
       });
+      http.get(`/sido`).then(({ data }) => {
+        console.log(data.sidoList);
+        this.selectList = data.sidoList;
+      });
   },
   methods: {
     register(){
       this.$router.push({ name: "reviewRegister" });
+    },
+    sort(){
+      console.log(this.selectedArea, this.selectedType);
+      http.get(`/reviewsort`, {
+        params: {
+          sido_code: this.selectedArea,
+          review_type: this.selectedType
+        }
+      })
+      .then((response) => {
+        console.log(response.status);
+        if(response.status == 200){
+          this.reviews = response.data;
+        }
+        else{
+          alert("검색 실패!");
+        }
+      })
     }
   },
 }
@@ -106,7 +126,7 @@ export default {
 
   .searchBtn{
     width: 60px;
-    margin-right: 60px;
+    margin-right: 30px;
     height: 35px;
     background-color: #F1F4F1;
     border: 1px solid rgba(255, 255, 255, .2);
@@ -114,7 +134,7 @@ export default {
   }
 
   .typeSelectbar{
-    width: 70px;
+    width: 150px;
     margin-right: 30px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);

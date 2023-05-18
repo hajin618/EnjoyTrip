@@ -91,10 +91,20 @@ public class ReviewControllerREST {
 	}
 	
 	@GetMapping("/reviewsort")
-	public ResponseEntity<List<ReviewDTO>> reviewListSort(@RequestBody ReviewSelectDTO reviewSelectDTO) throws Exception{
+	public ResponseEntity<List<ReviewDTO>> reviewListSort(@RequestParam("sido_code") int sido_code, @RequestParam("review_type") String review_type) throws Exception{
+		
+		ReviewSelectDTO reviewSelectDTO = new ReviewSelectDTO();
+		reviewSelectDTO.setSido_code(sido_code);
+		if(review_type.equals("")) {
+			reviewSelectDTO.setReview_type(null);
+		}
+		else {
+			reviewSelectDTO.setReview_type(review_type);	
+		}
+		
 		List<ReviewDTO> list = null;
 		list = service.listReviewSort(reviewSelectDTO);
-		if(list == null) {
+		if(list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
 		else {
