@@ -5,10 +5,12 @@
     </div>
     <div class = "topButtonDiv">
       <button
+        v-if="this.userInfo.is_admin === 'Y'"
         v-on:click="moveModify"
         class="Button"
         >수정</button>
       <button
+        v-if="this.userInfo.is_admin === 'Y'"
         v-on:click="moveDelete"
         class="Button"
         >삭제</button>
@@ -42,6 +44,9 @@
 <script>
 import http from "@/api/http";
 import moment from "moment";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
     name: "NoticeDetail",
@@ -52,11 +57,14 @@ export default {
     },
 
     computed: {
-        content() {
-          if (this.notice.notice_content)
-              return this.notice.notice_content.split("\n").join("<br>");
-          return "";
-        },
+      ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+      ...mapGetters(["checkisLogin", "checkUserInfo"]),
+
+      content() {
+        if (this.notice.notice_content)
+            return this.notice.notice_content.split("\n").join("<br>");
+        return "";
+      },
     },
 
     filters: {
@@ -90,6 +98,8 @@ export default {
               });
             }
         },
+        ...mapActions(userStore, ["userLogout"]),
+
     },
 
 };
