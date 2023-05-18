@@ -92,6 +92,7 @@
 		<if test='searchWord != null'>
 			and info.title like concat('%', #{searchWord}, '%')
 		</if>
+			limit 10;
 		
 	</select>
 </mapper>

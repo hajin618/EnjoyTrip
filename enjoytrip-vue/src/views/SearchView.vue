@@ -68,11 +68,12 @@
       </div>
 
       <div class="mapZone">
-        <kakao-map></kakao-map>
+        <kakao-map :attractions="attractions"></kakao-map>
       </div>
 
       <div class="rememberSpotZone">
         <div class="rememberTitle">여행지 저장</div>
+        
         
         <!-- for 돌릴 녀석 -->
         <div class="rememberItem">
@@ -147,58 +148,10 @@
               <search-view-item
                 v-for="att in attractions"
                 :key="att.content_id"
+                @saveAtt="saveAtt"
                 v-bind="att"/>
-                
-              <!-- <search-view-item>
-                
-              </search-view-item> -->
-
-              <!-- <b-tr>
-                <b-td>
-                  <img width="100px" height="100px" src="../assets/img/mainPageImg.png" alt="">
-                </b-td>
-                <b-td>
-                  관광지1
-                </b-td>
-                <b-td>
-                  대전 유성구 동서대로 98-39
-                </b-td>
-                <b-td>
-                  <button class="btn">저장</button>
-                </b-td>
-              </b-tr>
-
-              <b-tr>
-                <b-td>
-                  <img width="100px" height="100px" src="../assets/img/mainPageImg.png" alt="">
-                </b-td>
-                <b-td>
-                  관광지1
-                </b-td>
-                <b-td>
-                  대전 유성구 동서대로 98-39
-                </b-td>
-                <b-td>
-                  <button class="btn">저장</button>
-                </b-td>
-              </b-tr>
-
-              <b-tr>
-                <b-td>
-                  <img width="100px" height="100px" src="../assets/img/mainPageImg.png" alt="">
-                </b-td>
-                <b-td>
-                  관광지1
-                </b-td>
-                <b-td>
-                  대전 유성구 동서대로 98-39
-                </b-td>
-                <b-td>
-                  <button class="btn">저장</button>
-                </b-td>
-              </b-tr> -->
-
             </tbody>
+
           </b-table-simple>
         </b-col>
       </b-row>
@@ -230,13 +183,8 @@ export default {
       gugunSelected: null,
       gugunList: [],
       content_type_id: null,
-      // attractionSelectList: [{name: "관광지 선택", value: ""},
-      //                 {name: "name1", value: "a"},
-      //                 {name: "name2", value: "b"},
-      //                 {name: "name3", value: "c"},
-      //             ],
       attractions : [],
-
+      savedAtt : [],  // 저장한 여행지 번호 저장
     }
   },
   created(){
@@ -249,7 +197,6 @@ export default {
   methods: {
     getGuGun(){
       // console.log("시도 : "+this.sidoSelected);
-
       http.get(`/${this.sidoSelected}/gugun`).then(({data}) => {
         //console.log(data.gugunList);
         this.gugunList = data.gugunList;
@@ -257,10 +204,10 @@ export default {
     },
 
     searchAtt(){
-      console.log("시도 : "+this.sidoSelected);
-      console.log("구군 : "+this.gugunSelected);
-      console.log("유형 : "+this.content_type_id)
-      console.log("단어 : "+this.searchWord);
+      // console.log("시도 : "+this.sidoSelected);
+      // console.log("구군 : "+this.gugunSelected);
+      // console.log("유형 : "+this.content_type_id)
+      // console.log("단어 : "+this.searchWord);
       http.post(`/attraction`, {
         sido_code : this.sidoSelected,
         gugun_code : this.gugunSelected,
@@ -268,9 +215,17 @@ export default {
         searchWord : this.searchWord,
       })
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         this.attractions = data;
       })
+    },
+
+    saveAtt(value){
+      // 중복값 확인
+      if(!this.savedAtt.includes(value)){
+        this.savedAtt.push(value);
+      }
+      console.log(this.savedAtt);
     }
   }
 }
