@@ -51,7 +51,7 @@
 			<if test="user_name != null">user_name = #{user_name},</if>
 			<if test="user_pwd != null">user_pwd = #{user_pwd},</if>
 			<if test="user_email != null">user_email = #{user_email},</if>
-			<if test="id_admin != null">id_admin = #{id_admin}</if>
+			<if test="is_admin != null">is_admin = #{is_admin}</if>
 		</trim>
 		where user_id = #{user_id}		
 	</update>

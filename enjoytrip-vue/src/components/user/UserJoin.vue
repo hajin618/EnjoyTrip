@@ -27,12 +27,12 @@
 
       <div class="pwd">
         <span>비밀번호</span>
-        <input class="box" id="pwd" v-model="user.user_pwd" autocomplete="off" type="text" @focusout="pwdCheck" required>
+        <input class="box" id="pwd" v-model="user.user_pwd" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
       <div class="pwdCheck">
         <span>비밀번호 확인</span>
-        <input class="box" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" @focusout="pwdCheck" type="text" required>
+        <input class="box" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
       <span v-show="pwdNotCorrect" class="idDuplicate">
