@@ -33,4 +33,6 @@ public interface UserService {
 	public void saveRefreshToken(String userid, String refreshToken) throws Exception;
 	public Object getRefreshToken(String userid) throws Exception;
 	public void deleRefreshToken(String userid) throws Exception;
+
+	public UserDTO getUserInfoFromReview(int user_idx) throws Exception;
 }

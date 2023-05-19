@@ -136,6 +136,7 @@ export default {
             if(response.status == 200){
               alert("리뷰 등록 성공!!");
               this.review_idx = response.data;
+              console.log("review_idx",response.data);
               // Swal.fire({
               //   'Alert 실행!!.',  // Alert 제목
               //   'Alert 내용이 나타나는 곳.',  // 내용

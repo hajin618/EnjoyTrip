@@ -145,7 +145,7 @@ public class UserControllerREST {
 	}
 	
 	@DeleteMapping("/user/{user_id}")
-	public Map<String, Object> deleteUser(@PathVariable("user_id") String userId) {
+	public Map<String, Object> deleteKakaoUser(@PathVariable("user_id") String userId) {
 		logger.info(userId);
 		Map<String, Object> map = new HashMap();
 		HttpStatus status = HttpStatus.ACCEPTED;
@@ -270,6 +270,19 @@ public class UserControllerREST {
 	public ResponseEntity<String> updateUser(@RequestBody UserDTO userDto) throws Exception{
 		logger.info(userDto.toString());
 		service.updateUser(userDto);
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@GetMapping("/userdelete/{user_id}")
+	public ResponseEntity<String> deleteUser(@PathVariable("user_id") String user_id){
+		logger.info(user_id);
+		try {
+			service.deleRefreshToken(user_id);
+			service.deleteUser(user_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	

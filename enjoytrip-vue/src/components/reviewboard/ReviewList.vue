@@ -9,7 +9,7 @@
           <option value=0 selected>시/도 선택</option>
           <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">
           {{ item.sido_name }}
-          </option>
+          </option> 
       </select>
 
       <select class="typeSelectbar" v-model="selectedType">
@@ -26,7 +26,7 @@
     </div>
 
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
-    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
+    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px; align-content:space-evenly;">
       
       <review-list-item
         v-for="review in reviews"
@@ -114,7 +114,7 @@ export default {
     width:26vw;
   }
   .title{
-    margin-top : 80px;
+    margin-top : 60px;
     text-align : center;
   }
   
@@ -146,14 +146,14 @@ export default {
     width: 300px;
     height: 35px;
     margin-right: 30px;
-    background-color: #F1F4F1;
+    background-color:rgba(122, 187, 133, 0.5);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 20px / 20px;
   }
 
   .registerBtn{
     margin-top: 20px;
-    margin-left: 340px;
+    margin-left: 430px;
     margin-bottom: 30px;
     width: 130px;
     height: 35px;

@@ -90,4 +90,10 @@ public class UserServiceImpl implements UserService {
 		map.put("token", null);
 		userMapper.deleteRefreshToken(map);
 	}
+
+	@Override
+	public UserDTO getUserInfoFromReview(int user_idx) throws Exception {
+		return userMapper.getUserInfoFromReview(user_idx);
+		
+	}
 }
