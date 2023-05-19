@@ -10,6 +10,7 @@ import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
 import com.ssafy.enjoytrip.attraction.model.mapper.AttractionMapper;
+import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 
 @Service("AttractionServiceImpl")
 public class AttractionServiceImpl implements AttractionService{
@@ -39,6 +40,11 @@ public class AttractionServiceImpl implements AttractionService{
 	@Override
 	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception {
 		return attractionMapper.searchAttractionById(content_id);
+	}
+
+	@Override
+	public List<ChildAttractionDTO> searchChildAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception {
+		return attractionMapper.searchChildAttraction(attractionSelectDTO);
 	}
 
 }

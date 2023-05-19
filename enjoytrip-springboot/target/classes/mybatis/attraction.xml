@@ -69,6 +69,25 @@
 				content_id = #{content_id}		
 	</select>
 	
+	
+	<select id = "searchChildAttraction" parameterType="attractionSelectDto" resultType="childAttractionDto">
+		select	*
+		from	child_attraction
+		where	
+				1=1
+		<if test='sido_code != 0'>
+			and sido_code = #{sido_code}
+		
+			<if test='gugun_code != 0'>
+				and gugun_code = #{gugun_code}
+			</if>
+			
+		</if>
+			limit 10;
+			
+	</select>
+	
+	
 	<select id = "searchAttraction" parameterType="attractionSelectDto" resultMap="aI">
 		select	
 				info.content_id,

@@ -9,6 +9,7 @@ import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 
 @Mapper
 public interface AttractionMapper {
@@ -20,6 +21,9 @@ public interface AttractionMapper {
 
 	// 여행지 검색
 	public List<AttractionInfoDTO> searchAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception;
+	
+	// 아이 여행지 검색
+	public List<ChildAttractionDTO> searchChildAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception;
 	
 	// 여행지 검색 (content_id)
 	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception;

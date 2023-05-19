@@ -68,7 +68,7 @@
       </div>
 
       <div class="mapZone">
-        <kakao-map :attractions="attractions"></kakao-map>
+        <kakao-map :attractions="attractions"></kakao-map> 
       </div>
 
       <div class="rememberSpotZone">
@@ -146,6 +146,7 @@ export default {
       gugunList: [],
       content_type_id: null,
       attractions : [],
+      childAttractions : [],
       savedAtt : [],  // 저장한 여행지 번호 저장
       savedAttInfo : [],  // 저장한 여행지 번호로 조회한 정보 저장
     }
@@ -194,7 +195,18 @@ export default {
       .then(({ data }) => {
         // console.log(data);
         this.attractions = data;
+      });
+
+      http.post(`/childAttraction`, {
+        sido_code : this.sidoSelected,
+        gugun_code : this.gugunSelected,
+        content_type_id : this.content_type_id,
+        searchWord : this.searchWord,
       })
+      .then(({ data }) => {
+        console.log("child Attraction !! " + data);
+      });
+      
     },
 
     saveAtt(value){

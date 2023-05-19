@@ -23,6 +23,7 @@ import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
 import com.ssafy.enjoytrip.attraction.model.service.AttractionService;
+import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 import com.ssafy.enjoytrip.user.controller.UserControllerREST;
 
 @RestController
@@ -96,6 +97,7 @@ public class AttractionControllerRest {
 //		return resultMap;
 //	}
 	
+	// 어른 여행지 검색 
 	@PostMapping("/attraction")
 	public ResponseEntity<List<AttractionInfoDTO>> attractionList(@RequestBody AttractionSelectDTO attractionSelectDTO){
 		
@@ -118,6 +120,28 @@ public class AttractionControllerRest {
 		}
 	}
 	
+	// 아이 여행지 검색
+	@PostMapping("/childAttraction")
+	public ResponseEntity<List<ChildAttractionDTO>> childAttractionList(@RequestBody AttractionSelectDTO attractionSelectDTO){
+		
+		List<ChildAttractionDTO> list = null;
+		
+		try {
+			list = service.searchChildAttraction(attractionSelectDTO);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(list != null) {
+			return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	// 여행지 저장 할 때 사용
 	@GetMapping("/attraction/{content_id}")
 	public ResponseEntity<List<AttractionInfoDTO>> savedAttractionList(@PathVariable("content_id") String content_id){
 		

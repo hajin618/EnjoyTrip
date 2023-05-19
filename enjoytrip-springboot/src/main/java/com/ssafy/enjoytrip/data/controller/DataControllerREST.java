@@ -126,6 +126,7 @@ public class DataControllerREST {
 					// gugun_code 구하자 (창원시 마산회원구 처리 : StringTokenizer // 세종특별자치시 처리 : 구군 이름도 세종특별자치시)
 					if(gugun_name_origin == null) {
 						gugun_name = "세종특별자치시";
+						gugun_code = 1;
 					}
 					else {
 						st = new StringTokenizer(gugun_name_origin);
