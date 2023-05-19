@@ -61,7 +61,7 @@ export default {
                 notice_content: "",
             }
         };
-    },
+    }, 
     computed: {
         ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
         ...mapGetters(["checkisLogin", "checkUserInfo"]),

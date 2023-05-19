@@ -6,19 +6,21 @@
 
     <div class="InfoArea">
         <div class="postTitleBox">
-            <input class="titleBox" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." required>
+            <input class="titleBox" v-model="review.review_title" id="title" autocomplete="off" type="text" required>
             <!-- <select class="areaSelectbar" v-model="selectedArea">
               <option v-for="(item, index) in selectList" :key="index" :value="item.value">
                 {{ item.name }}
               </option>
             </select> -->
-            <select class="areaSelectbar" v-model="selectedArea">
+            <select class="areaSelectbar" v-model="review.sido_code">
+                <option value=0 selected>시/도 재선택</option>
                 <option v-for="(item, index) in selectList" :key="index" :value="item.value">
                 {{ item.name }}
                 </option>
             </select>
 
-            <select class="typeSelectbar" v-model="selectedType">
+            <select class="typeSelectbar" v-model="review.review_type">
+                <option value="" selected>여행 타입 재선택</option>
                 <option v-for="(item, index) in selectType" :key="index" :value="item.value">
                 {{ item.name }}
                 </option>
@@ -26,16 +28,29 @@
           </div>
 
         <div class="postContentArea">
-            <input class="postContentBox" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+            <input class="postContentBox" v-model="review.review_content" id="content" autocomplete="off" type="text" required>
         </div>
         
         <div class="imageArea">
-            <button class="imageBtn">이미지 업로드</button>
+          <div>
+            <input class="imageBtn" type="file" multiple @change="handleFileUpload">
+          </div>
+ 
+          <div v-if="review_image.length">
+
+            <review-modify-image-item v-for="image in review_image"
+              :key="image.image_num"
+              v-bind="image"
+              />
+          </div>
+
+
+            <!-- <button class="imageBtn">이미지 업로드</button>
 
             <div class="imageTextArea">
-                <!-- 이미지 url 생성 -->
-                <!-- 이미지 삭제도 -->
-            </div>
+                이미지 url 생성 
+                이미지 삭제도 
+            </div> -->
         </div>
 
         
@@ -43,37 +58,117 @@
 
 
     <div class="buttonArea">
-        <button class="registerBtn">수정</button>
+        <button v-on:click.prevent="confirm" class="registerBtn">수정</button>
         <button v-on:click.prevent="cancel" class="cancelBtn">취소</button>
     </div>
   </div>
 </template>
 
 <script>
+import http from "@/api/http";
+import ReviewModifyImageItem from "@/components/reviewboard/item/ReviewModifyImageItem.vue";
+
 export default {
     name: "ReviewModifyView",
     components: {
-
+      ReviewModifyImageItem
     },
     data(){
-        return{
-        selectedArea: '',
-        selectList: [{name: "시도 선택", value: ""},
-                        {name: "name1", value: "a"},
-                        {name: "name2", value: "b"},
-                        {name: "name3", value: "c"},
-                    ],
+      return{
+        review:[],
+        review_image:[],
+        selectedArea: 0,
+        selectList: [],
         selectedType: '',
-        selectType: [{name: "선택", value: ""},
-                        {name: "아이", value: "a"},
-                        {name: "어른", value: "b"},
+        selectType: [
+                        {name: '아이', value: "아이"},
+                        {name: '어른', value: "어른"},
                     ],
-        }
+        selectedFiles:[],
+      }
     },
     methods:{
       cancel(){
         this.$router.push({ name: "reviewBoardView" });
+      },
+      handleFileUpload(event) {
+        this.selectedFiles = Array.from(event.target.files);
+      },
+      confirm(){
+        if(this.review.review_title == ''){
+          alert("제목을 입력해주세요!");
+        }
+        else if(this.review.review_content == ''){
+          alert("내용을 입력해주세요!");
+        }
+        else if(this.review.sido_code == ''){
+          alert("지역을 선택해주세요!");
+        }
+        else if(this.review.review_type == ''){
+          alert("여행 타입을 선택해주세요!");
+        }
+        else{
+          console.log(this.selectedFiles);
+          this.edit();
+        }
+      },
+      edit(){
+        http.put(`/review`, {
+          user_idx: this.review.user_idx,
+          sido_code: this.review.sido_code,
+          review_title: this.review.review_title,
+          review_content: this.review.review_content,
+          review_hit: this.review.review_hit,
+          review_type: this.review.review_type,
+          // review_image: this.selectFiles
+        }).then((response) => { 
+            console.log(response.status);
+            if(response.status == 200){
+              alert("리뷰 수정 성공!!");
+              this.review_idx = response.data;
+              console.log("review_idx",response.data);
+              const formData = new FormData();
+
+              // 사진 삭제한거랑 새로 넣는거랑 생각해야해
+              // 서버에서 삭제할 필요는 없으니까 그냥 디비만 관리한다 생각하자
+              formData.append('review_idx', this.review_idx);
+              for (let i = 0; i < this.selectedFiles.length; i++) {
+                formData.append('upfile', this.selectedFiles[i]);
+              }
+
+              http.post(`/fileUpload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data' // 멀티파트 요청을 위해 설정
+                }
+              })
+              .then((response) => {
+                console.log(response.status);
+                if(response.status == 200){
+                  alert("사진 또한 수정 성공!!");
+                  this.$router.push({ name: "reviewBoardView" });
+                }
+                else{
+                  alert("사진 등록 실패!!");
+                }
+              })
+              
+            }
+            else{
+              alert("리뷰 등록 실패!");
+            }
+          });
       }
+    },
+    created(){
+      http.get(`/review/${this.$route.params.review_idx}`).then(({ data }) => {
+            console.log(data);
+          this.review = data;
+          this.review_image = this.review.review_image;
+      });
+      http.get(`/sido`).then(({ data }) => {
+        console.log(data.sidoList);
+        this.selectList = data.sidoList;
+      });
     }
 }
 </script>

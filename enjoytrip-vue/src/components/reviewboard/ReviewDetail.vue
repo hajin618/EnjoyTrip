@@ -119,7 +119,10 @@ export default {
       this.$router.push({ name: "reviewBoardView" });
     },
     edit(){
-      this.$router.push({ name: 'reviewModify', params: { review_idx: this.review_idx } }); 
+      this.$router.replace({
+        name: "reviewModify",
+        params: { review_idx : this.review.review_idx },
+      });
     },
   },
   computed: {
