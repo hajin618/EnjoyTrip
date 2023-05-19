@@ -50,12 +50,19 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     }
+    .findChildSpotBtn:hover{
+        background-color : #c8d6cc;
+    }
   .itemDeleteBtn{
     margin-left: 20px;
+    width : 30px;
     height: 30px;
     font-size: 10px;
     background-color: #F1F4F1;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+  .itemDeleteBtn:hover{
+    background-color : #c8d6cc;
   }
 </style>

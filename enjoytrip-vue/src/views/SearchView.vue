@@ -81,6 +81,13 @@
               @deleteAtt="deleteAtt"
               v-bind="item"/>
         </div>
+        <!-- <div class="rememberItem" v-else>
+          <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
+        </div> -->
+
+        <!-- <div class="goPlanBtnDiv"> -->
+          <button class = "goPlanBtn" v-on:click="goPlan">계획 생성하러 가기</button>
+        <!-- </div> -->
 
       </div>
     </div>
@@ -203,14 +210,14 @@ export default {
         //console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
       }
       // console.log(this.savedAtt);
-      console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
+      // console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
     },
 
     deleteAtt(value){
       // 삭제할 content_id 들어오면 savedAtt, savedAttInfo에서 삭제하기
       const index = this.savedAtt.indexOf(value);
       if(index !== -1){
-        console.log(index);
+        // console.log(index);
         this.savedAtt.splice(index, 1);
       }
 
@@ -218,6 +225,12 @@ export default {
       const index2 = this.savedAttInfo.findIndex(item => item.content_id === value);
       if(index !== -1){
         this.savedAttInfo.splice(index2, 1);
+      }
+    },
+
+    goPlan(){
+      if(this.savedAttInfo.length == 0){
+        alert("여행지를 하나 이상 선택해주세요");
       }
     }
   }
@@ -361,24 +374,20 @@ export default {
     border-radius: 10px / 10px;
   }
 
-  .findChildSpotBtn{
+
+  .goPlanBtn{
+    margin-top : 180px;
     margin-left: 20px;
-    width: 150px;
-    height: 30px;
-    font-size: 12px;
+    width: 200px;
+    height: 50px;
+    font-size: 15px;
     background-color: #F1F4F1;
-    border: 1px solid rgba(213, 120, 120, .2);
+    border: 1px solid rgba(103, 132, 177, 0.2);
     border-radius: 10px / 10px;
   }
 
-  .itemDeleteBtn{
-    margin-left: 20px;
-    height: 30px;
-    font-size: 10px;
-    background-color: #F1F4F1;
-    border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px;
+  .goPlanBtn:hover{
+    background-color : #c8d6cc;
   }
-
 
 </style>

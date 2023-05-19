@@ -51,6 +51,7 @@ export default {
     border-radius: 10px;
     width: 80px;
     height: 35px;
+    margin-left: 70px;
   }
   .btn:hover{
     background-color : #c8d6cc;

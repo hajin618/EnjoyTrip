@@ -366,6 +366,13 @@ CREATE TABLE IF NOT EXISTS `enjoytrip_dhj`.`child_attraction` (
   `nursing_room` VARCHAR(45) NULL,
   `stroller` VARCHAR(45) NULL,
   `kid_zone` VARCHAR(45) NULL,
+  `free_parking` VARCHAR(100) NULL,
+  `paid_parking` VARCHAR(100) NULL,
+  `sido_name` VARCHAR(30) NULL,
+  `sido_code` INT NULL,
+  `gugun_name` VARCHAR(30) NULL,
+  `gugun_code` INT NULL,
+  `admission_fee` VARCHAR(50) NULL,
   PRIMARY KEY (`attraction_idx`))
 ENGINE = InnoDB;
 
