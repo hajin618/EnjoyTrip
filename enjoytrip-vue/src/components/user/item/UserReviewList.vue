@@ -1,79 +1,54 @@
 <template>
   <div>
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>
-      </div>
-      
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
+    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
 
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
+      <review-list-item
+        v-for="review in reviews"
+        :key="review.review_idx"
+        v-bind="review"
+      />
 
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
-
-      <div class="box">
-        <div class="imageBox">
-          <img width="100%" height="100%" src="../../../assets/img/mainPageImg.png" alt="">
-        </div>
-        <div class="boxTitle">제목</div>
-        <div class="boxArea">지역</div>        
-      </div>
     </div>
-
   </div>
 </template>
 
 <script>
+import http from "@/api/http";
+import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
+
+import { mapState  } from "vuex";
+
 export default {
-  name: "UserLikeListView"
-  
+  name: "UserLikeListView",
+  components: {
+    ReviewListItem,
+  },
+  data(){
+    return{
+      reviews: [],
+    }
+  },
+  computed: {
+      ...mapState({
+        user_name: state => state.userStore.userInfo.user_name,
+        user_id: state => state.userStore.userInfo.user_id,
+        user_email: state => state.userStore.userInfo.user_email,
+        user_idx: state => state.userStore.userInfo.user_idx,
+      }),
+  },
+  created(){
+    http.get(`/myreview/${this.user_idx}`).then((response) => {
+        console.log(response.status);
+        console.log(response);
+        if(response.status == 200){
+          this.reviews = response.data;
+        }
+        else{
+          alert("나의 후기들 불러오기 실패!!!");
+        }
+    });
+  },
 }
 </script>
 
