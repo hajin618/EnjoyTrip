@@ -46,6 +46,7 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<ReviewDTO> listReview() throws Exception {
 		List<ReviewDTO> result = new ArrayList<ReviewDTO>();
 		result = reviewMapper.listReview();
+		
 		for(int i = 0; i < result.size(); i++) {
 			ReviewDTO now = result.get(i);
 			List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
@@ -57,7 +58,15 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception {
-		return reviewMapper.listReviewSort(reviewSelectDTO);
+		List<ReviewDTO> result = reviewMapper.listReviewSort(reviewSelectDTO);
+		
+		for(int i = 0; i < result.size(); i++) {
+			ReviewDTO now = result.get(i);
+			List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
+			images = reviewMapper.getImages(now.getReview_idx());
+			now.setReview_image(images);
+		}
+		return result;
 	}
 
 	@Override

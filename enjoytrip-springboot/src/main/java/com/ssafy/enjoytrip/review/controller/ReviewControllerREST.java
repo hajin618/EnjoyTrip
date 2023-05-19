@@ -13,8 +13,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +37,7 @@ import com.ssafy.enjoytrip.review.model.ReviewDTO;
 import com.ssafy.enjoytrip.review.model.ReviewImageDTO;
 import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 import com.ssafy.enjoytrip.review.model.service.ReviewService;
+import com.ssafy.enjoytrip.user.controller.UserControllerREST;
 import com.ssafy.enjoytrip.user.model.UserDTO;
 
 @RestController
@@ -41,6 +46,8 @@ public class ReviewControllerREST {
 	
 	@Autowired
 	ServletContext servletContext;
+	
+	public static final Logger logger = LoggerFactory.getLogger(UserControllerREST.class);
 	
 	@Autowired
 	@Qualifier("ReviewServiceImpl")
@@ -93,6 +100,10 @@ public class ReviewControllerREST {
 	@GetMapping("/reviewsort")
 	public ResponseEntity<List<ReviewDTO>> reviewListSort(@RequestParam("sido_code") int sido_code, @RequestParam("review_type") String review_type) throws Exception{
 		
+		logger.info("into sort logic");
+		logger.info("sido_code" + sido_code);
+		logger.info("review_type" + review_type);
+		
 		ReviewSelectDTO reviewSelectDTO = new ReviewSelectDTO();
 		reviewSelectDTO.setSido_code(sido_code);
 		if(review_type.equals("")) {
@@ -139,7 +150,10 @@ public class ReviewControllerREST {
 	public ResponseEntity<Integer> postReview(@RequestBody ReviewDTO reviewDto){
 		int result = -1;
 		try {
-			result = service.createReview(reviewDto);
+			int rowCount = service.createReview(reviewDto);
+			result = reviewDto.getReview_idx();
+//			long rowCount = pushService.insertPushSend(pushSendDomain);
+//			long push_send_seq = pushSendDomain.getPush_send_seq();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -155,11 +169,12 @@ public class ReviewControllerREST {
 	
 	@PostMapping("/fileUpload")
 	public ResponseEntity<String> postImage(@RequestParam("upfile") MultipartFile[] files, @RequestParam("review_idx") int reviewIdx) throws Exception{
-		String realPath = servletContext.getRealPath("/upload");
+		
+		String uploadDirectory = servletContext.getRealPath("/upload");
 		String today = new SimpleDateFormat("yyMMdd").format(new Date());
-		String saveFolder = realPath + File.separator + today;
-		System.out.println(saveFolder);
+		String saveFolder = uploadDirectory + File.separator + today;
 		File folder = new File(saveFolder);
+		
 		if (!folder.exists())
 			folder.mkdirs();
 		
