@@ -12,8 +12,12 @@ public interface ReviewService {
 	// 리뷰 작성
 	public int createReview(ReviewDTO reviewDto) throws Exception;
 	
+	// 리뷰 이미지 등록
 	public void createReviewImage(ReviewImageDTO reviewImageDto) throws Exception;
 
+	// 리뷰 이미지 삭제
+	public void deleteReviewImage(int deleteReviewImageIdx) throws Exception;
+	
 	// 리뷰 리스트 조회
 	public List<ReviewDTO> listReview() throws Exception;
 	

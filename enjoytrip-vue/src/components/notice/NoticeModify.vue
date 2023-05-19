@@ -15,7 +15,7 @@ import NoticeInputItem from "@/components/notice/item/NoticeInputItem.vue";
 export default {
     name: "NoticeModify",
     components: {
-        NoticeInputItem,
+        NoticeInputItem, 
     },
     data() {
         return {

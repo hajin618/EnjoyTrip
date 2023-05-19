@@ -27,25 +27,24 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int createReview(ReviewDTO reviewDto) throws Exception {
 		return reviewMapper.createReview(reviewDto);
-		
-//		List<ReviewImageDTO> reviewImageList = reviewDto.getReview_image();
-//		if(reviewImageList != null && !reviewImageList.isEmpty()) {
-//			for(ReviewImageDTO ri : reviewImageList) {
-//				ri.setReview_idx(review_idx);
-//				reviewMapper.createReviewImage(ri);
-//			}
-//		}
 	}
+	
 	@Override
 	public void createReviewImage(ReviewImageDTO reviewImageDto) throws Exception {
 		reviewMapper.createReviewImage(reviewImageDto);
 	}
 	
+	@Override
+	public void deleteReviewImage(int deleteReviewImageIdx) throws Exception {
+		reviewMapper.deleteReviewImage(deleteReviewImageIdx);
+		
+	}
 	
 	@Override
 	public List<ReviewDTO> listReview() throws Exception {
 		List<ReviewDTO> result = new ArrayList<ReviewDTO>();
 		result = reviewMapper.listReview();
+		
 		for(int i = 0; i < result.size(); i++) {
 			ReviewDTO now = result.get(i);
 			List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
@@ -57,7 +56,15 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception {
-		return reviewMapper.listReviewSort(reviewSelectDTO);
+		List<ReviewDTO> result = reviewMapper.listReviewSort(reviewSelectDTO);
+		
+		for(int i = 0; i < result.size(); i++) {
+			ReviewDTO now = result.get(i);
+			List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
+			images = reviewMapper.getImages(now.getReview_idx());
+			now.setReview_image(images);
+		}
+		return result;
 	}
 
 	@Override
@@ -74,14 +81,20 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void deleteReview(int reviewIdx) throws Exception {
-		reviewMapper.deleteReviewComment(reviewIdx, 0);
-		reviewMapper.deleteReviewImage(reviewIdx);
+//		reviewMapper.deleteReviewComment(reviewIdx, 0);
+		reviewMapper.deleteReviewImageAll(reviewIdx);
 		reviewMapper.deleteReview(reviewIdx);
 	}
 
 	@Override
 	public ReviewDTO getReview(int reviewIdx) throws Exception {
-		return reviewMapper.getReview(reviewIdx);
+		ReviewDTO reviewDto = reviewMapper.getReview(reviewIdx);
+		
+		List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
+		images = reviewMapper.getImages(reviewDto.getReview_idx());
+		reviewDto.setReview_image(images);
+		
+		return reviewDto;
 	}
 
 	@Override

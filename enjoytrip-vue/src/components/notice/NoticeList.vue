@@ -83,7 +83,7 @@ export default {
 
 <style scoped>
   .title{
-      padding-top : 100px;
+      padding-top : 40px;
       padding-bottom: 50px;
     }
   h2{

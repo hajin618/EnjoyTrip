@@ -47,6 +47,9 @@ public interface ReviewMapper {
 	// 리뷰 댓글 삭제
 	public void deleteReviewComment(int reviewIdx, int review_comment_idx) throws Exception;
 	
+	// 리뷰 사진 전체 삭제
+	public void deleteReviewImageAll(int reviewIdx) throws Exception;
+
 	// 리뷰 사진 삭제
-	public void deleteReviewImage(int reviewIdx) throws Exception;
+	public void deleteReviewImage(int deleteReviewImageIdx) throws Exception;
 }
