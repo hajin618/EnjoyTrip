@@ -20,4 +20,9 @@ public class DataServiceImpl implements DataService{
 		dataMapper.insertChildAttraction(childAttractionDto);
 	}
 
+	@Override
+	public int getGugunCode(int sido_code, String gugun_name) throws Exception {
+		return dataMapper.getGugunCode(sido_code, gugun_name);
+	}
+
 }

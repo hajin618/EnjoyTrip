@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,7 +36,7 @@ public class DataControllerREST {
 	@GetMapping("/childAttraction")
 	public Map<String, Object> putChildAttraction(){
 		Map<String, Object> resultMap = new HashMap<>();
-		
+		StringTokenizer st;
 		try {
 		
 			for(int idx=1; idx<=86; idx++) {
@@ -77,6 +78,60 @@ public class DataControllerREST {
 					String nursing_room = (String)object.get("수유실 보유 여부");
 					String stroller = (String)object.get("유모차 대여 여부");
 					String kid_zone = (String)object.get("키즈존 여부");
+					String free_parking = (String)object.get("무료주차 가능여부");
+					String paid_parking = (String)object.get("유료주차 가능여부");
+					String sido_name = (String)object.get("시도 명칭");
+					String gugun_name_origin = (String)object.get("시군구 명칭");
+					String admission_fee = (String)object.get("입장료 유무 여부");
+					int sido_code = 0;
+					int gugun_code = 0;
+					String gugun_name = null;
+					
+					// sido_code 구하자
+					if(sido_name.equals("서울특별시"))
+						sido_code = 1;
+					else if(sido_name.equals("인천광역시"))
+						sido_code = 2;
+					else if(sido_name.equals("대전광역시"))
+						sido_code = 3;
+					else if(sido_name.equals("대구광역시"))
+						sido_code = 4;
+					else if(sido_name.equals("광주광역시"))
+						sido_code = 5;
+					else if(sido_name.equals("부산광역시"))
+						sido_code = 6;
+					else if(sido_name.equals("울산광역시"))
+						sido_code = 7;
+					else if(sido_name.equals("세종특별자치시"))
+						sido_code = 8;
+					else if(sido_name.equals("경기도"))
+						sido_code = 31;
+					else if(sido_name.equals("강원도"))
+						sido_code = 32;
+					else if(sido_name.equals("충청북도"))
+						sido_code = 33;
+					else if(sido_name.equals("충청남도"))
+						sido_code = 34;
+					else if(sido_name.equals("경상북도"))
+						sido_code = 35;
+					else if(sido_name.equals("경상남도"))
+						sido_code = 36;
+					else if(sido_name.equals("전라북도"))
+						sido_code = 37;
+					else if(sido_name.equals("전라남도"))
+						sido_code = 38;
+					else if(sido_name.equals("제주특별자치도"))
+						sido_code = 39;
+					
+					// gugun_code 구하자 (창원시 마산회원구 처리 : StringTokenizer // 세종특별자치시 처리 : 구군 이름도 세종특별자치시)
+					if(gugun_name_origin == null) {
+						gugun_name = "세종특별자치시";
+					}
+					else {
+						st = new StringTokenizer(gugun_name_origin);
+						gugun_name = st.nextToken();
+						gugun_code = service.getGugunCode(sido_code, gugun_name);
+					}
 					
 					childAttractionDto.setAttraction_name(attraction_name);
 					childAttractionDto.setCategory1(category1);
@@ -93,6 +148,13 @@ public class DataControllerREST {
 					childAttractionDto.setNursing_room(nursing_room);
 					childAttractionDto.setStroller(stroller);
 					childAttractionDto.setKid_zone(kid_zone);
+					childAttractionDto.setFree_parking(free_parking);
+					childAttractionDto.setPaid_parking(paid_parking);
+					childAttractionDto.setSido_name(sido_name);
+					childAttractionDto.setSido_code(sido_code);
+					childAttractionDto.setGugun_name(gugun_name);
+					childAttractionDto.setGugun_code(gugun_code);
+					childAttractionDto.setAdmission_fee(admission_fee);
 					
 					service.insertChildAttraction(childAttractionDto);
 				}
