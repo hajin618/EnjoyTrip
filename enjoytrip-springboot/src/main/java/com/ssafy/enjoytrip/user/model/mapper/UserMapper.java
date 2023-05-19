@@ -32,6 +32,10 @@ public interface UserMapper {
 	public void deleteUser(String user_id) throws Exception;
 	// 회원정보 조회
 	public UserDTO userInfo(String userId) throws Exception;
+	
+	// 회원 정보 조회 리뷰 보드에서
+	public UserDTO getUserInfoFromReview(int user_idx) throws Exception;
+	
 	//회원 목록 조회
 	public List<UserDTO> userList();
 	

@@ -42,47 +42,18 @@
             controls
             indicators
           >
-
-           <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/userPageImg.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/family.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/mainPageImg.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            
-          
-
+            <review-image-item
+              v-for="image in review_image"
+              :key="image.image_num"
+              v-bind="image"
+            />
           </b-carousel>
         </div>
 
         <div class="postInfoBox">
           
           <div class="postTitleBox">
-            <div class="titleBox" id="title">제목</div>
+            <div class="titleBox" id="title">{{review.review_title}}</div>
 
             <!-- <select class="areaSelectbar" v-model="selectedArea">
               <option v-for="(item, index) in selectList" :key="index" :value="item.value">
@@ -90,14 +61,14 @@
               </option>
             </select> -->
             <div class="areaSelectbar">
-              지역
+              {{getSidoName(review.sido_code)}}
             </div>
             <div class="typeSelectbar">
-              아이
+              {{review.review_type}}
             </div>
           </div>
 
-          <div class="postContentBox" id="content">내용</div>
+          <div class="postContentBox" id="content">{{review.review_content}}</div>
 
 
         </div>
@@ -108,9 +79,10 @@
       <div class="listBox">
         <button v-on:click.prevent="moveList" class="listBtn">목록</button>
       </div>
-      <div>
+      
+      <div v-if="review.userDto.user_id === user_id">
         <button v-on:click.prevent="edit" class="editBtn">수정</button>
-        <button class="deleteBtn">삭제</button>
+        <button v-on:click.prevent="del" class="deleteBtn">삭제</button>
       </div>
     </div>
 
@@ -118,29 +90,89 @@
 </template>
 
 <script>
+import http from "@/api/http";
+import ReviewImageItem from "@/components/reviewboard/item/ReviewImageItem.vue";
+
+import { mapState } from "vuex";
+
 export default {
   name: "ReviewDetailView",
   data(){
     return{
-      selectedArea: '',
-      selectList: [{name: "시도 선택", value: ""},
-                    {name: "name1", value: "a"},
-                    {name: "name2", value: "b"},
-                    {name: "name3", value: "c"},
-                  ],
+      review:[],
+      review_image:[],
     }
+  },
+  components:{
+    ReviewImageItem
   },
   mounted(){
     document.getElementsByClassName("carousel-inner")[0].style.height="100%";
+  },
+  created() {
+    http.get(`/review/${this.$route.params.review_idx}`).then(({ data }) => {
+           console.log(data);
+        this.review = data;
+        this.review_image = this.review.review_image;
+    });
+    
   },
   methods:{
     moveList(){
       this.$router.push({ name: "reviewBoardView" });
     },
     edit(){
-      this.$router.push({ name: 'reviewModify', params: { review_idx: 1 } }); 
+      this.$router.replace({
+        name: "reviewModify",
+        params: { review_idx : this.review.review_idx },
+      });
+    },
+    del(){
+      http.delete(`/review/${this.review.review_idx}`)
+      .then((response) => {
+        if(response.status == 200){
+          alert("리뷰 삭제 성공!")
+          this.moveList();
+        }
+        else{
+          alert("리뷰 삭제 실패!");
+          this.moveList();
+        }
+      })
     }
-  }
+  },
+  computed: {
+    ...mapState({
+      user_name: state => state.userStore.userInfo.user_name,
+      user_id: state => state.userStore.userInfo.user_id,
+      user_email: state => state.userStore.userInfo.user_email,
+    }),
+    // 숫자를 지역명으로 변환하는 computed 속성
+    getSidoName() {
+      return (sidoCode) => {
+        const sidoMap = {
+          1: '서울',
+          2: '인천',
+          3: '대전',
+          4: '대구',
+          5: '광주',
+          6: '부산',
+          7: '울산',
+          8: '세종특별자치시',
+          31: '경기도',
+          32: '강원도',
+          33: '충청북도',
+          34: '충청남도',
+          35: '경상북도',
+          36: '경상남도',
+          37: '전라북도',
+          38: '전라남도'
+        };
+
+        return sidoMap[sidoCode] || '';
+      };
+    }
+  },
 }
 
 </script>
@@ -154,7 +186,7 @@ export default {
   }
 
 .carousel-inner, .carousel-item {
-  height: 100%;
+  height: 350px;
 }
 .carousel{
   height: 350px;
@@ -217,11 +249,10 @@ export default {
     margin-bottom: 40px;
     display: flex; 
     flex-direction:row;
-    float: right;
   }
 
   .listBox{
-    margin-right: 500px;
+    margin-left: 940px;
   }
 
   .listBtn{
@@ -233,7 +264,7 @@ export default {
   }
 
   .editBtn{
-    margin-right: 15px;
+    margin-left: 540px;
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);
@@ -242,7 +273,7 @@ export default {
   }
 
   .deleteBtn{
-    margin-right: 175px;
+    margin-left: 20px;
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);

@@ -51,6 +51,7 @@
 			    , review_type
 		from	review
 		where
+		<if test="sido_code == 0 and review_type == null">1=1</if>
 		<if test="sido_code != 0 and review_type == null">sido_code = #{sido_code}</if>
 		<if test="sido_code == 0 and review_type != null">review_type = #{review_type}</if>
 		<if test="sido_code != 0 and review_type != null">sido_code = #{sido_code} and review_type = #{review_type}</if>
@@ -73,11 +74,8 @@
 			  , r.review_content
 			  , r.review_create
 			  , r.review_update
-			  , u.user_name
-			  
+			  , r.review_type
 		from 	review r
-		join 	user u
-		on 		r.user_idx = u.user_idx
 		where 	r.review_idx = #{reviewIdx};
 	
 	</select>
@@ -109,13 +107,15 @@
 		update	review
 		set		review_title = #{review_title}
 			  , review_content = #{review_content}
+			  , sido_code = #{sido_code}
+			  , review_type = #{review_type}
 			  , review_update = now()
 		where	review_idx = #{review_idx}
 	</update>
 	
 	<delete id = "deleteReview" parameterType="int">
 		delete from		review
-		where			review_idx = #{review_idx}
+		where			review_idx = #{reivewIdx}
 	</delete>
 	
 	<delete id = "deleteReviewComment" parameterType="int">
@@ -126,9 +126,14 @@
 		</if>
 	</delete>
 	
+	<delete id = "deleteReviewImageAll" parameterType="int">
+		delete from		review_image
+		where			review_idx = #{reviewIdx}
+	</delete>
+	
 	<delete id = "deleteReviewImage" parameterType="int">
 		delete from		review_image
-		where			review_idx = #{review_idx}
+		where			image_num = #{deleteReviewImageIdx}
 	</delete>
 	
 	<insert id = "createReviewComment" parameterType="reviewCommentDto">
