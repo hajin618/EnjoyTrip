@@ -15,4 +15,6 @@ public interface AttractionService {
 	public List<GugunDTO> searchGugun(int sido_code) throws Exception;
 	// 여행지 검색
 	public List<AttractionInfoDTO> searchAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception;
+	// 여행지 검색 (content_id)
+	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception;
 }

@@ -36,4 +36,9 @@ public class AttractionServiceImpl implements AttractionService{
 		return attractionMapper.searchGugun(sido_code);
 	}
 
+	@Override
+	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception {
+		return attractionMapper.searchAttractionById(content_id);
+	}
+
 }

@@ -74,62 +74,15 @@
       <div class="rememberSpotZone">
         <div class="rememberTitle">여행지 저장</div>
         
-        
-        <!-- for 돌릴 녀석 -->
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
-
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
-
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
-
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
+        <div class="rememberItem" v-if="savedAttInfo.length">
+            <saved-attraction-item
+              v-for="item in savedAttInfo"
+              :key="item.content_id"
+              @deleteAtt="deleteAtt"
+              v-bind="item"/>
         </div>
 
       </div>
-
     </div>
 
     <div class="searchedArea">
@@ -167,6 +120,7 @@ import http from "@/api/http";
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
+import SavedAttractionItem from "@/components/layout/SavedAttractionItem.vue";
 
 export default {
   name: "SearchView",
@@ -174,6 +128,7 @@ export default {
     HeaderNaviBar,
     SearchViewItem,
     KakaoMap,
+    SavedAttractionItem,
   },
   data(){
     return{
@@ -185,6 +140,7 @@ export default {
       content_type_id: null,
       attractions : [],
       savedAtt : [],  // 저장한 여행지 번호 저장
+      savedAttInfo : [],  // 저장한 여행지 번호로 조회한 정보 저장
     }
   },
   created(){
@@ -193,7 +149,21 @@ export default {
       this.sidoList = data.sidoList;
     });
   },
-
+  
+  // watch: {
+  //   // 저장한 여행지 정보 변할 때 마다 수행
+  //   savedAtt(){
+  //     // this.savedAttInfo = [];
+  //     this.savedAtt.forEach(item =>{
+  //       http.get(`/attraction/${item}`).then(({ data }) =>{
+  //         console.log(data);
+  //         this.savedAttInfo.push(data);
+          
+  //       })
+  //     });
+  //     console.log("savedAttInfo ::: "+this.savedAttInfo);
+  //   }
+  // },
   methods: {
     getGuGun(){
       // console.log("시도 : "+this.sidoSelected);
@@ -224,8 +194,31 @@ export default {
       // 중복값 확인
       if(!this.savedAtt.includes(value)){
         this.savedAtt.push(value);
+
+        http.get(`/attraction/${value}`).then(({ data }) =>{
+          // console.log("attraction title ::: " + data.title);
+          this.savedAttInfo.push(data);
+        });
+        
+        //console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
       }
-      console.log(this.savedAtt);
+      // console.log(this.savedAtt);
+      console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
+    },
+
+    deleteAtt(value){
+      // 삭제할 content_id 들어오면 savedAtt, savedAttInfo에서 삭제하기
+      const index = this.savedAtt.indexOf(value);
+      if(index !== -1){
+        console.log(index);
+        this.savedAtt.splice(index, 1);
+      }
+
+      //console.log(this.savedAtt);
+      const index2 = this.savedAttInfo.findIndex(item => item.content_id === value);
+      if(index !== -1){
+        this.savedAttInfo.splice(index2, 1);
+      }
     }
   }
 }
@@ -387,7 +380,5 @@ export default {
     border-radius: 10px / 10px;
   }
 
-  .itemInfo{
-    margin-top: 10px;
-  }
+
 </style>

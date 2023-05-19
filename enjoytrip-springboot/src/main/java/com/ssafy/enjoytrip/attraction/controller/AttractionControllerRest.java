@@ -117,4 +117,23 @@ public class AttractionControllerRest {
 			return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.NO_CONTENT);
 		}
 	}
+	
+	@GetMapping("/attraction/{content_id}")
+	public ResponseEntity<List<AttractionInfoDTO>> savedAttractionList(@PathVariable("content_id") String content_id){
+		
+		List<AttractionInfoDTO> list = null;
+		
+		try {
+			list = service.searchAttractionById(Integer.parseInt(content_id));
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.info("error");
+			
+			return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.OK);
+	}
+	
+	
 }
