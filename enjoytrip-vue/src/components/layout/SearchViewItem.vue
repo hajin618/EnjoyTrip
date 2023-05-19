@@ -40,12 +40,6 @@ export default {
 
 <style scoped>
   .btn{
-    /* margin-left: 70px;
-    width: 100px;
-    height: 37px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px; */
     border-color:#98c2a182;
     background-color : #98c2a182;
     border-radius: 10px;

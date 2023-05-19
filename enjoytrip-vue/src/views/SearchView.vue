@@ -68,7 +68,7 @@
       </div>
 
       <div class="mapZone">
-        <kakao-map :attractions="attractions"></kakao-map> 
+        <kakao-map :attractions="attractions" :childAttractions="childAttractions"></kakao-map> 
       </div>
 
       <div class="rememberSpotZone">
@@ -110,8 +110,13 @@
                 :key="att.content_id"
                 @saveAtt="saveAtt"
                 v-bind="att"/>
-            </tbody>
 
+              <search-view-item-ch
+                v-for="att in childAttractions"
+                :key="att.attraction_idx"
+                @saveChAtt="saveChAtt"
+                v-bind="att"/>
+            </tbody>
           </b-table-simple>
         </b-col>
       </b-row>
@@ -128,6 +133,7 @@ import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 import SavedAttractionItem from "@/components/layout/SavedAttractionItem.vue";
+import SearchViewItemCh from "@/components/layout/SearchViewItem-Ch.vue";
 
 export default {
   name: "SearchView",
@@ -136,6 +142,7 @@ export default {
     SearchViewItem,
     KakaoMap,
     SavedAttractionItem,
+    SearchViewItemCh,
   },
   data(){
     return{
@@ -147,8 +154,10 @@ export default {
       content_type_id: null,
       attractions : [],
       childAttractions : [],
-      savedAtt : [],  // 저장한 여행지 번호 저장
-      savedAttInfo : [],  // 저장한 여행지 번호로 조회한 정보 저장
+      savedAtt : [],          // 저장한 여행지 번호 저장
+      savedAttInfo : [],      // 저장한 여행지 번호로 조회한 정보 저장
+      savedChAtt : [],        // 저장한 어린이 여행지 번호 저장
+      savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
     }
   },
   created(){
@@ -204,7 +213,9 @@ export default {
         searchWord : this.searchWord,
       })
       .then(({ data }) => {
-        console.log("child Attraction !! " + data);
+        //console.log("child Attraction !! " + data);
+        this.childAttractions = data;
+        // console.log(this.childAttractions);
       });
       
     },
@@ -225,6 +236,18 @@ export default {
       // console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
     },
 
+    
+    saveChAtt(value){
+      // console.log(value);
+      if(!this.savedChAtt.includes(value)){
+        this.savedChAtt.push(value);
+
+        http.get(`/childAttraction/${value}`).then(({ data }) =>{
+          this.savedChAttInfo.push(data);
+        });
+      }
+    },
+
     deleteAtt(value){
       // 삭제할 content_id 들어오면 savedAtt, savedAttInfo에서 삭제하기
       const index = this.savedAtt.indexOf(value);
@@ -232,13 +255,18 @@ export default {
         // console.log(index);
         this.savedAtt.splice(index, 1);
       }
+      else{
+        console.log("no value !!");
+      }
 
-      //console.log(this.savedAtt);
+      console.log("savedAtt : " + this.savedAtt);
       const index2 = this.savedAttInfo.findIndex(item => item.content_id === value);
       if(index !== -1){
         this.savedAttInfo.splice(index2, 1);
       }
     },
+
+    
 
     goPlan(){
       if(this.savedAttInfo.length == 0){
