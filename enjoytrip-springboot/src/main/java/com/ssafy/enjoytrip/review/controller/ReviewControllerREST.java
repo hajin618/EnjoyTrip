@@ -66,29 +66,6 @@ public class ReviewControllerREST {
 	// 한 개 조회할 때는 review, reviewComment, reviewImage 가져와야되는데
 	// 목록 조회는 review랑 userName만 가져오면 됨
 	
-	// 1개 조회
-//	@GetMapping("/review/{review_idx}")
-//	public Map<String, Object> reviewOne(@RequestParam Map<String, String> param,
-//			@PathVariable("review_idx") String review_idx){
-//		ReviewDTO reviewDto = null;
-//		List<ReviewCommentDTO> reviewCommentDto = null;
-//		Map<String, Object> resultMap = new HashMap<>();	
-//		
-//		try {
-//			service.updateHit(Integer.parseInt(review_idx));
-//			reviewDto = service.getReview(Integer.parseInt(review_idx));
-//			reviewCommentDto = service.getReviewComment(Integer.parseInt(review_idx));
-//			resultMap.put("isSuccess", "true");
-//			resultMap.put("review", reviewDto);
-//			resultMap.put("reviewComment", reviewCommentDto);
-//			
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			resultMap.put("isSuccess", "false");
-//		}
-//		return resultMap;
-//	}
-	
 	@GetMapping("/review/{review_idx}")
 	public ResponseEntity<ReviewDTO> reviewOne(@PathVariable("review_idx") int review_idx){
 		ReviewDTO reviewDto = null;
@@ -109,7 +86,6 @@ public class ReviewControllerREST {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 	}
-	
 	
 	@GetMapping("/review")
 	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
@@ -148,29 +124,6 @@ public class ReviewControllerREST {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 	}
-	
-	// 리뷰 작성
-	//@PostMapping(value = "review", headers = "content-type=application/json")
-//	@PostMapping("/review")
-//	public Map<String, Object> writeReview(@RequestBody ReviewDTO reviewDto, @RequestParam Map<String, String> param, HttpSession session){
-//		
-//		Map<String, Object> resultMap = new HashMap<>();
-////		UserDTO userDto = (UserDTO)session.getAttribute("userInfo");
-////		reviewDto.setUser_idx(userDto.getUser_idx());
-////		PageNavigation pageNavigation = service.makePageNavigation(param);
-//
-//		try {
-//			service.createReview(reviewDto);
-//			resultMap.put("isSuccess", "true");
-////			map.put("navigation", pageNavigation);
-////			map.put("pgno", param.get("pgno"));
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			resultMap.put("isSuccess", "false");
-//		}
-//		return resultMap;
-//	}
 
 	@PostMapping("/review")
 	public ResponseEntity<Integer> postReview(@RequestBody ReviewDTO reviewDto){
@@ -178,8 +131,6 @@ public class ReviewControllerREST {
 		try {
 			int rowCount = service.createReview(reviewDto);
 			result = reviewDto.getReview_idx();
-//			long rowCount = pushService.insertPushSend(pushSendDomain);
-//			long push_send_seq = pushSendDomain.getPush_send_seq();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -220,42 +171,65 @@ public class ReviewControllerREST {
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
-
-	// 리뷰 수정
+	
+	@PostMapping("/fileDelete")
+	public ResponseEntity<String> deleteImage(@RequestBody int[] deleteImageIdxList){
+		
+		for(int i = 0; i < deleteImageIdxList.length; i++) {
+			int deleteImageIdx = deleteImageIdxList[i];
+			try {
+				service.deleteReviewImage(deleteImageIdx);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
+	
 	@PutMapping("/review/{review_idx}")
-	public Map<String, Object> modifyReview(@RequestBody ReviewDTO reviewDto, @RequestParam Map<String, String> param,
-			HttpSession session, @PathVariable("review_idx") String review_idx){
-		Map<String, Object> resultMap = new HashMap<>();
-		reviewDto.setReview_idx(Integer.parseInt(review_idx));
-//		PageNavigation pageNavigation = service.makePageNavigation(param);
+	public ResponseEntity<String> updateReview(@RequestBody ReviewDTO reviewDto, @PathVariable("review_idx") int review_idx){
+		logger.info(reviewDto.toString());
+		reviewDto.setReview_idx(review_idx);
 		try {
 			service.modifyReview(reviewDto);
-			resultMap.put("isSuccess", "true");
-//			map.put("navigation", pageNavigation);
-//			map.put("pgno", param.get("pgno"));
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
 		}
-		return resultMap;
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	
 	// 리뷰 삭제
+//	@DeleteMapping("/review/{review_idx}")
+//	public Map<String, Object> deleteReview(@RequestParam Map<String, String> param,
+//			HttpSession session, @PathVariable("review_idx") String review_idx){
+//		Map<String, Object> resultMap = new HashMap<>();
+////		PageNavigation pageNavigation = service.makePageNavigation(param);
+//		try {
+//			service.deleteReview(Integer.parseInt(review_idx));
+//			resultMap.put("isSuccess", "true");
+////			map.put("navigation", pageNavigation);
+////			map.put("pgno", param.get("pgno"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			resultMap.put("isSuccess", "false");
+//		}
+//		return resultMap;
+//	}
+	
 	@DeleteMapping("/review/{review_idx}")
-	public Map<String, Object> deleteReview(@RequestParam Map<String, String> param,
-			HttpSession session, @PathVariable("review_idx") String review_idx){
-		Map<String, Object> resultMap = new HashMap<>();
-//		PageNavigation pageNavigation = service.makePageNavigation(param);
+	public ResponseEntity<String> deleteReview(@PathVariable("review_idx") int review_idx){
+		
+		// 이미지들 다 삭제하고 그 다음에 리뷰 삭제해야됨
 		try {
-			service.deleteReview(Integer.parseInt(review_idx));
-			resultMap.put("isSuccess", "true");
-//			map.put("navigation", pageNavigation);
-//			map.put("pgno", param.get("pgno"));
+			service.deleteReview(review_idx);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
 		}
-		return resultMap;
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	
 	// 리뷰 댓글 생성

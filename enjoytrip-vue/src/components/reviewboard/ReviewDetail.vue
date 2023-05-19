@@ -79,9 +79,10 @@
       <div class="listBox">
         <button v-on:click.prevent="moveList" class="listBtn">목록</button>
       </div>
-      <div>
+      
+      <div v-if="review.userDto.user_id === user_id">
         <button v-on:click.prevent="edit" class="editBtn">수정</button>
-        <button class="deleteBtn">삭제</button>
+        <button v-on:click.prevent="del" class="deleteBtn">삭제</button>
       </div>
     </div>
 
@@ -91,6 +92,8 @@
 <script>
 import http from "@/api/http";
 import ReviewImageItem from "@/components/reviewboard/item/ReviewImageItem.vue";
+
+import { mapState } from "vuex";
 
 export default {
   name: "ReviewDetailView",
@@ -124,8 +127,26 @@ export default {
         params: { review_idx : this.review.review_idx },
       });
     },
+    del(){
+      http.delete(`/review/${this.review.review_idx}`)
+      .then((response) => {
+        if(response.status == 200){
+          alert("리뷰 삭제 성공!")
+          this.moveList();
+        }
+        else{
+          alert("리뷰 삭제 실패!");
+          this.moveList();
+        }
+      })
+    }
   },
   computed: {
+    ...mapState({
+      user_name: state => state.userStore.userInfo.user_name,
+      user_id: state => state.userStore.userInfo.user_id,
+      user_email: state => state.userStore.userInfo.user_email,
+    }),
     // 숫자를 지역명으로 변환하는 computed 속성
     getSidoName() {
       return (sidoCode) => {
@@ -165,7 +186,7 @@ export default {
   }
 
 .carousel-inner, .carousel-item {
-  height: 100%;
+  height: 350px;
 }
 .carousel{
   height: 350px;
@@ -228,11 +249,10 @@ export default {
     margin-bottom: 40px;
     display: flex; 
     flex-direction:row;
-    float: right;
   }
 
   .listBox{
-    margin-right: 500px;
+    margin-left: 940px;
   }
 
   .listBtn{
@@ -244,7 +264,7 @@ export default {
   }
 
   .editBtn{
-    margin-right: 15px;
+    margin-left: 540px;
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);
@@ -253,7 +273,7 @@ export default {
   }
 
   .deleteBtn{
-    margin-right: 175px;
+    margin-left: 20px;
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);

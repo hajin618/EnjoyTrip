@@ -109,7 +109,7 @@ export default {
 <style scoped>
   .main{
       background-color: white;
-      height: 720px;
+      height: 550px;
       width: 100%;
   }
   .name{

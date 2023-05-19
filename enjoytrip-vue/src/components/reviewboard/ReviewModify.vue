@@ -14,8 +14,8 @@
             </select> -->
             <select class="areaSelectbar" v-model="review.sido_code">
                 <option value=0 selected>시/도 재선택</option>
-                <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-                {{ item.name }}
+                <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">
+                {{ item.sido_name }}
                 </option>
             </select>
 
@@ -37,11 +37,11 @@
           </div>
  
           <div v-if="review_image.length">
+            <div v-for="image in review_image" :key="image.image_num">
+              <span>{{image.image_name}}</span>
+              <button v-on:click.prevent="addDeleteList(image.image_num); review_image = review_image.filter(item => item.image_num !== image.image_num)">삭제하기</button>
+            </div>
 
-            <review-modify-image-item v-for="image in review_image"
-              :key="image.image_num"
-              v-bind="image"
-              />
           </div>
 
 
@@ -66,12 +66,11 @@
 
 <script>
 import http from "@/api/http";
-import ReviewModifyImageItem from "@/components/reviewboard/item/ReviewModifyImageItem.vue";
 
 export default {
     name: "ReviewModifyView",
     components: {
-      ReviewModifyImageItem
+      
     },
     data(){
       return{
@@ -85,6 +84,7 @@ export default {
                         {name: '어른', value: "어른"},
                     ],
         selectedFiles:[],
+        deleteFiles:[],
       }
     },
     methods:{
@@ -113,50 +113,61 @@ export default {
         }
       },
       edit(){
-        http.put(`/review`, {
+        console.log(this.review);
+        http.put(`/review/${this.review.review_idx}`, {
           user_idx: this.review.user_idx,
           sido_code: this.review.sido_code,
           review_title: this.review.review_title,
           review_content: this.review.review_content,
-          review_hit: this.review.review_hit,
           review_type: this.review.review_type,
           // review_image: this.selectFiles
         }).then((response) => { 
             console.log(response.status);
             if(response.status == 200){
               alert("리뷰 수정 성공!!");
-              this.review_idx = response.data;
-              console.log("review_idx",response.data);
-              const formData = new FormData();
 
+              // 삭제 로직
               // 사진 삭제한거랑 새로 넣는거랑 생각해야해
               // 서버에서 삭제할 필요는 없으니까 그냥 디비만 관리한다 생각하자
-              formData.append('review_idx', this.review_idx);
+              http.post(`/fileDelete`, this.deleteFiles)
+                .then((response) =>{
+                  if(response.status == 200){
+                    alert("사진 삭제 성공!");
+                  }
+                })
+
+
+              const formData = new FormData();
+              formData.append('review_idx', this.review.review_idx);
               for (let i = 0; i < this.selectedFiles.length; i++) {
                 formData.append('upfile', this.selectedFiles[i]);
               }
 
-              http.post(`/fileUpload`, formData, {
-                headers: {
-                  'Content-Type': 'multipart/form-data' // 멀티파트 요청을 위해 설정
-                }
-              })
-              .then((response) => {
-                console.log(response.status);
-                if(response.status == 200){
-                  alert("사진 또한 수정 성공!!");
-                  this.$router.push({ name: "reviewBoardView" });
-                }
-                else{
-                  alert("사진 등록 실패!!");
-                }
-              })
-              
+              if(this.selectedFiles.length != 0){
+                http.post(`/fileUpload`, formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data' // 멀티파트 요청을 위해 설정
+                  }
+                })
+                .then((response) => {
+                  console.log(response.status);
+                  if(response.status == 200){
+                    alert("사진 또한 수정 성공!!");
+                  }
+                  else{
+                    alert("사진 등록 실패!!");
+                  }
+                })
+              }
             }
             else{
-              alert("리뷰 등록 실패!");
+              alert("리뷰 수정 실패!");
             }
+            this.$router.push({ name: "reviewBoardView" });
           });
+      },
+      addDeleteList(imageNum){
+        this.deleteFiles.push(imageNum);
       }
     },
     created(){

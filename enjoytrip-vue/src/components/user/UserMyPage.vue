@@ -18,7 +18,7 @@
 
 
       <!-- 회원 정보 수정이 눌려있다면 -->
-    <div class="titleEdit">
+    <div class="title">
       회원 정보 수정
     </div>
     <user-edit></user-edit>
@@ -75,9 +75,9 @@ export default {
     font-weight: 550;
   }  
     .title{
-    margin-top: 40px;
+    margin-top: 50px;
     margin-left: 900px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     color: black;
     font-size: 20px;
     font-weight: 550;

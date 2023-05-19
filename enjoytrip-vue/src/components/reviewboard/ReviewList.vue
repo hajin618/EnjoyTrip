@@ -114,7 +114,7 @@ export default {
     width:26vw;
   }
   .title{
-    margin-top : 80px;
+    margin-top : 60px;
     text-align : center;
   }
   
@@ -146,14 +146,14 @@ export default {
     width: 300px;
     height: 35px;
     margin-right: 30px;
-    background-color: #F1F4F1;
+    background-color:rgba(122, 187, 133, 0.5);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 20px / 20px;
   }
 
   .registerBtn{
     margin-top: 20px;
-    margin-left: 340px;
+    margin-left: 430px;
     margin-bottom: 30px;
     width: 130px;
     height: 35px;

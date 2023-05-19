@@ -35,6 +35,12 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 	@Override
+	public void deleteReviewImage(int deleteReviewImageIdx) throws Exception {
+		reviewMapper.deleteReviewImage(deleteReviewImageIdx);
+		
+	}
+	
+	@Override
 	public List<ReviewDTO> listReview() throws Exception {
 		List<ReviewDTO> result = new ArrayList<ReviewDTO>();
 		result = reviewMapper.listReview();
@@ -75,7 +81,7 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void deleteReview(int reviewIdx) throws Exception {
-		reviewMapper.deleteReviewComment(reviewIdx, 0);
+//		reviewMapper.deleteReviewComment(reviewIdx, 0);
 		reviewMapper.deleteReviewImage(reviewIdx);
 		reviewMapper.deleteReview(reviewIdx);
 	}

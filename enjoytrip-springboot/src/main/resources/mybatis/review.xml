@@ -107,13 +107,15 @@
 		update	review
 		set		review_title = #{review_title}
 			  , review_content = #{review_content}
+			  , sido_code = #{sido_code}
+			  , review_type = #{review_type}
 			  , review_update = now()
 		where	review_idx = #{review_idx}
 	</update>
 	
 	<delete id = "deleteReview" parameterType="int">
 		delete from		review
-		where			review_idx = #{review_idx}
+		where			review_idx = #{reivewIdx}
 	</delete>
 	
 	<delete id = "deleteReviewComment" parameterType="int">
@@ -124,9 +126,14 @@
 		</if>
 	</delete>
 	
+	<delete id = "deleteReviewImageAll" parameterType="int">
+		delete from		review_image
+		where			review_idx = #{reviewIdx}
+	</delete>
+	
 	<delete id = "deleteReviewImage" parameterType="int">
 		delete from		review_image
-		where			review_idx = #{review_idx}
+		where			image_num = #{deleteReviewImageIdx}
 	</delete>
 	
 	<insert id = "createReviewComment" parameterType="reviewCommentDto">
