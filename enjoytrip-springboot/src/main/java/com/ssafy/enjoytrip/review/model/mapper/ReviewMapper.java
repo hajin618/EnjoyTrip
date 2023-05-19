@@ -21,6 +21,8 @@ public interface ReviewMapper {
 	// 리뷰 리스트 조회
 	public List<ReviewDTO> listReview() throws Exception;
 	
+	public List<ReviewDTO> myReviewList(int user_idx) throws Exception;
+	
 	public List<ReviewImageDTO> getImages(int reviewIdx) throws Exception;
 	
 	// 리뷰 리스트 정제 조회
