@@ -42,47 +42,18 @@
             controls
             indicators
           >
-
-           <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/userPageImg.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/family.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            <b-carousel-slide>
-              <template #img >
-                <img
-                  class="d-block img-fluid w-100"
-                  src="../../assets/img/mainPageImg.png"
-                  alt="image slot"
-                  style="height:100%; object-fit:cover;"
-                >
-              </template>
-            </b-carousel-slide>
-            
-          
-
+            <review-image-item
+              v-for="image in review_image"
+              :key="image.image_num"
+              v-bind="image"
+            />
           </b-carousel>
         </div>
 
         <div class="postInfoBox">
           
           <div class="postTitleBox">
-            <div class="titleBox" id="title">제목</div>
+            <div class="titleBox" id="title">{{review.review_title}}</div>
 
             <!-- <select class="areaSelectbar" v-model="selectedArea">
               <option v-for="(item, index) in selectList" :key="index" :value="item.value">
@@ -90,14 +61,14 @@
               </option>
             </select> -->
             <div class="areaSelectbar">
-              지역
+              {{getSidoName(review.sido_code)}}
             </div>
             <div class="typeSelectbar">
-              아이
+              {{review.review_type}}
             </div>
           </div>
 
-          <div class="postContentBox" id="content">내용</div>
+          <div class="postContentBox" id="content">{{review.review_content}}</div>
 
 
         </div>
@@ -118,29 +89,66 @@
 </template>
 
 <script>
+import http from "@/api/http";
+import ReviewImageItem from "@/components/reviewboard/item/ReviewImageItem.vue";
+
 export default {
   name: "ReviewDetailView",
   data(){
     return{
-      selectedArea: '',
-      selectList: [{name: "시도 선택", value: ""},
-                    {name: "name1", value: "a"},
-                    {name: "name2", value: "b"},
-                    {name: "name3", value: "c"},
-                  ],
+      review:[],
+      review_image:[],
     }
+  },
+  components:{
+    ReviewImageItem
   },
   mounted(){
     document.getElementsByClassName("carousel-inner")[0].style.height="100%";
+  },
+  created() {
+    http.get(`/review/${this.$route.params.review_idx}`).then(({ data }) => {
+           console.log(data);
+        this.review = data;
+        this.review_image = this.review.review_image;
+    });
+    
   },
   methods:{
     moveList(){
       this.$router.push({ name: "reviewBoardView" });
     },
     edit(){
-      this.$router.push({ name: 'reviewModify', params: { review_idx: 1 } }); 
+      this.$router.push({ name: 'reviewModify', params: { review_idx: this.review_idx } }); 
+    },
+  },
+  computed: {
+    // 숫자를 지역명으로 변환하는 computed 속성
+    getSidoName() {
+      return (sidoCode) => {
+        const sidoMap = {
+          1: '서울',
+          2: '인천',
+          3: '대전',
+          4: '대구',
+          5: '광주',
+          6: '부산',
+          7: '울산',
+          8: '세종특별자치시',
+          31: '경기도',
+          32: '강원도',
+          33: '충청북도',
+          34: '충청남도',
+          35: '경상북도',
+          36: '경상남도',
+          37: '전라북도',
+          38: '전라남도'
+        };
+
+        return sidoMap[sidoCode] || '';
+      };
     }
-  }
+  },
 }
 
 </script>

@@ -74,11 +74,8 @@
 			  , r.review_content
 			  , r.review_create
 			  , r.review_update
-			  , u.user_name
-			  
+			  , r.review_type
 		from 	review r
-		join 	user u
-		on 		r.user_idx = u.user_idx
 		where 	r.review_idx = #{reviewIdx};
 	
 	</select>

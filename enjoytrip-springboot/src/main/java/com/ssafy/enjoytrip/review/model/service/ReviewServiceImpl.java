@@ -27,20 +27,12 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int createReview(ReviewDTO reviewDto) throws Exception {
 		return reviewMapper.createReview(reviewDto);
-		
-//		List<ReviewImageDTO> reviewImageList = reviewDto.getReview_image();
-//		if(reviewImageList != null && !reviewImageList.isEmpty()) {
-//			for(ReviewImageDTO ri : reviewImageList) {
-//				ri.setReview_idx(review_idx);
-//				reviewMapper.createReviewImage(ri);
-//			}
-//		}
 	}
+	
 	@Override
 	public void createReviewImage(ReviewImageDTO reviewImageDto) throws Exception {
 		reviewMapper.createReviewImage(reviewImageDto);
 	}
-	
 	
 	@Override
 	public List<ReviewDTO> listReview() throws Exception {
@@ -90,7 +82,13 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public ReviewDTO getReview(int reviewIdx) throws Exception {
-		return reviewMapper.getReview(reviewIdx);
+		ReviewDTO reviewDto = reviewMapper.getReview(reviewIdx);
+		
+		List<ReviewImageDTO> images = new ArrayList<ReviewImageDTO>();
+		images = reviewMapper.getImages(reviewDto.getReview_idx());
+		reviewDto.setReview_image(images);
+		
+		return reviewDto;
 	}
 
 	@Override

@@ -75,6 +75,12 @@
 		where user_id = #{user_id}
 	</select>
 	
+	<select id="getUserInfoFromReview" resultType="userDto">
+		select user_idx, user_name, user_id, user_pwd, user_email, is_admin
+		from user
+		where user_idx = #{user_idx}
+	</select>
+	
 	<!-- 아래부터 토큰 관련 -->
 	<select id="getRefreshToken" parameterType="string" resultType="string">
 		select token

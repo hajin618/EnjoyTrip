@@ -63,7 +63,7 @@ export default {
       content() {
         if (this.notice.notice_content)
             return this.notice.notice_content.split("\n").join("<br>");
-        return "";
+        return ""; 
       },
     },
 

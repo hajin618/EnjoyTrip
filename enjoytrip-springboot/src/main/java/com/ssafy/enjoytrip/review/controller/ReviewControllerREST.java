@@ -39,6 +39,7 @@ import com.ssafy.enjoytrip.review.model.ReviewSelectDTO;
 import com.ssafy.enjoytrip.review.model.service.ReviewService;
 import com.ssafy.enjoytrip.user.controller.UserControllerREST;
 import com.ssafy.enjoytrip.user.model.UserDTO;
+import com.ssafy.enjoytrip.user.model.service.UserService;
 
 @RestController
 @RequestMapping("/api")
@@ -53,37 +54,62 @@ public class ReviewControllerREST {
 	@Qualifier("ReviewServiceImpl")
 	private ReviewService service;
 	
-	public ReviewControllerREST(ReviewService service) {
+	@Autowired
+	private UserService uService;
+	
+	public ReviewControllerREST(ReviewService service, UserService uService) {
 		super();
 		this.service = service;
+		this.uService = uService;
 	}
 
 	// 한 개 조회할 때는 review, reviewComment, reviewImage 가져와야되는데
 	// 목록 조회는 review랑 userName만 가져오면 됨
 	
 	// 1개 조회
+//	@GetMapping("/review/{review_idx}")
+//	public Map<String, Object> reviewOne(@RequestParam Map<String, String> param,
+//			@PathVariable("review_idx") String review_idx){
+//		ReviewDTO reviewDto = null;
+//		List<ReviewCommentDTO> reviewCommentDto = null;
+//		Map<String, Object> resultMap = new HashMap<>();	
+//		
+//		try {
+//			service.updateHit(Integer.parseInt(review_idx));
+//			reviewDto = service.getReview(Integer.parseInt(review_idx));
+//			reviewCommentDto = service.getReviewComment(Integer.parseInt(review_idx));
+//			resultMap.put("isSuccess", "true");
+//			resultMap.put("review", reviewDto);
+//			resultMap.put("reviewComment", reviewCommentDto);
+//			
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			resultMap.put("isSuccess", "false");
+//		}
+//		return resultMap;
+//	}
+	
 	@GetMapping("/review/{review_idx}")
-	public Map<String, Object> reviewOne(@RequestParam Map<String, String> param,
-			@PathVariable("review_idx") String review_idx){
+	public ResponseEntity<ReviewDTO> reviewOne(@PathVariable("review_idx") int review_idx){
 		ReviewDTO reviewDto = null;
-		List<ReviewCommentDTO> reviewCommentDto = null;
-		Map<String, Object> resultMap = new HashMap<>();	
 		
 		try {
-			service.updateHit(Integer.parseInt(review_idx));
-			reviewDto = service.getReview(Integer.parseInt(review_idx));
-			reviewCommentDto = service.getReviewComment(Integer.parseInt(review_idx));
-			resultMap.put("isSuccess", "true");
-			resultMap.put("review", reviewDto);
-			resultMap.put("reviewComment", reviewCommentDto);
-			
-		} catch(Exception e) {
+			service.updateHit(review_idx);
+			reviewDto = service.getReview(review_idx);
+			UserDTO reviewUser = uService.getUserInfoFromReview(reviewDto.getUser_idx());
+			reviewDto.setUserDto(reviewUser);
+		} catch (Exception e) {
 			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
 		}
 		
-		return resultMap;
+		if(reviewDto != null) {
+			return new ResponseEntity<>(reviewDto, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
 	}
+	
 	
 	@GetMapping("/review")
 	public ResponseEntity<List<ReviewDTO>> reviewList() throws Exception{
