@@ -11,10 +11,14 @@ export default {
             map: null,
             positions: [],
             markers: [],
+
+            ChPositions: [],
+            ChMarkers: [],
         };
     },
     props: {
         attractions: [],
+        childAttractions: [],
     },
     watch: {
         attractions(){
@@ -27,7 +31,18 @@ export default {
                 this.positions.push(obj);
             });
             this.loadMarker();
-        }  
+        },
+
+        childAttractions(){
+            this.ChPositions = [];
+            this.childAttractions.forEach((attraction) => {
+                let obj = {};
+                obj.title = attraction.attraction_name;
+                obj.latlng = new window.kakao.maps.LatLng(attraction.latitude, attraction.longitude);
+                this.ChPositions.push(obj);
+            });
+            this.loadMarker();
+        }
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
@@ -88,9 +103,20 @@ export default {
                 this.markers.push(marker);
             })
 
+            // 어린이 여행지 마커 생성
+            this.ChMarkers = [];
+            this.ChPositions.forEach((position) => {
+                const marker = new window.kakao.maps.Marker({
+                    map : this.map,
+                    position: position.latlng,
+                    title: position.title,
+                });
+                this.ChMarkers.push(marker);
+            })
+
             // // 마커 표시
             // marker.setMap(this.map);
-            // 지동 이동시키기
+            // 지도 이동시키기
             const bounds = this.positions.reduce(
                 (bounds, position) => bounds.extend(position.latlng),
                 new window.kakao.maps.LatLngBounds()
@@ -107,6 +133,13 @@ export default {
                     item.setMap(null);
                 });
             }
+
+            // if(this.ChMarkers.length > 0){
+            //     this.ChMarkers.forEach((item) => {
+            //         console.log("item : " + item);
+            //         item.setMap(null);
+            //     })
+            // }
         },
 
     

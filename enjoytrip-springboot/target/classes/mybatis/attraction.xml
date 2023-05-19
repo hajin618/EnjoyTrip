@@ -47,6 +47,47 @@
 		where	sido_code = #{sido_code}
 	</select>
 	
+	<select id = "searchAttractionById" resultType="attractionInfoDto">
+		select 	content_id,
+				content_type_id,
+				title,
+				addr1,
+				addr2,
+				zipcode,
+				tel,
+				first_image,
+				first_image2,
+				readcount,
+				sido_code,
+				gugun_code,
+				latitude,
+				longitude,
+				mlevel
+		from	
+				attraction_info
+		where
+				content_id = #{content_id}		
+	</select>
+	
+	
+	<select id = "searchChildAttraction" parameterType="attractionSelectDto" resultType="childAttractionDto">
+		select	*
+		from	child_attraction
+		where	
+				1=1
+		<if test='sido_code != 0'>
+			and sido_code = #{sido_code}
+		
+			<if test='gugun_code != 0'>
+				and gugun_code = #{gugun_code}
+			</if>
+			
+		</if>
+			limit 10;
+			
+	</select>
+	
+	
 	<select id = "searchAttraction" parameterType="attractionSelectDto" resultMap="aI">
 		select	
 				info.content_id,

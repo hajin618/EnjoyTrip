@@ -68,68 +68,28 @@
       </div>
 
       <div class="mapZone">
-        <kakao-map :attractions="attractions"></kakao-map>
+        <kakao-map :attractions="attractions" :childAttractions="childAttractions"></kakao-map> 
       </div>
 
       <div class="rememberSpotZone">
         <div class="rememberTitle">여행지 저장</div>
         
-        
-        <!-- for 돌릴 녀석 -->
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
+        <div class="rememberItem" v-if="savedAttInfo.length">
+            <saved-attraction-item
+              v-for="item in savedAttInfo"
+              :key="item.content_id"
+              @deleteAtt="deleteAtt"
+              v-bind="item"/>
         </div>
+        <!-- <div class="rememberItem" v-else>
+          <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
+        </div> -->
 
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
-
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
-
-        <div class="rememberItem">
-          <img width="200px" height="200px" src="../assets/img/mainPageImg.png" alt="">
-          <div>
-            <span class="itemName">
-              여행지명
-            </span>
-          </div>
-          <div class="itemInfo">
-            <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
-            <button class="itemDeleteBtn">X</button>
-          </div>
-        </div>
+        <!-- <div class="goPlanBtnDiv"> -->
+          <button class = "goPlanBtn" v-on:click="goPlan">계획 생성하러 가기</button>
+        <!-- </div> -->
 
       </div>
-
     </div>
 
     <div class="searchedArea">
@@ -150,8 +110,13 @@
                 :key="att.content_id"
                 @saveAtt="saveAtt"
                 v-bind="att"/>
-            </tbody>
 
+              <search-view-item-ch
+                v-for="att in childAttractions"
+                :key="att.attraction_idx"
+                @saveChAtt="saveChAtt"
+                v-bind="att"/>
+            </tbody>
           </b-table-simple>
         </b-col>
       </b-row>
@@ -167,6 +132,8 @@ import http from "@/api/http";
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
+import SavedAttractionItem from "@/components/layout/SavedAttractionItem.vue";
+import SearchViewItemCh from "@/components/layout/SearchViewItem-Ch.vue";
 
 export default {
   name: "SearchView",
@@ -174,6 +141,8 @@ export default {
     HeaderNaviBar,
     SearchViewItem,
     KakaoMap,
+    SavedAttractionItem,
+    SearchViewItemCh,
   },
   data(){
     return{
@@ -184,7 +153,11 @@ export default {
       gugunList: [],
       content_type_id: null,
       attractions : [],
-      savedAtt : [],  // 저장한 여행지 번호 저장
+      childAttractions : [],
+      savedAtt : [],          // 저장한 여행지 번호 저장
+      savedAttInfo : [],      // 저장한 여행지 번호로 조회한 정보 저장
+      savedChAtt : [],        // 저장한 어린이 여행지 번호 저장
+      savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
     }
   },
   created(){
@@ -193,7 +166,21 @@ export default {
       this.sidoList = data.sidoList;
     });
   },
-
+  
+  // watch: {
+  //   // 저장한 여행지 정보 변할 때 마다 수행
+  //   savedAtt(){
+  //     // this.savedAttInfo = [];
+  //     this.savedAtt.forEach(item =>{
+  //       http.get(`/attraction/${item}`).then(({ data }) =>{
+  //         console.log(data);
+  //         this.savedAttInfo.push(data);
+          
+  //       })
+  //     });
+  //     console.log("savedAttInfo ::: "+this.savedAttInfo);
+  //   }
+  // },
   methods: {
     getGuGun(){
       // console.log("시도 : "+this.sidoSelected);
@@ -217,15 +204,74 @@ export default {
       .then(({ data }) => {
         // console.log(data);
         this.attractions = data;
+      });
+
+      http.post(`/childAttraction`, {
+        sido_code : this.sidoSelected,
+        gugun_code : this.gugunSelected,
+        content_type_id : this.content_type_id,
+        searchWord : this.searchWord,
       })
+      .then(({ data }) => {
+        //console.log("child Attraction !! " + data);
+        this.childAttractions = data;
+        // console.log(this.childAttractions);
+      });
+      
     },
 
     saveAtt(value){
       // 중복값 확인
       if(!this.savedAtt.includes(value)){
         this.savedAtt.push(value);
+
+        http.get(`/attraction/${value}`).then(({ data }) =>{
+          // console.log("attraction title ::: " + data.title);
+          this.savedAttInfo.push(data);
+        });
+        
+        //console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
       }
-      console.log(this.savedAtt);
+      // console.log(this.savedAtt);
+      // console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
+    },
+
+    
+    saveChAtt(value){
+      // console.log(value);
+      if(!this.savedChAtt.includes(value)){
+        this.savedChAtt.push(value);
+
+        http.get(`/childAttraction/${value}`).then(({ data }) =>{
+          this.savedChAttInfo.push(data);
+        });
+      }
+    },
+
+    deleteAtt(value){
+      // 삭제할 content_id 들어오면 savedAtt, savedAttInfo에서 삭제하기
+      const index = this.savedAtt.indexOf(value);
+      if(index !== -1){
+        // console.log(index);
+        this.savedAtt.splice(index, 1);
+      }
+      else{
+        console.log("no value !!");
+      }
+
+      console.log("savedAtt : " + this.savedAtt);
+      const index2 = this.savedAttInfo.findIndex(item => item.content_id === value);
+      if(index !== -1){
+        this.savedAttInfo.splice(index2, 1);
+      }
+    },
+
+    
+
+    goPlan(){
+      if(this.savedAttInfo.length == 0){
+        alert("여행지를 하나 이상 선택해주세요");
+      }
     }
   }
 }
@@ -368,26 +414,20 @@ export default {
     border-radius: 10px / 10px;
   }
 
-  .findChildSpotBtn{
+
+  .goPlanBtn{
+    margin-top : 180px;
     margin-left: 20px;
-    width: 150px;
-    height: 30px;
-    font-size: 12px;
+    width: 200px;
+    height: 50px;
+    font-size: 15px;
     background-color: #F1F4F1;
-    border: 1px solid rgba(213, 120, 120, .2);
+    border: 1px solid rgba(103, 132, 177, 0.2);
     border-radius: 10px / 10px;
   }
 
-  .itemDeleteBtn{
-    margin-left: 20px;
-    height: 30px;
-    font-size: 10px;
-    background-color: #F1F4F1;
-    border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px;
+  .goPlanBtn:hover{
+    background-color : #c8d6cc;
   }
 
-  .itemInfo{
-    margin-top: 10px;
-  }
 </style>

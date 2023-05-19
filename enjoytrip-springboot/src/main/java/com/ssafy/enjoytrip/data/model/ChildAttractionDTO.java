@@ -18,7 +18,14 @@ public class ChildAttractionDTO {
 	String nursing_room;
 	String stroller;
 	String kid_zone;
-	
+	String free_parking;
+	String paid_parking;
+	String sido_name;
+	int sido_code;
+	String gugun_name;
+	int gugun_code;
+	String admission_fee;
+
 	@Override
 	public String toString() {
 		return "ChildAttractionDTO [attraction_idx=" + attraction_idx + ", attraction_name=" + attraction_name
@@ -26,8 +33,95 @@ public class ChildAttractionDTO {
 				+ latitude + ", longitude=" + longitude + ", road_address=" + road_address + ", address=" + address
 				+ ", phone_number=" + phone_number + ", homepage=" + homepage + ", closed_day=" + closed_day
 				+ ", operating_time=" + operating_time + ", nursing_room=" + nursing_room + ", stroller=" + stroller
-				+ ", kid_zone=" + kid_zone + "]";
+				+ ", kid_zone=" + kid_zone + ", free_parking=" + free_parking + ", paid_parking=" + paid_parking
+				+ ", sido_name=" + sido_name + ", sido_code=" + sido_code + ", gugun_name=" + gugun_name
+				+ ", gugun_code=" + gugun_code + ", admission_fee=" + admission_fee + "]";
 	}
+	
+
+	public String getFree_parking() {
+		return free_parking;
+	}
+
+
+
+	public void setFree_parking(String free_parking) {
+		this.free_parking = free_parking;
+	}
+
+
+
+	public String getPaid_parking() {
+		return paid_parking;
+	}
+
+
+
+	public void setPaid_parking(String paid_parking) {
+		this.paid_parking = paid_parking;
+	}
+
+
+
+	public String getSido_name() {
+		return sido_name;
+	}
+
+
+
+	public void setSido_name(String sido_name) {
+		this.sido_name = sido_name;
+	}
+
+
+
+	public int getSido_code() {
+		return sido_code;
+	}
+
+
+
+	public void setSido_code(int sido_code) {
+		this.sido_code = sido_code;
+	}
+
+
+
+	public String getGugun_name() {
+		return gugun_name;
+	}
+
+
+
+	public void setGugun_name(String gugun_name) {
+		this.gugun_name = gugun_name;
+	}
+
+
+
+	public int getGugun_code() {
+		return gugun_code;
+	}
+
+
+
+	public void setGugun_code(int gugun_code) {
+		this.gugun_code = gugun_code;
+	}
+
+
+
+	public String getAdmission_fee() {
+		return admission_fee;
+	}
+
+
+
+	public void setAdmission_fee(String admission_fee) {
+		this.admission_fee = admission_fee;
+	}
+
+
 
 	public int getAttraction_idx() {
 		return attraction_idx;

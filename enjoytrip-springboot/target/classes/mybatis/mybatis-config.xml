@@ -47,6 +47,9 @@
 		<typeAlias
 			type="com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO"
 			alias="attractionSelectDto" />
+		<typeAlias
+			type="com.ssafy.enjoytrip.data.model.ChildAttractionDTO"
+			alias="childAttractionDto" />
 	</typeAliases>
 
 	<mappers>
