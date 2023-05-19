@@ -80,6 +80,13 @@
               :key="item.content_id"
               @deleteAtt="deleteAtt"
               v-bind="item"/>
+            
+            <saved-ch-attraction-item
+              v-for="item in savedChAttInfo"
+              :key="item.attraction_idx"
+              @deleteChAtt="deleteChAtt"
+              v-bind="item"/>
+            
         </div>
         <!-- <div class="rememberItem" v-else>
           <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
@@ -128,12 +135,16 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
 
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 import SearchViewItem from "../components/layout/SearchViewItem.vue"
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 import SavedAttractionItem from "@/components/layout/SavedAttractionItem.vue";
 import SearchViewItemCh from "@/components/layout/SearchViewItem-Ch.vue";
+import SavedChAttractionItem from "@/components/layout/SavedChAttractionItem.vue";
+
+const userStore = "userStore";
 
 export default {
   name: "SearchView",
@@ -143,6 +154,7 @@ export default {
     KakaoMap,
     SavedAttractionItem,
     SearchViewItemCh,
+    SavedChAttractionItem
   },
   data(){
     return{
@@ -158,8 +170,12 @@ export default {
       savedAttInfo : [],      // 저장한 여행지 번호로 조회한 정보 저장
       savedChAtt : [],        // 저장한 어린이 여행지 번호 저장
       savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
+      plan_idx: 0,
     }
   },
+  computed: {
+      ...mapState(userStore, ["userInfo"]),
+    },
   created(){
     http.get(`/sido`).then(({ data }) => {
       //console.log(data.sidoList);
@@ -266,11 +282,77 @@ export default {
       }
     },
 
+    deleteChAtt(value){
+      const index=this.savedChAtt.indexOf(value);
+      if(index !== -1){
+        this.savedChAtt.splice(index, 1);
+      }
+      else{
+        console.log("no value !!");
+      }
+
+      const index2 = this.savedChAttInfo.findIndex(item => item.attraction_idx === value);
+      if(index !== -1){
+        this.savedChAttInfo.splice(index2, 1);
+      }
+    },
+
     
 
     goPlan(){
-      if(this.savedAttInfo.length == 0){
+      if(this.savedAttInfo.length == 0 && this.savedChAttInfo.length == 0){
         alert("여행지를 하나 이상 선택해주세요");
+        
+      }
+      else{
+        // console.log(this.savedAtt);
+        // console.log(this.savedChAtt);
+        
+        // db에 넣자ㅏ
+
+        // 새로운 계획 생성하기
+        http.post(`/plan`, {
+          user_idx : this.userInfo.user_idx,
+        }).then((response) => {
+          if(response.status == 200){
+            this.plan_idx = response.data;
+
+            // plan idx 얻어왔으면 이걸로 plan detail에 데이터 넣자
+            //console.log(this.plan_idx);
+            // 일단 순서는 막 넣기
+            let idx = 1;
+            for(let i=0; i<this.savedAtt.length; i++){
+              http.post(`/planDetail`, {
+                plan_idx : this.plan_idx,
+                content_id : this.savedAtt[i],
+                detail_order : idx
+              }).then((response) =>{
+                if(response.status == 200){
+                  console.log("디비 들어감");
+                }
+              })
+
+              idx += 1;
+            }
+
+            for(let j=0; j<this.savedChAtt.length; j++){
+              http.post(`/planDetail`, {
+                plan_idx : this.plan_idx,
+                content_id : this.savedChAtt[j],
+                detail_order : idx
+              }).then((response) =>{
+                if(response.status == 200){
+                  console.log("디비 들어감!");
+                }
+              })
+
+              idx += 1;
+            }
+        }
+      })
+
+
+
       }
     }
   }

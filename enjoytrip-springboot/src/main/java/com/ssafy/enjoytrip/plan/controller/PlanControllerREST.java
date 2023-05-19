@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,6 +78,8 @@ public class PlanControllerREST {
 		return resultMap;
 	}
 	
+	
+	/*
 	@PostMapping("/plan") // 여행 계획 생성, 처음 여행 계획 생성한 사람 permission 추가
 	public Map<String, Object> createPlan(@RequestBody PlanDTO planDto, @RequestParam Map<String, String> map, Model model) {
 		Map<String, Object> resultMap = new HashMap();
@@ -99,6 +103,43 @@ public class PlanControllerREST {
 			map.put("resmsg", "여행 계획 생성 실패");
 		}
 		return resultMap;
+	}
+	*/
+	@PostMapping("/plan")
+	public ResponseEntity<Integer> createPlan(@RequestBody PlanDTO planDto){
+		int result = -1;
+		planDto.setPlan_type("어린이");
+		try {
+			int rowCount = service.createPlan(planDto);
+			result = planDto.getPlan_idx();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@PostMapping("/planDetail")
+	public ResponseEntity<Integer> createPlanDetail(@RequestBody PlanDetailDTO planDetailDto){
+		int result = -1;
+		try {
+			result = service.createPlanDetail(planDetailDto);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
+		
 	}
 
 	@DeleteMapping("/plan/{plan_idx}")

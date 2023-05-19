@@ -48,6 +48,7 @@
 	</select>
 	
 	<select id = "searchAttractionById" resultType="attractionInfoDto">
+	
 		select 	content_id,
 				content_type_id,
 				title,
@@ -67,6 +68,18 @@
 				attraction_info
 		where
 				content_id = #{content_id}		
+				
+	</select>
+	
+	<select id = "searchChildAttractionById" resultType="childAttractionDto">
+	
+		select	
+				*
+		from	
+				child_attraction
+		where
+				attraction_idx = #{attraction_idx}
+				
 	</select>
 	
 	
