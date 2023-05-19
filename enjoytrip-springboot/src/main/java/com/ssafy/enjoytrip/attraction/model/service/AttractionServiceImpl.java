@@ -47,4 +47,9 @@ public class AttractionServiceImpl implements AttractionService{
 		return attractionMapper.searchChildAttraction(attractionSelectDTO);
 	}
 
+	@Override
+	public List<ChildAttractionDTO> searchChildAttractionById(int attraction_idx) throws Exception {
+		return attractionMapper.searchChildAttractionById(attraction_idx);
+	}
+
 }

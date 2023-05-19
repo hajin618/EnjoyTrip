@@ -32,11 +32,12 @@
 		from plan
 		where plan_idx = #{plan_idx}
 	</select>
+	
 	<insert id="createPlan" parameterType="planDto">
 		insert into plan
-		(user_idx, plan_title, plan_start, plan_end)
-		values (#{user_idx},
-		#{plan_title}, #{plan_start}, #{plan_end})
+		(user_idx, plan_type)
+		values (#{user_idx}, #{plan_type} )
+
 		<selectKey resultType="int" keyProperty="plan_idx" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -95,12 +96,10 @@
 		delete from plan_detail where plan_idx = #{plan_idx}
 	</delete>
 	
-	<insert id = "createPlanDetail" parameterType="planDto">
-		insert into plan_detail (plan_idx, content_id)
+	<insert id = "createPlanDetail" parameterType="planDetailDto">
+		insert into plan_detail (plan_idx, content_id, detail_order)
 		values 
-		<foreach collection="planDetail" item="details" separator=" , ">
-		(#{plan_idx}, #{details.content_id})
-		</foreach>
+		(#{plan_idx}, #{content_id}, #{detail_order})
 	</insert>
 	
 	<insert id="createPlanComment" parameterType="planCommentDto">

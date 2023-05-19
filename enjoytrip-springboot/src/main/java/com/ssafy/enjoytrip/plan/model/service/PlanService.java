@@ -10,7 +10,9 @@ import com.ssafy.enjoytrip.plan.model.PlanDetailDTO;
 
 public interface PlanService {
 	// 여행 계획 생성
-	public void createPlan(PlanDTO planDto) throws Exception;
+	public int createPlan(PlanDTO planDto) throws Exception;
+	// 여행 계획 detail 생성
+	public int createPlanDetail(PlanDetailDTO planDetailDto) throws Exception;
 	// 여행 계획 수정
 	public void updatePlan(PlanDTO planDto) throws Exception;
 	// 여행 계획 리스트 조회

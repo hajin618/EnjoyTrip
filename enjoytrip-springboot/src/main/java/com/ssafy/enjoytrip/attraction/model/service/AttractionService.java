@@ -20,4 +20,6 @@ public interface AttractionService {
 	public List<ChildAttractionDTO> searchChildAttraction(AttractionSelectDTO attractionSelectDTO) throws Exception;
 	// 여행지 검색 (content_id)
 	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception;
+	// 아이 여행지 검색 (attraction_idx)
+	public List<ChildAttractionDTO> searchChildAttractionById(int attraction_idx) throws Exception;
 }

@@ -22,15 +22,8 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public void createPlan(PlanDTO planDto) throws Exception {
-		System.out.println("service: " + planDto.toString());
-		planMapper.createPlan(planDto);
-		
-		System.out.println(planDto.getPlan_idx());
-		List<PlanDetailDTO> planDetailList = planDto.getPlanDetail();
-		if(planDetailList != null && !planDetailList.isEmpty()) {
-			planMapper.createPlanDetail(planDto);
-		}
+	public int createPlan(PlanDTO planDto) throws Exception {
+		return planMapper.createPlan(planDto);
 	}
 
 	@Override
@@ -113,5 +106,10 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public void deleteLikePlan(@Param("plan_idx")int planIdx, @Param("user_idx")int userIdx) throws Exception {
 		planMapper.deleteLikePlan(planIdx, userIdx);
+	}
+
+	@Override
+	public int createPlanDetail(PlanDetailDTO planDetailDto) throws Exception {
+		return planMapper.createPlanDetail(planDetailDto);
 	}
 }

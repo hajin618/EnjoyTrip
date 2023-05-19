@@ -76,27 +76,6 @@ public class AttractionControllerRest {
 		return resultMap;
 	}
 	
-	// 시도코드, 구군코드, 관광지 유형, 검색어 들고 전체 관광지 검색
-//	@GetMapping("/attraction")
-//	public Map<String, Object> attractionList(@RequestBody AttractionInfoDTO attractionInfoDto) throws Exception {
-//		Map<String, Object> resultMap = new HashMap<>();
-//		List<AttractionInfoDTO> list = null;
-//		
-//		try {
-//			System.out.println("==========================================");
-//			System.out.println(param.toString());
-//			System.out.println("sido : "+param.get("sido_code"));
-//			System.out.println("gugun : "+param.get("gugun_code"));
-//			list = service.searchAttraction(param);
-//			resultMap.put("isSuccess", "true");
-//			resultMap.put("attractionList", list);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			resultMap.put("isSuccess", "false");
-//		}
-//		return resultMap;
-//	}
-	
 	// 어른 여행지 검색 
 	@PostMapping("/attraction")
 	public ResponseEntity<List<AttractionInfoDTO>> attractionList(@RequestBody AttractionSelectDTO attractionSelectDTO){
@@ -157,6 +136,24 @@ public class AttractionControllerRest {
 		}
 		
 		return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.OK);
+	}
+	
+	// 여행지 저장 할 때 사용 (어린이요 관광지)
+	@GetMapping("/childAttraction/{attraction_idx}")
+	public ResponseEntity<List<ChildAttractionDTO>> savedChildAttractionList(@PathVariable("attraction_idx") String attraction_idx){
+		
+		List<ChildAttractionDTO> list = null;
+		
+		try {
+			list = service.searchChildAttractionById(Integer.parseInt(attraction_idx));
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.info("error");
+			
+			return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.OK);
 	}
 	
 	
