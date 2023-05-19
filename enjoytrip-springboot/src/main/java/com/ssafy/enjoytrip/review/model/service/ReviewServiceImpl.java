@@ -82,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public void deleteReview(int reviewIdx) throws Exception {
 //		reviewMapper.deleteReviewComment(reviewIdx, 0);
-		reviewMapper.deleteReviewImage(reviewIdx);
+		reviewMapper.deleteReviewImageAll(reviewIdx);
 		reviewMapper.deleteReview(reviewIdx);
 	}
 

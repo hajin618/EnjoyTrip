@@ -31,6 +31,7 @@
         <input class="box" v-model="this.user_email" id="email" autocomplete="off" type="text" readonly required>
       </div> 
 
+      <button v-on:click.prevent="deleteUser" class="deleteBtn" >회원탈퇴</button>
       <button v-on:click.prevent="checkPwd" class="editBtn" >회원 정보 수정</button>
     </form>
   </div>
@@ -38,7 +39,9 @@
 
 <script>
 import http from "@/api/http";
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const userStore = "userStore";
 
 
 export default {
@@ -59,8 +62,36 @@ export default {
         user_id: state => state.userStore.userInfo.user_id,
         user_email: state => state.userStore.userInfo.user_email,
       }),
+      ...mapGetters(["checkisLogin", "checkUserInfo"]),
   },
   methods: {
+    ...mapActions(userStore, ["userLogout"]),
+    deleteUser(){
+      if (!confirm("정말 탈퇴하시겠습니까?")) {
+            alert("회원 탈퇴되지 않았습니다.");
+        } else {
+            console.log(this.user_id);
+            http.get(`/userdelete/${this.user_id}`)
+            .then(({data}) => { 
+              console.log(data);
+              if(data == "SUCCESS"){
+                alert("탈퇴 성공하였습니다.");
+                this.userLogout(this.user_id);
+                sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+                sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+                // Swal.fire({
+                //   'Alert 실행!!.',  // Alert 제목
+                //   'Alert 내용이 나타나는 곳.',  // 내용
+                //   'success',  // icon
+                // });
+                this.$router.push({ name: "HomeView" });
+              }
+              else{
+                alert("회원 탈퇴 실패!");
+              }
+          });
+        }
+    },
     pwdChecked(){
       if(this.pwd == ''){
         this.pwdNotCorrect = false;
@@ -97,7 +128,7 @@ export default {
               this.$router.push({ name: "HomeView" });
             }
             else{
-              alert("회원 가입 실패!");
+              alert("회원 정보 수정 실패!");
             }
           });
         }
@@ -153,10 +184,21 @@ export default {
     }
     .editBtn{
       margin-top: 60px;
-      margin-left: 870px;
+      margin-left: 30px;
       height: 40px;
       color: white;
       width: 300px;
+      background-color: #7aab85;
+      border: 1px solid rgba(213, 120, 120, .2);
+      border-radius: 20px / 20px;
+    }
+
+    .deleteBtn{
+      margin-top: 60px;
+      margin-left: 690px;
+      height: 40px;
+      color: white;
+      width: 150px;
       background-color: #7aab85;
       border: 1px solid rgba(213, 120, 120, .2);
       border-radius: 20px / 20px;
