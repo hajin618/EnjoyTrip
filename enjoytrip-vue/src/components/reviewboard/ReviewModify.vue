@@ -35,7 +35,7 @@
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
           </div>
- 
+
           <div v-if="review_image.length">
             <div v-for="image in review_image" :key="image.image_num">
               <span>{{image.image_name}}</span>
