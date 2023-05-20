@@ -21,6 +21,9 @@ public interface ReviewService {
 	// 리뷰 리스트 조회
 	public List<ReviewDTO> listReview() throws Exception;
 	
+	// 나의 리뷰 리스트 조회
+	public List<ReviewDTO> myReviewList(int user_idx) throws Exception;
+	
 	// 리뷰 리스트 정제 조회
 	public List<ReviewDTO> listReviewSort(ReviewSelectDTO reviewSelectDTO) throws Exception;
 	

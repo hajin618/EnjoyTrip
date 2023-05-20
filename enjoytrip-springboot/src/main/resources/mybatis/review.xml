@@ -39,6 +39,20 @@
 		from	review
 	</select>
 	
+	<select id="myReviewList" resultMap="review">
+		select 	  review_idx
+			    , user_idx
+			    , sido_code
+			    , review_title
+			    , review_content
+			    , review_create
+			    , review_update
+			    , review_hit
+			    , review_type
+		from	review
+		where user_idx = #{user_idx};
+	</select>
+	
 	<select id = "listReviewSort" resultMap="review">
 		select 	  review_idx
 			    , user_idx

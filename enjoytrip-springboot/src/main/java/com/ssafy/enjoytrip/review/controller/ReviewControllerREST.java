@@ -99,6 +99,18 @@ public class ReviewControllerREST {
 		}
 	}
 	
+	@GetMapping("/myreview/{user_idx}")
+	public ResponseEntity<List<ReviewDTO>> myReviewList(@PathVariable("user_idx") int user_idx) throws Exception{
+		List<ReviewDTO> list = null;
+		list = service.myReviewList(user_idx);
+		if(list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+	}
+	
 	@GetMapping("/reviewsort")
 	public ResponseEntity<List<ReviewDTO>> reviewListSort(@RequestParam("sido_code") int sido_code, @RequestParam("review_type") String review_type) throws Exception{
 		
