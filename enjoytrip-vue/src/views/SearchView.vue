@@ -140,39 +140,40 @@
 
       <div class="modal-body">
         <div class="address">
-          <strong>Address:</strong> {{ modalSelectedItem.address }}
+          <strong>주소:</strong> {{ modalSelectedItem.address }}
         </div>
 
         <div class="category">
-          <strong>Category:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
+          <strong>카테고리:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
         </div>
 
         <div class="phone-number">
-          <strong>Phone Number:</strong> {{ modalSelectedItem.phone_number }}
+          <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
         </div>
 
         <div class="homepage">
-          <strong>Homepage:</strong> {{ modalSelectedItem.homepage }}
+          <strong>homepage:</strong>
+          <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
         </div>
 
         <div class="operating-time">
-          <strong>Operating Time:</strong> {{ modalSelectedItem.operating_time }}
+          <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
         </div>
 
         <div class="closed-day">
-          <strong>Closed Day:</strong> {{ modalSelectedItem.closed_day }}
+          <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
         </div>
 
         <div class="stroller">
-          <strong>Stroller:</strong> {{ modalSelectedItem.stroller }}
+          <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
         </div>
 
         <div class="nursing-room">
-          <strong>Nursing Room:</strong> {{ modalSelectedItem.nursing_room }}
+          <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
         </div>
 
         <div class="admission-fee">
-          <strong>Admission Fee:</strong> {{ modalSelectedItem.admission_fee }}
+          <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
         </div>
       </div>
     </div>
@@ -588,7 +589,7 @@ export default {
 }
 
 .modal-content {
-  background-color : #eeefee;
+  background-color: #f5f1e7;
   padding: 20px;
   border-radius: 5px;
   width: 400px;
@@ -603,6 +604,7 @@ export default {
 
 .modal-title {
   margin: 0;
+  color: #7aab85;
 }
 
 .close-modal-btn {
@@ -631,7 +633,9 @@ export default {
 
 strong {
   margin-right: 5px;
+  color: #7aab85;
 }
+
 
 
 </style>
