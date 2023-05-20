@@ -6,32 +6,9 @@
 
         <div style="display: flex; flex-direction:row; margin-bottom:100px">
             <div class="findKidZone">
-                <div class="findTitle">실종 아동 정보</div>
-
-                <div class="findImageBox">
-                <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-                </div>
-
-                <div class="findNameBox">
-                <label>이름 : </label>
-                <span>홍길동</span>
-                </div>
-                
-                <div class="findAgeBox">
-                <label>나이 : </label>
-                <span>5</span>
-                </div>
-
-                <div class="findInfoBox">
-                <label>인적사항 1 : </label>
-                <span>마른 편</span>
-                </div>
-
-                <div class="findInfoBox">
-                <label>인적사항 2 : </label>
-                <span>눈이 이쁨</span>
-                </div>
-
+              <div>
+                여행 순서
+              </div>
             </div>
         
             <div class="planDiv">
@@ -51,31 +28,21 @@
                 <div class="planContentDiv">
                   내용
                 </div>
-
-                <div class="planButtonDiv">
-                  <div class="planListBtnDiv">
-                    <button
-                      v-on:click="listPlan"
-                      class="Button"
-                      >목록</button>
-                  </div>
-                  <div class="planMdRmBtnDiv">
-                    <button
-                      v-on:click="modifyPlan"
-                      class="Button"
-                      >수정</button>
-                    <button
-                    v-on:click="removePlan"
-                    class="Button"
-                    >삭제</button>
-                  </div>
-                </div>
-
             </div>
-
-            
-
         </div>
+
+      <div class="buttonBox">
+        <div class="listBox">
+          <button v-on:click.prevent="listPlan" class="listBtn">목록</button>
+        </div>
+        
+        <!-- <div v-if="plan.userDto.user_id === user_id"> -->
+        <div>
+          <button v-on:click.prevent="modifyPlan" class="editBtn">수정</button>
+          <button v-on:click.prevent="removePlan" class="deleteBtn">삭제</button>
+        </div>
+      </div>
+
     </div>
 
 
@@ -83,8 +50,10 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
+
 export default {
-    name: "PlanDetail",
+    name: "PlanDetailView",
 
     data(){
         return{
@@ -93,29 +62,47 @@ export default {
     },
 
     created(){
-        http.get(`/plan/${this.$route.params.plan_idx}`).then(({ data }) => {
-            console.log(data);
-            this.plan = data.plan;
-        });
+      // http.get(`/plan/${this.$route.params.plan_idx}`).then(({ data }) => {
+      //     console.log(data);
+      //     this.plan = data.plan;
+      // });
     },
-
     methods:{
       listPlan(){
-
+        this.$router.push({ name: "PlanView" });
       },
       modifyPlan(){
-
+        this.$router.replace({
+          name: "planModify",
+          params: { plan_idx : this.plan.plan_idx },
+        });
       },
       removePlan(){
-
+        http.delete(`/plan/${this.plan.plan_idx}`)
+        .then((response) => {
+          if(response.status == 200){
+            alert("계획 삭제 성공!")
+            this.listPlan();
+          }
+          else{
+            alert("계획 삭제 실패!");
+            this.listPlan();
+          }
+        })
       },
+    },
+    computed: {
+    ...mapState({
+      user_name: state => state.userStore.userInfo.user_name,
+      user_id: state => state.userStore.userInfo.user_id,
+      user_email: state => state.userStore.userInfo.user_email,
+      }),
     }
-
 }
 </script>
 <style scoped>
   .title{
-      padding-top : 100px;
+      padding-top : 50px;
       padding-bottom: 50px;
     }
   h2{
@@ -124,8 +111,8 @@ export default {
 
   .findKidZone{
     margin-left: 40px;
-    width: 15%;
-    height: 560px;
+    width: 25%;
+    height: 620px;
     background-color: rgba(200, 235, 207, 0.5);
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 10px / 10px;
@@ -141,7 +128,7 @@ export default {
   .findImageBox{
     margin-top: 20px;
     margin-left: 10%;
-    width: 80%;
+    width: 70%;
     height: 300px;
   }
 
@@ -175,15 +162,17 @@ export default {
   }
 
   .planTitleDiv{
-    width: 95%;
-    height: 40px;
+    width: 75%;
+    height: 50px;
+    line-height : 50px;
     background-color:#e8ece8d1;
     border-radius: 20px / 20px;
   }
   .planChildBtnDiv{
-    margin-left: 70px;
-    width: 10%;
-    height: 40px;
+    margin-left: 120px;
+    width: 15%;
+    height: 50px;
+    line-height : 50px;
     background-color:#e8ece8d1;
     border-radius: 20px / 20px;
   }
@@ -199,9 +188,9 @@ export default {
     margin-bottom: 30px;
   }
   .Button{
-    border-color:#98c2a182;
-    background-color : #98c2a182;
-    border-radius: 10px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
     width: 80px;
     height: 35px;
     margin-right: 5px;
@@ -218,5 +207,42 @@ export default {
   .planMdRmBtnDiv{
     width: 50%;
     text-align: right;
+  }
+
+.buttonBox{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex; 
+    flex-direction:row;
+  }
+
+  .listBox{
+    margin-left: 940px;
+  }
+
+  .listBtn{
+    width: 80px;
+    height: 35px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .editBtn{
+    margin-left: 540px;
+    width: 80px;
+    height: 35px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .deleteBtn{
+    margin-left: 20px;
+    width: 80px;
+    height: 35px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
   }
 </style>
