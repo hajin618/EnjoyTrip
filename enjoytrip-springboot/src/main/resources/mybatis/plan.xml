@@ -27,10 +27,19 @@
 
 	<select id="getPlan" parameterType="int" resultType="planDto">
 		select
-		plan_idx, user_idx, plan_title, plan_create, plan_update, plan_start,
-		plan_end, plan_like, plan_hit
-		from plan
-		where plan_idx = #{plan_idx}
+				plan_idx
+			  , user_idx
+			  , plan_title
+			  , plan_create
+			  , plan_update
+			  , plan_like
+			  , plan_hit
+			  , plan_content
+			  , plan_type
+		from 
+				plan
+		where 
+				plan_idx = #{plan_idx}
 	</select>
 	
 	<insert id="createPlan" parameterType="planDto">
@@ -77,9 +86,14 @@
 
 	<select id="getPlanDetail" parameterType="int"
 		resultType="planDetailDto">
-		select *
-		from plan_detail
-		where plan_idx = #{plan_idx}
+		select 
+				plan_idx
+			  , content_id
+			  , detail_order
+		from 
+				plan_detail
+		where 
+				plan_idx = #{plan_idx}
 	</select>
 
 	<select id="getPlanComment" parameterType="int"

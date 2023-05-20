@@ -6,12 +6,12 @@
 
         <div class="Div">
             <div class="mapDiv">
-                지도
+                <kakao-map></kakao-map>
             </div>
 
             <div class="horVerDiv">
                 <div class="horDiv">
-                    <input class="planTitleDiv" v-model="title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." >
+                    <input class="planTitleDiv" v-model="plan_title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." >
                         
                 <select class="planChildBtnDiv" v-model="selectedType">
                     <option value='' selected>여행 타입 선택</option>
@@ -35,7 +35,7 @@
 
         <div class="bottomBox">
             <div class="contentDiv">
-                <input v-model="content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+                <input v-model="plan_content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
             </div>
 
             <div class="ButtonDiv">
@@ -47,8 +47,8 @@
 </template>
 
 <script>
-// import http from "@/api/http";
-
+import http from "@/api/http";
+import KakaoMap from "@/components/layout/KakaoMap.vue";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
@@ -56,18 +56,33 @@ const userStore = "userStore";
 export default {
     name: "PlanRegister",
     components: {
-        
+        KakaoMap,
     },
     data(){
         return{
-            title: '',
-            content: '',
-            selectedType: '',
+            plan:{
+                plan_title: "",
+                plan_content: "",
+                plan_type: "",
+
+            },
+            // title: '',
+            // content: '',
+            // selectedType: '',
             selectType: [
                         {name: '아이', value: "아이"},
                         {name: '어른', value: "어른"},
                         ],
+            attractions: [],        // 저장된 어른 여행지 저장할 배열 : kakao 지도에 넘길거임
+            childAttractions: [],   // 저장된 어린이 여행지 저장할 배열 : kakao 지도에 넘길거임
         }
+    },
+    created(){
+        http.get(`/plan/${this.$route.params.plan_idx}`).then(({data}) => {
+            this.plan = data;
+            console.log(data.plan);
+            console.log(data.planDetail);
+        })
     },
     methods:{
         confirm(){

@@ -65,9 +65,9 @@ public class PlanControllerREST {
 			service.updateHit(planIdx);
 			
 			resultMap.put("resmsg", "여행 계획 조회 성공");
-			resultMap.put("여행계획", planDto);
-			resultMap.put("여행계획상세", planDetailList);
-			resultMap.put("여행계획댓글", planCommetList);
+			resultMap.put("plan", planDto);
+			resultMap.put("planDetail", planDetailList);
+			resultMap.put("planComment", planCommetList);
 			resultMap.put("pgno", map.get("pgno"));
 			resultMap.put("key", map.get("key"));
 			resultMap.put("word", map.get("word"));

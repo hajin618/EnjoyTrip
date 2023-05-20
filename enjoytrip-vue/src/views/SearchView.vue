@@ -349,7 +349,7 @@ export default {
 
             // plan idx 얻어왔으면 이걸로 plan detail에 데이터 넣자
             //console.log(this.plan_idx);
-            // 일단 순서는 막 넣기
+            // 일단 순서는 넣은 순서대로
             let idx = 1;
             for(let i=0; i<this.savedAtt.length; i++){
               http.post(`/planDetail`, {
@@ -358,7 +358,7 @@ export default {
                 detail_order : idx
               }).then((response) =>{
                 if(response.status == 200){
-                  console.log("디비 들어감");
+                  // console.log("디비 들어감");
                 }
               })
 
@@ -372,12 +372,18 @@ export default {
                 detail_order : idx
               }).then((response) =>{
                 if(response.status == 200){
-                  console.log("디비 들어감!");
+                  // console.log("디비 들어감!");
                 }
               })
 
               idx += 1;
             }
+
+            // 페이지 이동하자
+            this.$router.replace({ 
+              name: "planRegister",
+              params: {plan_idx : this.plan_idx},
+            });
         }
       })
 
