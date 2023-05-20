@@ -212,9 +212,6 @@ CREATE TABLE IF NOT EXISTS `enjoytrip_dhj`.`plan_detail` (
   `detail_order` INT NOT NULL,
   PRIMARY KEY (`plan_idx`, `content_id`),
   INDEX `FK_attraction_info_TO_plan_detail` (`content_id` ASC) VISIBLE,
-  CONSTRAINT `FK_attraction_info_TO_plan_detail`
-    FOREIGN KEY (`content_id`)
-    REFERENCES `enjoytrip_dhj`.`attraction_info` (`content_id`),
   CONSTRAINT `FK_plan_TO_plan_detail`
     FOREIGN KEY (`plan_idx`)
     REFERENCES `enjoytrip_dhj`.`plan` (`plan_idx`))
