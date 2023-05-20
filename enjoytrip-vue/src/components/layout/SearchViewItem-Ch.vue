@@ -1,21 +1,28 @@
 <template>
-  <b-tr>
-    <img class="img" width="100px" height="100px" src="@/assets/img/childAttraction.jpg" alt="">
-    <b-td>
-      {{attraction_name}}
-    </b-td>
-    <b-td>
-      {{address}}
-    </b-td>
-    <b-td>
-      <button class="btn" v-on:click="saveChAtt">저장</button>
-    </b-td>
-  </b-tr>
+
+    <b-tr @click="openModal(attraction_idx)">
+      <img class="img" width="100px" height="100px" src="@/assets/img/childAttraction.jpg" alt="">
+      <b-td>
+        {{attraction_name}}
+      </b-td>
+      <b-td>
+        {{address}}
+      </b-td>
+      <b-td>
+        <button class="btn" v-on:click="saveChAtt">저장</button>
+      </b-td>
+    </b-tr>
+
 </template>
 
 <script>
 export default {
   name: "SearchViewItem-Ch",
+  data(){
+    return{
+
+    }
+  },
   props: {
     attraction_idx: Number,
     attraction_name: String,
@@ -28,6 +35,10 @@ export default {
       // emit 이벤트명 : saveAtt
       this.$emit("saveChAtt", this.attraction_idx); 
     },
+    openModal(attraction_idx){
+      this.$emit('openModal', attraction_idx);
+    },
+    
   },
 }
 </script>

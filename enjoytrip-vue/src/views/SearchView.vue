@@ -122,13 +122,28 @@
                 v-for="att in childAttractions"
                 :key="att.attraction_idx"
                 @saveChAtt="saveChAtt"
+                @openModal="openModal"
                 v-bind="att"/>
+
             </tbody>
           </b-table-simple>
         </b-col>
       </b-row>
     </div>
 
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-close-button">
+          <button class="closeModalBtn" v-on:click="closeModal">x</button>
+        </div>
+        <div class="modal-title">
+          <h4>{{modalSelectedItem.attraction_name}}</h4>
+        </div>
+
+         <!-- db child_attraction 테이블 컬럼명 쓰면 댐 -->
+        {{modalSelectedItem.road_address}}
+      </div>
+    </div>
 
   </div>
 </template>
@@ -158,6 +173,8 @@ export default {
   },
   data(){
     return{
+      showModal: false,     // 모달 열림/닫힘 상태
+      modalSelectedItem: null,   // 선택한 항목 데이터
       searchWord: null,
       sidoSelected: null,
       sidoList: [],
@@ -220,6 +237,7 @@ export default {
       .then(({ data }) => {
         // console.log(data);
         this.attractions = data;
+        //console.log(this.attractions);
       });
 
       http.post(`/childAttraction`, {
@@ -231,7 +249,7 @@ export default {
       .then(({ data }) => {
         //console.log("child Attraction !! " + data);
         this.childAttractions = data;
-        // console.log(this.childAttractions);
+        //console.log(this.childAttractions);
       });
       
     },
@@ -297,7 +315,19 @@ export default {
       }
     },
 
+    openModal(attraction_idx){
+      this.showModal = true;
+
+      for(var i=0; i<this.childAttractions.length; i++){
+        if(this.childAttractions[i].attraction_idx == attraction_idx){
+          this.modalSelectedItem  = this.childAttractions[i];
+        }
+      }
+    },
     
+    closeModal(){
+      this.showModal = false;
+    },
 
     goPlan(){
       if(this.savedAttInfo.length == 0 && this.savedChAttInfo.length == 0){
@@ -510,6 +540,34 @@ export default {
 
   .goPlanBtn:hover{
     background-color : #c8d6cc;
+  }
+
+  .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 모달 배경색과 투명도 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  .modal-title{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #000000;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 800px;
+  }
+  
+  .closeModalBtn{
+    float: right;
+    border : none;
   }
 
 </style>
