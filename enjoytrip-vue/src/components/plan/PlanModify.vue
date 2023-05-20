@@ -1,5 +1,9 @@
 <template lang="">
     <div>
+        <div class = "title">
+          <h2>여행 계획 수정</h2>
+        </div>
+
         <div class="Div">
             <div class="mapDiv">
                 지도
@@ -35,25 +39,63 @@
             </div>
 
             <div class="ButtonDiv">
-                <button v-on:click="registPlan" class="Button" v-if="this.type === 'register'">등록</button>
-                <button v-on:click="editPlan" class="Button" v-else>수정</button>
-
-                <button v-on:click="removePlan" class="Button">취소</button>
+                <button v-on:click="confirm" class="Button">수정</button>
+                <button v-on:click="cancel" class="Button">취소</button>
             </div>   
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: "PlanInputItem",
-    components:{
 
+<script>
+// import http from "@/api/http";
+
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
+export default {
+    name: "PlanModify",
+    components: {
+        
     },
     data(){
         return{
             title: '',
             content: '',
+            selectedType: '',
+            selectType: [
+                        {name: '아이', value: "아이"},
+                        {name: '어른', value: "어른"},
+                        ],
         }
+    },
+    methods:{
+        confirm(){
+            if(this.title == ''){
+                alert("제목을 입력해주세요!");
+            }
+            else if(this.content == ''){
+                alert("내용을 입력해주세요!");
+            }
+            else if(this.selectedType == ''){
+                alert("여행 타입을 선택해주세요!");
+            }
+            else{
+                this.editPlan();
+            }
+        },
+        editPlan(){
+            // 디비 수정
+        },
+        cancel(){
+            this.$router.push({ name: "PlanView" });
+        }
+    },
+    computed: {
+      ...mapState(userStore, ["userInfo"]),
+    },
+    created(){
+      // 그 번호 데이터 가져오기
     },
 }
 </script>
@@ -148,11 +190,18 @@ export default {
     text-align: center;
 }
 .Button{
-    border-color:#98c2a182;
-    background-color : #98c2a182;
-    border-radius: 10px;
     width: 80px;
     height: 35px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
     margin-bottom:25px;
   }
+  .title{
+      padding-top : 40px;
+      padding-bottom: 40px;
+    }
+  h2{
+      text-align : center;
+    }    
 </style>

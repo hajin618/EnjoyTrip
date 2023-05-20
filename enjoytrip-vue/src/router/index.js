@@ -163,6 +163,11 @@ const routes = [
         component: () => import("@/components/plan/PlanDetail.vue"),
       },
       {
+        path: "modify/:plan_idx",
+        name: "planModify",
+        component: () => import("@/components/plan/PlanModify.vue"),
+      },
+      {
         path: "regist",
         name: "planRegister",
         component: () => import("@/components/plan/PlanRegister.vue"),
