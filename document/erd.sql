@@ -209,7 +209,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `enjoytrip_dhj`.`plan_detail` (
   `plan_idx` INT NOT NULL,
   `content_id` INT NOT NULL,
-  `order` INT NOT NULL,
+  `detail_order` INT NOT NULL,
   PRIMARY KEY (`plan_idx`, `content_id`),
   INDEX `FK_attraction_info_TO_plan_detail` (`content_id` ASC) VISIBLE,
   CONSTRAINT `FK_attraction_info_TO_plan_detail`
