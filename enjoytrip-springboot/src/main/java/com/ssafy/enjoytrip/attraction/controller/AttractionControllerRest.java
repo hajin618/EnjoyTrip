@@ -122,38 +122,42 @@ public class AttractionControllerRest {
 	
 	// 여행지 저장 할 때 사용
 	@GetMapping("/attraction/{content_id}")
-	public ResponseEntity<List<AttractionInfoDTO>> savedAttractionList(@PathVariable("content_id") String content_id){
+	public ResponseEntity<AttractionInfoDTO> savedAttractionList(@PathVariable("content_id") String content_id){
 		
-		List<AttractionInfoDTO> list = null;
+		AttractionInfoDTO attractionInfoDto = null;
 		
 		try {
-			list = service.searchAttractionById(Integer.parseInt(content_id));
+			attractionInfoDto = service.searchAttractionById(Integer.parseInt(content_id));
+			//System.out.println("att=========================");
+			//System.out.println(attractionInfoDto.toString());
 		}catch (Exception e) {
 			e.printStackTrace();
 			logger.info("error");
 			
-			return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<AttractionInfoDTO>(attractionInfoDto, HttpStatus.NO_CONTENT);
 		}
 		
-		return new ResponseEntity<List<AttractionInfoDTO>>(list, HttpStatus.OK);
+		return new ResponseEntity<AttractionInfoDTO>(attractionInfoDto, HttpStatus.OK);
 	}
 	
-	// 여행지 저장 할 때 사용 (어린이요 관광지)
+	// 여행지 저장 할 때 사용 (어린이용 관광지)
 	@GetMapping("/childAttraction/{attraction_idx}")
-	public ResponseEntity<List<ChildAttractionDTO>> savedChildAttractionList(@PathVariable("attraction_idx") String attraction_idx){
+	public ResponseEntity<ChildAttractionDTO> savedChildAttractionList(@PathVariable("attraction_idx") String attraction_idx){
 		
-		List<ChildAttractionDTO> list = null;
+		ChildAttractionDTO childAttractionDto = null;
 		
 		try {
-			list = service.searchChildAttractionById(Integer.parseInt(attraction_idx));
+			childAttractionDto = service.searchChildAttractionById(Integer.parseInt(attraction_idx));
+			//System.out.println("child att=========================");
+			//System.out.println(childAttractionDto.toString());
 		}catch (Exception e) {
 			e.printStackTrace();
 			logger.info("error");
 			
-			return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<ChildAttractionDTO>(childAttractionDto, HttpStatus.NO_CONTENT);
 		}
 		
-		return new ResponseEntity<List<ChildAttractionDTO>>(list, HttpStatus.OK);
+		return new ResponseEntity<ChildAttractionDTO>(childAttractionDto, HttpStatus.OK);
 	}
 	
 	

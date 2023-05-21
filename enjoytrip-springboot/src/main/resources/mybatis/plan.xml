@@ -15,7 +15,6 @@
 		<result column="plan_end" property="plan_end" />
 		<result column="plan_like" property="plan_like" />
 		<result column="plan_hit" property="plan_hit" />
-		<result column="user_name" property="userDto.user_name" />
 	</resultMap>
 	
 	<select id="listPlan" resultMap="plan">
@@ -27,10 +26,19 @@
 
 	<select id="getPlan" parameterType="int" resultType="planDto">
 		select
-		plan_idx, user_idx, plan_title, plan_create, plan_update, plan_start,
-		plan_end, plan_like, plan_hit
-		from plan
-		where plan_idx = #{plan_idx}
+				plan_idx
+			  , user_idx
+			  , plan_title
+			  , plan_create
+			  , plan_update
+			  , plan_like
+			  , plan_hit
+			  , plan_content
+			  , plan_type
+		from 
+				plan
+		where 
+				plan_idx = #{plan_idx}
 	</select>
 	
 	<insert id="createPlan" parameterType="planDto">
@@ -60,14 +68,28 @@
 		where
 		plan_idx = #{planIdx} and user_idx = #{userIdx}
 	</delete>
-	<update id="updatePlan" parameterType="planDto">
+	
+	<!-- update id="updatePlan" parameterType="planDto">
 		update plan
 		<trim prefix="set" suffixOverrides=",">
 			<if test="plan_title != null">plan_title = #{plan_title},</if>
 			<if test="plan_content != null">plan_content= #{plan_content},</if>
 		</trim>
 		where plan_idx = #{plan_idx}
+	</update -->
+	
+	<update id="updatePlan" parameterType="planDto">
+		update
+				plan
+		set	
+				plan_title 		= #{plan_title}
+			  , plan_content 	= #{plan_content}
+			  , plan_type		= #{plan_type}
+		where
+				plan_idx 		= #{plan_idx}
+				
 	</update>
+	
 	<update id="updateHit" parameterType="int">
 		update plan
 		set plan_hit =
@@ -77,9 +99,14 @@
 
 	<select id="getPlanDetail" parameterType="int"
 		resultType="planDetailDto">
-		select *
-		from plan_detail
-		where plan_idx = #{plan_idx}
+		select 
+				plan_idx
+			  , content_id
+			  , detail_order
+		from 
+				plan_detail
+		where 
+				plan_idx = #{plan_idx}
 	</select>
 
 	<select id="getPlanComment" parameterType="int"
@@ -93,7 +120,9 @@
 	</select>
 	
 	<delete id="deletePlanDetail" parameterType="int">
-		delete from plan_detail where plan_idx = #{plan_idx}
+		delete from 
+						plan_detail 
+		where 			plan_idx = #{plan_idx}
 	</delete>
 	
 	<insert id = "createPlanDetail" parameterType="planDetailDto">
