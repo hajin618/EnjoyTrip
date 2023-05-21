@@ -5,7 +5,7 @@
         </div>
 
         <div class="Div">
-            <div class="mapDiv">
+            <div class="mapDiv" id="mapDiv">
                 <kakao-map :attractions="attractions" :childAttractions="childAttractions"></kakao-map>
             </div>
 
@@ -34,7 +34,6 @@
                     </div>
                 </div>
             </div>   
-
         </div>
 
         <div class="bottomBox">
@@ -55,6 +54,7 @@ import http from "@/api/http";
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 import { mapState } from "vuex";
 import draggable from 'vuedraggable';
+import html2canvas from 'html2canvas';
 
 const userStore = "userStore";
 
@@ -88,6 +88,7 @@ export default {
             listForOrder : [],
         }
     },
+
     created(){
         http.get(`/plan/${this.$route.params.plan_idx}`).then(({data}) => {
             this.plan = data;
@@ -147,9 +148,50 @@ export default {
                 alert("여행 타입을 선택해주세요!");
             }
             else{
+                this.captureScreen();
                 this.registPlan();
+                
             }
         },
+        captureScreen(){
+            // mapDiv 캡쳐할거임
+            html2canvas(document.querySelector("#map")).then(canvas => {
+                // 캔버스를 이미지 데이터 URL로 변환
+
+                const imageUrl = canvas.toDataURL('image/png'); // 또는 'image/png'으로 설정
+  
+                // 데이터 URL을 Blob 형식으로 변환
+                const byteCharacters = atob(imageUrl.split(',')[1]);
+                const byteArrays = new Uint8Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteArrays[i] = byteCharacters.charCodeAt(i);
+                }
+                const blob = new Blob([byteArrays], { type: 'image/png' }); // 또는 'image/png'으로 설정
+                
+                // Blob을 FormData로 변환
+                const formData = new FormData();
+                // formData.append('image', blob, 'image.jpg');
+                formData.append('plan_idx', this.plan.plan_idx);
+                formData.append('upfile', blob);
+
+                http.post(`/plan/fileUpload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data' // 멀티파트 요청을 위해 설정
+                }
+                })
+                .then((response) => {
+                    console.log(response.status);
+                    if(response.status == 200){
+                    alert("사진 또한 등록 성공!!");
+                    this.$router.push({ name: "reviewBoardView" });
+                    }
+                    else{
+                    alert("사진 등록 실패!!");
+                    }
+                })
+            });
+        },
+        
         registPlan(){
             /*
             plan은 이미 생성되어 있음,

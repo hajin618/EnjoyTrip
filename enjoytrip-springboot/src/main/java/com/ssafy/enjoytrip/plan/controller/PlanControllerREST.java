@@ -1,8 +1,12 @@
 package com.ssafy.enjoytrip.plan.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.plan.model.PlanCommentDTO;
@@ -31,6 +36,9 @@ public class PlanControllerREST {
 	@Autowired
 	@Qualifier("PlanServiceImpl")
 	private PlanService service;
+	
+	@Autowired
+	ServletContext servletContext;
 
 	public PlanControllerREST(PlanService service) {
 		super();
@@ -52,6 +60,24 @@ public class PlanControllerREST {
 			resultMap.put("resmsg", "여행 계획 리스트 조회 실패");
 		}
 		return resultMap;
+	}
+	
+	@PostMapping("/plan/fileUpload")
+	public ResponseEntity<String> postImage(@RequestParam("upfile") MultipartFile[] files, @RequestParam("plan_idx") int plan_idx) throws Exception {
+		String uploadDirectory = servletContext.getRealPath("/upload/plan");
+		File folder = new File(uploadDirectory);
+		
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		for(MultipartFile mfile : files) {
+			String originalFileName = plan_idx+".png";
+			if(!originalFileName.isEmpty()) {
+				mfile.transferTo(new File(folder, originalFileName));
+			}
+		}
+		return new ResponseEntity<String> ("SUCCESS", HttpStatus.OK);
 	}
 	
 //	@GetMapping("/plan/{plan_idx}")  // 여행 계획 1개 조회, '여행 계획 + 여행 계획 상세 + 댓글' 
