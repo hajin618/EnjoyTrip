@@ -15,7 +15,6 @@
 		<result column="plan_end" property="plan_end" />
 		<result column="plan_like" property="plan_like" />
 		<result column="plan_hit" property="plan_hit" />
-		<result column="user_name" property="userDto.user_name" />
 	</resultMap>
 	
 	<select id="listPlan" resultMap="plan">
@@ -69,14 +68,28 @@
 		where
 		plan_idx = #{planIdx} and user_idx = #{userIdx}
 	</delete>
-	<update id="updatePlan" parameterType="planDto">
+	
+	<!-- update id="updatePlan" parameterType="planDto">
 		update plan
 		<trim prefix="set" suffixOverrides=",">
 			<if test="plan_title != null">plan_title = #{plan_title},</if>
 			<if test="plan_content != null">plan_content= #{plan_content},</if>
 		</trim>
 		where plan_idx = #{plan_idx}
+	</update -->
+	
+	<update id="updatePlan" parameterType="planDto">
+		update
+				plan
+		set	
+				plan_title 		= #{plan_title}
+			  , plan_content 	= #{plan_content}
+			  , plan_type		= #{plan_type}
+		where
+				plan_idx 		= #{plan_idx}
+				
 	</update>
+	
 	<update id="updateHit" parameterType="int">
 		update plan
 		set plan_hit =
@@ -107,7 +120,9 @@
 	</select>
 	
 	<delete id="deletePlanDetail" parameterType="int">
-		delete from plan_detail where plan_idx = #{plan_idx}
+		delete from 
+						plan_detail 
+		where 			plan_idx = #{plan_idx}
 	</delete>
 	
 	<insert id = "createPlanDetail" parameterType="planDetailDto">

@@ -14,7 +14,7 @@ public interface PlanService {
 	// 여행 계획 detail 생성
 	public int createPlanDetail(PlanDetailDTO planDetailDto) throws Exception;
 	// 여행 계획 수정
-	public void updatePlan(PlanDTO planDto) throws Exception;
+	public int updatePlan(PlanDTO planDto) throws Exception;
 	// 여행 계획 리스트 조회
 	public List<PlanDTO> listPlan(Map<String, String> param) throws Exception;
 	// 여행 계획 1개 조회
@@ -42,7 +42,7 @@ public interface PlanService {
 	// 여행 계획 댓글 보기
 	public List<PlanCommentDTO> getPlanComment(int planIdx) throws Exception;
 	// 여행 계획 상세 삭제
-	public void deletePlanDetail(int plan_idx)throws Exception;
+	public int deletePlanDetail(int plan_idx)throws Exception;
 	// 여행 계획 좋아요
 	public void addLikePlan(int planIdx, int userIdx) throws Exception;
 	// 여행 계획 좋아요 취소

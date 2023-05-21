@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.plan.model.PlanCommentDTO;
 import com.ssafy.enjoytrip.plan.model.PlanDTO;
 import com.ssafy.enjoytrip.plan.model.PlanDetailDTO;
@@ -53,30 +54,63 @@ public class PlanControllerREST {
 		return resultMap;
 	}
 	
-	@GetMapping("/plan/{plan_idx}")  // 여행 계획 1개 조회, '여행 계획 + 여행 계획 상세 + 댓글' 
-	public Map<String, Object> planInfo(@PathVariable("plan_idx") int planIdx, @RequestParam Map<String, String> map, Model model) {
-		Map<String, Object> resultMap = new HashMap();
-
-		try {
-			PlanDTO planDto = service.getPlan(planIdx);
-			List<PlanDetailDTO > planDetailList = service.getPlanDetail(planIdx);
-			List<PlanCommentDTO> planCommetList = service.getPlanComment(planIdx);
-			
-			service.updateHit(planIdx);
-			
-			resultMap.put("resmsg", "여행 계획 조회 성공");
-			resultMap.put("plan", planDto);
-			resultMap.put("planDetail", planDetailList);
-			resultMap.put("planComment", planCommetList);
-			resultMap.put("pgno", map.get("pgno"));
-			resultMap.put("key", map.get("key"));
-			resultMap.put("word", map.get("word"));
-		} catch (Exception e) {
+//	@GetMapping("/plan/{plan_idx}")  // 여행 계획 1개 조회, '여행 계획 + 여행 계획 상세 + 댓글' 
+//	public Map<String, Object> planInfo(@PathVariable("plan_idx") int planIdx, @RequestParam Map<String, String> map, Model model) {
+//		Map<String, Object> resultMap = new HashMap();
+//
+//		try {
+//			PlanDTO planDto = service.getPlan(planIdx);
+//			List<PlanDetailDTO > planDetailList = service.getPlanDetail(planIdx);
+//			List<PlanCommentDTO> planCommetList = service.getPlanComment(planIdx);
+//			
+//			service.updateHit(planIdx);
+//			
+//			resultMap.put("resmsg", "여행 계획 조회 성공");
+//			resultMap.put("plan", planDto);
+//			resultMap.put("planDetail", planDetailList);
+//			resultMap.put("planComment", planCommetList);
+//			resultMap.put("pgno", map.get("pgno"));
+//			resultMap.put("key", map.get("key"));
+//			resultMap.put("word", map.get("word"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			map.put("resmsg", "여행 계획 생성 실패");
+//		}
+//		return resultMap;
+//	}
+	
+	// plan_idx로 계획 1개 얻어오기
+	@GetMapping("/plan/{plan_idx}")
+	public ResponseEntity<PlanDTO> getPlan(@PathVariable("plan_idx") String plan_idx){
+		
+		PlanDTO planDto = null;
+		
+		try{
+			planDto = service.getPlan(Integer.parseInt(plan_idx));
+		}catch(Exception e) {
 			e.printStackTrace();
-			map.put("resmsg", "여행 계획 생성 실패");
+			
+			return new ResponseEntity<PlanDTO>(planDto, HttpStatus.NO_CONTENT);
 		}
-		return resultMap;
+		return new ResponseEntity<PlanDTO>(planDto, HttpStatus.OK);
 	}
+	
+	// plan_idx로 여행 계획 상세 얻기(PlanDetailDTO list)
+	@GetMapping("/planDetail/{plan_idx}")
+	public ResponseEntity<List<PlanDetailDTO>> getPlanDetail(@PathVariable("plan_idx") String plan_idx){
+		
+		List<PlanDetailDTO> list = null;
+		
+		try {
+			list = service.getPlanDetail(Integer.parseInt(plan_idx));
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			return new ResponseEntity<List<PlanDetailDTO>>(list, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<PlanDetailDTO>>(list, HttpStatus.OK);
+	}
+	
 	
 	
 	/*
@@ -160,25 +194,63 @@ public class PlanControllerREST {
 		return resultMap;
 	}
 	
-	@PutMapping("/plan") // planDto, planDtoDetailDto 수정
-	// 매개 변수를 이렇게 전달해주는게 맞는지,,,
-	public Map<String, Object> updatePlan(@RequestBody PlanDTO planDto, @RequestBody List<PlanDetailDTO> planDetilList, @RequestParam Map<String, String> map, @RequestParam List<PlanDetailDTO> details) {
-		Map<String, Object> resultMap = new HashMap();
+//	@PutMapping("/plan") // planDto, planDtoDetailDto 수정
+//	// 매개 변수를 이렇게 전달해주는게 맞는지,,,
+//	public Map<String, Object> updatePlan(@RequestBody PlanDTO planDto, @RequestBody List<PlanDetailDTO> planDetilList, @RequestParam Map<String, String> map, @RequestParam List<PlanDetailDTO> details) {
+//		Map<String, Object> resultMap = new HashMap();
+//		
+//		try {
+//			service.updatePlan(planDto);
+//			
+//			service.deletePlanDetail(planDto.getPlan_idx());
+////			service.createPlanDetail(planDetilList);
+//			resultMap.put("resmsg", "여행 계획 수정 성공");
+//			resultMap.put("pgno", map.get("pgno"));
+//			resultMap.put("key", map.get("key"));
+//			resultMap.put("word", map.get("word"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			resultMap.put("resmsg", "여행 계획 수정 실패");
+//		}
+//		return resultMap;
+//	}
+	
+	// 계획 수정하기 : 등록 버튼 눌렀을 때도 이거 사용함 (계획 생성하러 가기 버튼 눌렀을 때 이미 생성되었기 때문)
+	@PutMapping("/plan/{plan_idx}")
+	public ResponseEntity<Integer> updatePlan(@RequestBody PlanDTO planDto){
+		int result = -1;
 		
 		try {
-			service.updatePlan(planDto);
-			
-			service.deletePlanDetail(planDto.getPlan_idx());
-//			service.createPlanDetail(planDetilList);
-			resultMap.put("resmsg", "여행 계획 수정 성공");
-			resultMap.put("pgno", map.get("pgno"));
-			resultMap.put("key", map.get("key"));
-			resultMap.put("word", map.get("word"));
-		} catch (Exception e) {
+			result = service.updatePlan(planDto);
+		}catch(Exception e) {
 			e.printStackTrace();
-			resultMap.put("resmsg", "여행 계획 수정 실패");
 		}
-		return resultMap;
+		
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	// plan_detail 삭제하기
+	@DeleteMapping("/planDetail/{plan_idx}")
+	public ResponseEntity<Integer> deletePlanDetail(@PathVariable("plan_idx") int plan_idx){
+		int result = -1;
+		
+		try {
+			result = service.deletePlanDetail(plan_idx);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
 	}
 	
 	@PostMapping("/plan/{plan_idx}/{user_idx}")

@@ -6,14 +6,14 @@
 
         <div class="Div">
             <div class="mapDiv">
-                <kakao-map></kakao-map>
+                <kakao-map :attractions="attractions" :childAttractions="childAttractions"></kakao-map>
             </div>
 
             <div class="horVerDiv">
                 <div class="horDiv">
-                    <input class="planTitleDiv" v-model="plan_title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." >
+                    <input class="planTitleDiv" v-model="plan.plan_title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." >
                         
-                <select class="planChildBtnDiv" v-model="selectedType">
+                <select class="planChildBtnDiv" v-model="plan.plan_type">
                     <option value='' selected>여행 타입 선택</option>
                     <option v-for="(item, index) in selectType" :key="index" :value="item.value">
                     {{ item.name }}
@@ -23,10 +23,14 @@
 
                 <div class="verDiv">
                     <div class="textDiv">
-                        순서 재배치
+                        <h5>순서 배치하기</h5>
                     </div>
                     <div class="orderDiv">
-                        순서자리
+                        <draggable v-model="listForOrder">
+                            <div v-for="item in listForOrder" :key="item.attraction_idx">
+                                {{item.attraction_name}}
+                            </div>
+                        </draggable>
                     </div>
                 </div>
             </div>   
@@ -35,7 +39,7 @@
 
         <div class="bottomBox">
             <div class="contentDiv">
-                <input v-model="plan_content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+                <input v-model="plan.plan_content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
             </div>
 
             <div class="ButtonDiv">
@@ -50,6 +54,7 @@
 import http from "@/api/http";
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 import { mapState } from "vuex";
+import draggable from 'vuedraggable';
 
 const userStore = "userStore";
 
@@ -57,43 +62,88 @@ export default {
     name: "PlanRegister",
     components: {
         KakaoMap,
+        draggable,
     },
     data(){
         return{
             plan:{
-                plan_title: "",
-                plan_content: "",
-                plan_type: "",
+                plan_title: '',
+                plan_content: '',
+                plan_type: '',
 
             },
-            // title: '',
-            // content: '',
-            // selectedType: '',
+            // plan_title: '',
+            // plan_content: '',
+            // plan_type: '',
+
             selectType: [
                         {name: '아이', value: "아이"},
                         {name: '어른', value: "어른"},
                         ],
+            planDetails : [],
             attractions: [],        // 저장된 어른 여행지 저장할 배열 : kakao 지도에 넘길거임
             childAttractions: [],   // 저장된 어린이 여행지 저장할 배열 : kakao 지도에 넘길거임
-            // 1 ~ 8000 대면 어린이 여행지, 나머지는 어른 여행지로
+                                    // 1 ~ 8000 대면 어린이 여행지, 나머지는 어른 여행지로
+            
+            listForOrder : [],
         }
     },
     created(){
         http.get(`/plan/${this.$route.params.plan_idx}`).then(({data}) => {
             this.plan = data;
-            console.log(data.plan);
-            console.log(data.planDetail);
+            //console.log(data.plan);
+            //console.log(this.plan);
+        }),
+
+        http.get(`/planDetail/${this.$route.params.plan_idx}`).then(({ data }) => {
+            this.planDetails = data;
+            console.log("planDetail length : " + this.planDetails.length);
+            for(var i=0; i<this.planDetails.length; i++){
+                
+                let contentId = this.planDetails[i].content_id;
+                //console.log("content_id ::::: " + contentId);
+
+                // 어린이 여행지인 경우
+                if(contentId >= 1 && contentId <= 8580){
+                    http.get(`/childAttraction/${contentId}`).then(({ data }) => {
+                        //console.log("어린이 여행지 : " + data);
+                        this.childAttractions.push(data);
+                        this.listForOrder.push({
+                            attraction_name : data.attraction_name, 
+                            attraction_idx : data.attraction_idx,
+                            attraction_type : "어린이",
+                            });
+                    })
+                }
+                // 어른 여행지인 경우
+                else{
+                    http.get(`/attraction/${contentId}`).then(({ data }) => {
+                        //console.log("어른 여행지 : " + data);
+                        this.attractions.push(data);
+                        this.listForOrder.push({
+                            attraction_name : data.title, 
+                            attraction_idx : data.content_id,
+                            attraction_type : "어른",
+                            });
+                    })
+                }
+            }
+
+            //console.log("child attractiosn : " + this.childAttractions);
+            //console.log("attractions : " + this.attractions);
         })
+
+
     },
     methods:{
         confirm(){
-            if(this.title == ''){
+            if(this.plan_title == ''){
                 alert("제목을 입력해주세요!");
             }
-            else if(this.content == ''){
+            else if(this.plan_content == ''){
                 alert("내용을 입력해주세요!");
             }
-            else if(this.selectedType == ''){
+            else if(this.plan_type == ''){
                 alert("여행 타입을 선택해주세요!");
             }
             else{
@@ -101,8 +151,50 @@ export default {
             }
         },
         registPlan(){
-            // 디비 등록
-            // 사용자 정보는 userInfo에 담겨있음
+            /*
+            plan은 이미 생성되어 있음,
+            update를 통해 plan_title, plan_content, plan_type만 수정하기
+            */
+           http.put(`/plan/${this.plan.plan_idx}`, {
+            plan_idx : this.plan.plan_idx,
+            plan_title : this.plan.plan_title,
+            plan_content : this.plan.plan_content,
+            plan_type : this.plan.plan_type,
+           }).then((response) => {
+            if(response.status == 200){
+                alert("등록 성공");
+
+                /*
+                현재 plan_idx로 등록되어 있는 모든 detail 삭제하고
+                listForOrder 순서대로 집어넣기
+                */
+               http.delete(`/planDetail/${this.plan.plan_idx}`)
+               .then((response) => {
+                if(response.status == 200){
+                    console.log("detail 삭제 성공");
+
+                    /*
+                    기존 plan_detail 삭제했으면 listForOrder 순서대로 planDetail 생성하기
+                    */
+                   let idx = 1;
+                   for(var i=0; i<this.listForOrder.length; i++){
+                    http.post(`/planDetail`, {
+                        plan_idx : this.plan.plan_idx,
+                        content_id : this.listForOrder[i].attraction_idx,
+                        detail_order : idx
+                    }).then((response) =>{
+                        if(response.status == 200){
+                            console.log("plan detail 디비 들어감 !");
+                        }
+                    })
+                    idx += 1;
+                   }
+                }
+               })
+            }
+           })
+
+            
         },
         removePlan(){
             // 검색에서 들어올때 등록했던 녀석 삭제하고 라우팅
@@ -198,7 +290,8 @@ export default {
 }
 
 .textDiv{
-    margin-bottom: 30px;
+    margin-top : 10px;
+    margin-bottom: 20px;
 }
 
 .contentDiv{
