@@ -11,7 +11,7 @@
       <div class="title" v-if="selectedTab === 'plans'">
         나의 계획들
       </div>
-      <user-plan-list v-if="selectedTab === 'plans'"></user-plan-list>
+      <!-- <user-plan-list v-if="selectedTab === 'plans'"></user-plan-list> -->
 
       <div class="title" v-if="selectedTab === 'edit'">
         회원 정보 수정
@@ -28,7 +28,7 @@
 
 <script>
 import UserEdit from './item/UserEdit.vue';
-import UserPlanList from './item/UserPlanList.vue';
+// import UserPlanList from './item/UserPlanList.vue';
 import UserReviewList from './item/UserReviewList.vue';
 import HeaderNaviBar from "../layout/HeaderNaviBar.vue";
 
@@ -36,7 +36,7 @@ export default {
   name: "UserMyPage",
   components: {
     UserEdit,
-    UserPlanList,
+    // UserPlanList,
     UserReviewList,
     HeaderNaviBar,
   },

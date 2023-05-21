@@ -110,7 +110,7 @@
                 <b-th>주소</b-th>
                 <b-th>저장</b-th>
               </b-tr>
-            </b-thead>
+            </b-thead> 
             <tbody>
               <search-view-item
                 v-for="att in attractions"
