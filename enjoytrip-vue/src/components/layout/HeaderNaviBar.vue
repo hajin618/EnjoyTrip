@@ -9,8 +9,7 @@
 
             <!-- 로그인 안된 경우 -->
             <span v-if="!userInfo">
-                <router-link class="whitelink" style="margin-left: 400px;" to="/user/login">로그인</router-link>
-                <router-link class="whitelink" style="margin-left: 30px;" to="/plan/detail/3">UITEST</router-link>
+                <router-link class="whitelink" style="margin-left: 450px;" to="/user/login">로그인</router-link>
                 <router-link class="whitelink" style="margin-left: 30px;" to="/user/join">회원가입</router-link>
             </span>
             

@@ -86,6 +86,26 @@
       </div>
     </div>
 
+    <div class="commentBox">
+      댓글
+
+      <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
+        <div>{{comment.user_name}}</div>
+        <div>{{comment.review_comment_create}}</div>
+        <div>{{comment.review_comment_content}}</div>
+        <!-- <button v-if="comment.user_name === user_name" v-on:click.prevent="updateComment(comment.comment_idx)">수정</button> -->
+        <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)">삭제</button>
+      </div>
+
+    </div>
+
+    <div class="commentWriteBox">
+      <hr>
+      <div>{{user_name}}</div>
+      <textarea placeholder="댓글을 입력하세요" v-model="context"></textarea>
+      <b-button v-on:click.prevent="confirm">댓글달기</b-button>
+    </div>
+
   </div>
 </template>
 
@@ -101,6 +121,8 @@ export default {
     return{
       review:[],
       review_image:[],
+      comments: [],
+      context: "",
     }
   },
   components:{
@@ -115,6 +137,10 @@ export default {
         this.review = data;
         this.review_image = this.review.review_image;
     });
+    http.get(`/review/${this.$route.params.review_idx}/comment`).then(({data}) => {
+      console.log(data);
+      this.comments = data;
+    })
     
   },
   methods:{
@@ -132,17 +158,64 @@ export default {
       .then((response) => {
         if(response.status == 200){
           alert("리뷰 삭제 성공!")
-          this.moveList();
+          this.moveList(); 
         }
         else{
           alert("리뷰 삭제 실패!");
           this.moveList();
         }
       })
-    }
+    },
+    confirm(){
+      if(this.context == ''){
+        alert("댓글을 입력해주세요!")
+      }
+      else{
+        this.commentRegister();
+      }
+    },
+    commentRegister(){
+      console.log(this.review.review_idx);
+      console.log(this.user_name);
+      console.log(this.user_idx);
+      console.log(this.context);
+
+      const tmpComment = {
+        review_idx: this.review.review_idx,
+        user_name: this.user_name,
+        user_idx: this.user_idx,
+        review_comment_content: this.context,
+      };
+
+      http.post(`/review/${this.review.review_idx}/comment`, 
+        tmpComment
+      )
+      .then((response) => {
+        console.log(response.status);
+        if(response.status == 200){
+          this.comments.push(tmpComment);
+          alert("댓글 등록 성공!");
+        }
+      })
+    },
+    deleteComment(comment_idx){
+      const commentIndex = this.comments.findIndex(comment => comment.comment_idx === comment_idx);
+      this.comments.splice(commentIndex, 1);
+
+      console.log(this.review.review_idx);
+      console.log(comment_idx);
+
+      http.post(`review/${this.review.review_idx}/comment/${comment_idx}`)
+      .then((response) => {
+        if(response.status == 200){
+          alert("댓글 삭제 성공!");
+        }
+      })
+    },
   },
   computed: {
     ...mapState({
+      user_idx: state => state.userStore.userInfo.user_idx,
       user_name: state => state.userStore.userInfo.user_name,
       user_id: state => state.userStore.userInfo.user_id,
       user_email: state => state.userStore.userInfo.user_email,
@@ -179,6 +252,10 @@ export default {
 
 
 <style scoped> 
+  .commentBox{
+    text-align: center;
+
+  }
   .title{
     margin-top : 70px;
     margin-bottom: 80px;
