@@ -27,8 +27,8 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public void updatePlan(PlanDTO planDto) throws Exception {
-		planMapper.updatePlan(planDto);
+	public int updatePlan(PlanDTO planDto) throws Exception {
+		return planMapper.updatePlan(planDto);
 	}
 
 	@Override
@@ -88,8 +88,8 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public void deletePlanDetail(int planIdx) throws Exception {
-		planMapper.deletePlanDetail(planIdx);
+	public int deletePlanDetail(int planIdx) throws Exception {
+		return planMapper.deletePlanDetail(planIdx);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 <template>
 
-    <b-tr @click="openModal(attraction_idx)">
+    <b-tr>
       <img class="img" width="100px" height="100px" src="@/assets/img/childAttraction.jpg" alt="">
-      <b-td>
+      <b-td @click="openModal(attraction_idx)">
         {{attraction_name}}
       </b-td>
       <b-td>

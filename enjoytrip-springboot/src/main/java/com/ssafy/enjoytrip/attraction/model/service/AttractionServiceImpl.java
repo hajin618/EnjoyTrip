@@ -38,7 +38,7 @@ public class AttractionServiceImpl implements AttractionService{
 	}
 
 	@Override
-	public List<AttractionInfoDTO> searchAttractionById(int content_id) throws Exception {
+	public AttractionInfoDTO searchAttractionById(int content_id) throws Exception {
 		return attractionMapper.searchAttractionById(content_id);
 	}
 
@@ -48,7 +48,7 @@ public class AttractionServiceImpl implements AttractionService{
 	}
 
 	@Override
-	public List<ChildAttractionDTO> searchChildAttractionById(int attraction_idx) throws Exception {
+	public ChildAttractionDTO searchChildAttractionById(int attraction_idx) throws Exception {
 		return attractionMapper.searchChildAttractionById(attraction_idx);
 	}
 
