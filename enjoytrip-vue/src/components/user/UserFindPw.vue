@@ -57,6 +57,7 @@
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 // import emailjs from "emailjs-com";
 
 export default {
@@ -81,14 +82,22 @@ export default {
     methods: {
       findEmail(){
         if(this.email == ''){
-          alert("이메일을 입력해주세요!");
+          Swal.fire(
+            '이메일을 다시 확인해주세요!',
+            '이메일은 공백일 수 없습니다!',
+            'question'
+          )
         }
         else{
           http.get(`/findId/${this.email}`).then((response) => {
             console.log(response); 
             // 이메일 찾기 실패
             if(response.status == 204){
-              alert("이메일을 찾을 수 없습니다.");
+              Swal.fire({
+                icon: 'error',
+                title: '이메일 찾기 실패!',
+                text: '등록되지 않은 이메일입니다!',
+              })
             }
             // 이메일 찾기 성공
             else{
@@ -110,6 +119,13 @@ export default {
               // test 코드
               this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
               console.log(this.confirmNumber);
+              Swal.fire({
+                position: 'center-center',
+                icon: 'success',
+                title: '이메일 전송 성공!',
+                showConfirmButton: true,
+                timer: 1500
+              })
             }
           });
         }
@@ -119,12 +135,21 @@ export default {
         // 사용자가 입력한 인증번호와 확인
         if(this.userConfirmNumber == this.confirmNumber){
           // 같다면
+          Swal.fire(
+            '인증 성공!',
+            '비밀번호 변경 페이지로 이동합니다!',
+            'success'
+          )
           this.putConfirmNumber = false;
           this.nowChangePwd = true;
         }
         // 다르다면
         else{
-          alert("인증 실패! 다시 인증번호를 받아주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '인증 실패!',
+            text: '인증번호를 잘못 입력하셨습니다!',
+          })
           this.putConfirmNumber = false;
           this.getEmail = false;
           this.email = '';
@@ -133,7 +158,11 @@ export default {
       },
       changePwd(){
         if(this.userPwdChange.length < 4){
-          alert("비밀번호는 4자리 이상이여야합니다!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 정보 변경 실패!',
+            text: '비밀번호는 4자리 이상입니다!',
+          })
         }
         else{
             http.post(`/changePwd`,  {
@@ -142,16 +171,19 @@ export default {
             }  ).then((response) => { 
             console.log(response);
             if(response.status == 200){
-              alert("비밀번호 변경 완료! 바뀐 비밀번호로 로그인해주세요!");
-              // Swal.fire({
-              //   'Alert 실행!!.',  // Alert 제목
-              //   'Alert 내용이 나타나는 곳.',  // 내용
-              //   'success',  // icon
-              // });
+              Swal.fire(
+                '회원 정보 변경 성공!',
+                '새로운 비밀번호로 로그인하세요!',
+                'success'
+              )
               this.$router.push({ name: "HomeView" });
             }
             else{
-              alert("비밀번호 변경 실패!");
+              Swal.fire(
+                '회원 정보 변경 실패',
+                '서버의 문제가 있습니다. 잠시 후 다시 시도해주세요!',
+                'question'
+              )
               this.getEmail = false;
               this.nowChangePwd = false;        
             }

@@ -38,6 +38,7 @@
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 
 export default {
     name: "UserFindIdView",
@@ -57,14 +58,22 @@ export default {
     methods: { 
       findId(){
         if(this.email == ''){
-          alert("이메일을 입력해주세요!");
+          Swal.fire(
+            '이메일을 다시 확인해주세요!',
+            '이메일은 공백일 수 없습니다!',
+            'question'
+          )
         }
         else{
           http.get(`/findId/${this.email}`).then((response) => {
             console.log(response);
             // 아이디 찾기 실패
             if(response.status == 204){
-              alert("이메일을 찾을 수 없습니다.");
+              Swal.fire({
+                icon: 'error',
+                title: '이메일 찾기 실패!',
+                text: '등록되지 않은 이메일입니다!',
+              })
             }
             // 아이디 찾기 성공
             else{

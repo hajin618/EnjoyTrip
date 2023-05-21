@@ -56,6 +56,7 @@
 <script>
 import http from "@/api/http";
 import { mapState, mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 const userStore = "userStore";
 
@@ -123,8 +124,11 @@ export default {
             let token = sessionStorage.getItem("access-token");
             if (this.isLogin) {
                 await this.getUserInfo(token);
-                // console.log("4. confirm() userInfo :: ", this.userInfo);
-                // console.log("성공했다 선진아");
+                Swal.fire(
+                    '카카오 로그인 성공!',
+                    '성공적으로 로그인 되었습니다!',
+                    'success'
+                )
                 this.$router.push({ name: "HomeView" });
             }
           },
@@ -135,7 +139,11 @@ export default {
       },
       idCheck() {
         if(this.user.user_id == ''){
-          alert("아이디를 입력해주세요!");
+          Swal.fire(
+            '아이디를 다시 확인해주세요!',
+            '아이디 칸은 공백일 수 없습니다!',
+            'question'
+          )
         }
         else{
           http.get(`/idCheck/${this.user.user_id}`).then((response) => {
@@ -166,7 +174,11 @@ export default {
       },
       emailCheck(){
         if(this.user.user_email == ''){
-          alert("이메일을 입력해주세요!");
+          Swal.fire(
+            '이메일을 다시 확인해주세요!',
+            '이메일 칸은 공백일 수 없습니다!',
+            'question'
+          )
         }
         else{
           http.get(`/emailCheck/${this.user.user_email}`).then((response) => {
@@ -186,42 +198,82 @@ export default {
       },
       register(){
         if(this.idDuplicated){
-          alert("중복된 아이디로 가입 불가!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '중복된 아이디입니다!',
+          })
         }
         else if(this.emailDuplicated){
-          alert("중복된 이메일로 가입 불가!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '중복된 이메일입니다!',
+          })
         }
         else if(this.user.user_name == ''){
-          alert("이름을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '이름을 확인해주세요!',
+          })
         }
         else if(this.user.user_id == ''){
-          alert("아이디를 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '아이디를 확인해주세요!',
+          })
         }
         else if(this.user.user_email == ''){
-          alert("이메일을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '이메일을 확인해주세요!',
+          })
         }
         else if(this.pwdNotCorrect){
-          alert("비밀번호, 비밀번호 확인란을 다시 확인해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '비밀번호를 다시 확인해주세요!',
+          })
         }
         else if(this.user.user_pwd.length < 4){
-          alert("비밀번호는 4자리 이상!!!");
+          Swal.fire({
+            icon: 'error',
+            title: '회원 등록 실패!',
+            text: '비밀번호는 4자리 이상입니다!',
+          })
         }
         else{
-          http.post(`/user`, this.user).then(({data}) => { 
-            console.log(data);
-            if(data == "SUCCESS"){
-              alert("회원 가입 완료!");
-              // Swal.fire({
-              //   'Alert 실행!!.',  // Alert 제목
-              //   'Alert 내용이 나타나는 곳.',  // 내용
-              //   'success',  // icon
-              // });
-              this.$router.push({ name: "HomeView" });
+          Swal.fire({
+            title: '회원가입 하시겠습니까?',
+            text: "동의하시면 이메일 대한 개인정보가 사용됩니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'JOIN!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                '가입 성공!',
+                '회원 정보가 성공적으로 등록되었습니다!',
+                'success'
+              )
+              http.post(`/user`, this.user).then(({data}) => { 
+                console.log(data);
+                if(data == "SUCCESS"){
+                  // alert("회원 가입 완료!");
+                  this.$router.push({ name: "HomeView" });
+                }
+                else{
+                  // alert("회원 가입 실패!");
+                }
+              });
             }
-            else{
-              alert("회원 가입 실패!");
-            }
-          });
+          })
         }
       }
     }
