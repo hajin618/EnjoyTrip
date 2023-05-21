@@ -158,6 +158,9 @@
 			(user_idx, review_idx, review_comment_create, review_comment_content)
 		values
 			(#{user_idx}, #{review_idx}, now(), #{review_comment_content})
+		<selectKey resultType="int" keyProperty="comment_idx" order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
 	
 	<select id = "getReviewComment" resultType="reviewCommentDto">

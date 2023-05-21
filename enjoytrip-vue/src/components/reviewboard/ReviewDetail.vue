@@ -86,25 +86,44 @@
       </div>
     </div>
 
-    <div class="commentBox">
-      댓글
+    <!-- <div style="text-align: center;" class="commentBox">
+      <h3 style="margin-bottom: 20px;">댓글</h3>
 
       <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
-        <div>{{comment.user_name}}</div>
-        <div>{{comment.review_comment_create}}</div>
-        <div>{{comment.review_comment_content}}</div>
-        <!-- <button v-if="comment.user_name === user_name" v-on:click.prevent="updateComment(comment.comment_idx)">수정</button> -->
-        <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)">삭제</button>
+        <div class="commentUserName">{{comment.user_name}}</div>
+        <div class="commentDate">{{comment.review_comment_create}}</div>
+        <div class="commentContent">{{comment.review_comment_content}}</div>
+        <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)" class="deleteButton">삭제</button>
       </div>
-
     </div>
 
     <div class="commentWriteBox">
       <hr>
-      <div>{{user_name}}</div>
+      <div class="loggedInUserName">{{user_name}}</div>
       <textarea placeholder="댓글을 입력하세요" v-model="context"></textarea>
-      <b-button v-on:click.prevent="confirm">댓글달기</b-button>
+      <b-button v-on:click.prevent="confirm" class="commentButton">댓글달기</b-button>
+    </div> -->
+
+    <div class="commentContainer">
+      <div style="text-align: center;" class="commentBox">
+        <h3>댓글</h3>
+
+        <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
+          <div class="commentUserName">{{comment.user_name}}</div>
+          <div class="commentDate">{{comment.review_comment_create}}</div>
+          <div class="commentContent">{{comment.review_comment_content}}</div>
+          <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)" class="deleteButton">삭제</button>
+        </div>
+      </div>
+
+      <div class="commentWriteBox">
+        <hr>
+        <div class="loggedInUserName">{{user_name}}</div>
+        <textarea placeholder="댓글을 입력하세요" v-model="context"></textarea>
+        <button v-on:click.prevent="commentRegister" class="commentButton">댓글달기</button>
+      </div>
     </div>
+
 
   </div>
 </template>
@@ -181,6 +200,7 @@ export default {
       console.log(this.context);
 
       const tmpComment = {
+        comment_idx: '',
         review_idx: this.review.review_idx,
         user_name: this.user_name,
         user_idx: this.user_idx,
@@ -193,21 +213,23 @@ export default {
       .then((response) => {
         console.log(response.status);
         if(response.status == 200){
+          const comment_idx = response.data;
+          tmpComment.comment_idx = comment_idx;
           this.comments.push(tmpComment);
+          this.context = '';
           alert("댓글 등록 성공!");
         }
       })
     },
     deleteComment(comment_idx){
-      const commentIndex = this.comments.findIndex(comment => comment.comment_idx === comment_idx);
-      this.comments.splice(commentIndex, 1);
-
-      console.log(this.review.review_idx);
-      console.log(comment_idx);
-
       http.post(`review/${this.review.review_idx}/comment/${comment_idx}`)
       .then((response) => {
         if(response.status == 200){
+          const commentIndex = this.comments.findIndex(comment => comment.comment_idx === comment_idx);
+          this.comments.splice(commentIndex, 1);
+
+          console.log(this.review.review_idx);
+          console.log(comment_idx);
           alert("댓글 삭제 성공!");
         }
       })
@@ -252,10 +274,6 @@ export default {
 
 
 <style scoped> 
-  .commentBox{
-    text-align: center;
-
-  }
   .title{
     margin-top : 70px;
     margin-bottom: 80px;
@@ -430,4 +448,163 @@ export default {
     line-height : 280px;
   }
 
+/* .commentBox {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.commentBox h3 {
+  margin-bottom: 20px;
+}
+
+.commentItem {
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.commentUserName {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.commentDate {
+  color: #777777;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.commentContent {
+  margin-bottom: 10px;
+}
+
+.deleteButton {
+  background-color: #ff5555;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.commentWriteBox {
+  padding-top: 20px;
+}
+
+.commentWriteBox hr {
+  border: none;
+  border-top: 1px solid #e1e1e1;
+  margin: 20px 0;
+}
+
+.loggedInUserName {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.commentButton {
+  background-color: #5555ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+} */
+.commentContainer {
+  max-width: 800px; /* 최대 너비 조정 */
+  margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진을 auto로 설정 */
+}
+
+.commentBox {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.commentBox h3 {
+  margin-bottom: 20px;
+}
+
+.commentItem {
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.commentUserName {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.commentDate {
+  color: #777777;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.commentContent {
+  margin-bottom: 10px;
+}
+
+.deleteButton {
+  background-color: #ff5555;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.commentWriteBox {
+  padding-top: 20px;
+}
+
+.commentWriteBox hr {
+  border: none;
+  border-top: 1px solid #e1e1e1;
+  margin: 20px 0;
+}
+
+.loggedInUserName {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.commentButton {
+  background-color: #7aab85;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
 </style>

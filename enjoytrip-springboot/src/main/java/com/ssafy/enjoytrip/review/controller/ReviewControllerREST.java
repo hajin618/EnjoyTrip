@@ -245,17 +245,19 @@ public class ReviewControllerREST {
 	
 	
 	@PostMapping("/review/{review_idx}/comment")
-	public ResponseEntity<String> createRevviewComment(@PathVariable("review_idx") int review_idx,
+	public ResponseEntity<Integer> createReviewComment(@PathVariable("review_idx") int review_idx,
 			@RequestBody ReviewCommentDTO reviewCommentDto){
 		logger.info("into postComment logic");
 		logger.info(reviewCommentDto.toString());
+		int result = -1;
 		try {
-			service.createReviewComment(reviewCommentDto);
+			int rowCount = service.createReviewComment(reviewCommentDto);
+			result = reviewCommentDto.getComment_idx();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
 	

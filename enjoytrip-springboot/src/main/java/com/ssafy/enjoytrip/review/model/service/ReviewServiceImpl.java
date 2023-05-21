@@ -117,8 +117,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception {
-		reviewMapper.createReviewComment(reviewCommentDto);
+	public int createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception {
+		return reviewMapper.createReviewComment(reviewCommentDto);
 		
 	}
 

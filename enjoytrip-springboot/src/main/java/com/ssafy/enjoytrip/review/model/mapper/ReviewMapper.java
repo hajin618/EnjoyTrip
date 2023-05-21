@@ -44,7 +44,7 @@ public interface ReviewMapper {
 	public List<ReviewCommentDTO> getReviewComment(int reviewIdx);
 	
 	// 리뷰 댓글 생성
-	public void createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
+	public int createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
 	
 	// 리뷰 댓글 삭제
 	public void deleteReviewComment(Map<String, Integer> map) throws Exception;

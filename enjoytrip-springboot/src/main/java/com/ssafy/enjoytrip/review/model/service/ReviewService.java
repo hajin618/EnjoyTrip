@@ -43,7 +43,7 @@ public interface ReviewService {
 	public List<ReviewCommentDTO> getReviewComment(int reviewIdx);
 	
 	// 리뷰 댓글 생성
-	public void createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
+	public int createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
 	
 	// 리뷰 댓글 삭제
 	public void deleteReviewComment(int reviewIdx, int review_comment_idx) throws Exception;
