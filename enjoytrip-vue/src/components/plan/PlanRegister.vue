@@ -75,6 +75,7 @@ export default {
                         ],
             attractions: [],        // 저장된 어른 여행지 저장할 배열 : kakao 지도에 넘길거임
             childAttractions: [],   // 저장된 어린이 여행지 저장할 배열 : kakao 지도에 넘길거임
+            // 1 ~ 8000 대면 어린이 여행지, 나머지는 어른 여행지로
         }
     },
     created(){
