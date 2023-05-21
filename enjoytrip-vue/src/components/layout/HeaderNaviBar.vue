@@ -27,6 +27,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 const userStore = "userStore";
 
@@ -43,15 +44,15 @@ export default{
     methods:{
         ...mapActions(userStore, ["userLogout"]),
         logout(){
-            console.log(this.userInfo.user_id);
             this.userLogout(this.userInfo.user_id);
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-            console.log(this.isLogin);
+            Swal.fire(
+                '로그아웃 성공!',
+                '안전하게 로그아웃 되었습니다!',
+                'success'
+            )
             if (this.$route.path != "/") this.$router.push({ name: "HomeView" });
-            // else{
-            //     this.$router.go();
-            // }
         },
     }
 };

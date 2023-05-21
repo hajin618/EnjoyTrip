@@ -36,6 +36,7 @@
 <script>
 
 import { mapState, mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 const userStore = "userStore";
 
@@ -58,19 +59,23 @@ export default {
     methods: {
         ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
         async confirm() {
-            // console.log("로그인 버튼 클릭 -> login 메소드 실행");
-            // console.log("인자 : " + this.user);
             await this.userConfirm(this.user);
             let token = sessionStorage.getItem("access-token");
-            // console.log("1. confirm() token >> " + token);
             if (this.isLogin) {
                 await this.getUserInfo(token);
-                // console.log("4. confirm() userInfo :: ", this.userInfo);
-                // console.log("성공했다 선진아");
+                Swal.fire(
+                    '로그인 성공!',
+                    '성공적으로 로그인 되었습니다!',
+                    'success'
+                )
                 this.$router.push({ name: "HomeView" });
             }
             else{
-                alert("로그인 실패! 다시 로그인해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '로그인 실패!',
+                    text: '사용자 인증에 실패하였습니다!',
+                })
             }
         },
     },
