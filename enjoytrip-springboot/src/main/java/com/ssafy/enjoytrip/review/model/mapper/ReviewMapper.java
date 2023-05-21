@@ -38,16 +38,18 @@ public interface ReviewMapper {
 	public void modifyReview(ReviewDTO reviewDto) throws Exception;
 
 	// 리뷰 삭제
-	public void deleteReview(int reivewIdx) throws Exception;
+	public void deleteReview(int reviewIdx) throws Exception;
 	
 	// 리뷰 댓글 조회
 	public List<ReviewCommentDTO> getReviewComment(int reviewIdx);
 	
 	// 리뷰 댓글 생성
-	public void createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
+	public int createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception;
 	
 	// 리뷰 댓글 삭제
-	public void deleteReviewComment(int reviewIdx, int review_comment_idx) throws Exception;
+	public void deleteReviewComment(Map<String, Integer> map) throws Exception;
+	
+	public void deleteReviewCommentAll(int reviewIdx) throws Exception;
 	
 	// 리뷰 사진 전체 삭제
 	public void deleteReviewImageAll(int reviewIdx) throws Exception;

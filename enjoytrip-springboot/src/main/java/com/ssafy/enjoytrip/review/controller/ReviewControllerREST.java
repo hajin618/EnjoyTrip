@@ -213,29 +213,13 @@ public class ReviewControllerREST {
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	
-	// 리뷰 삭제
-//	@DeleteMapping("/review/{review_idx}")
-//	public Map<String, Object> deleteReview(@RequestParam Map<String, String> param,
-//			HttpSession session, @PathVariable("review_idx") String review_idx){
-//		Map<String, Object> resultMap = new HashMap<>();
-////		PageNavigation pageNavigation = service.makePageNavigation(param);
-//		try {
-//			service.deleteReview(Integer.parseInt(review_idx));
-//			resultMap.put("isSuccess", "true");
-////			map.put("navigation", pageNavigation);
-////			map.put("pgno", param.get("pgno"));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			resultMap.put("isSuccess", "false");
-//		}
-//		return resultMap;
-//	}
-	
 	@DeleteMapping("/review/{review_idx}")
 	public ResponseEntity<String> deleteReview(@PathVariable("review_idx") int review_idx){
 		
 		// 이미지들 다 삭제하고 그 다음에 리뷰 삭제해야됨
+		// 댓글도 다 삭제해야됨
 		try {
+			service.deleteAllReviewComment(review_idx);
 			service.deleteReview(review_idx);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -244,45 +228,52 @@ public class ReviewControllerREST {
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	
-	// 리뷰 댓글 생성
-	@PostMapping("/review/{review_idx}/comment")
-	public Map<String, Object> createReviewComment(@PathVariable("review_idx") String review_idx, 
-			@RequestBody ReviewCommentDTO reviewCommentDto, @RequestParam Map<String, String> param, HttpSession session){
+	@GetMapping("/review/{review_idx}/comment")
+	public ResponseEntity<List<ReviewCommentDTO>> getReviewComment(@PathVariable("review_idx") int review_idx) throws Exception{
+		List<ReviewCommentDTO> list = null;
 		
-		Map<String, Object> resultMap = new HashMap<>();
-//		UserDTO userDto = (UserDTO)session.getAttribute("userInfo");
-		reviewCommentDto.setComment_idx(Integer.parseInt(review_idx));
-//		reviewCommentDto.setUser_idx(userDto.getUser_idx());
-//		PageNavigation pageNavigation = service.makePageNavigation(param);
+		list = service.getReviewComment(review_idx);
 		
-		try {
-			service.createReviewComment(reviewCommentDto);
-			resultMap.put("isSuccess", "true");
-//			map.put("navigation", pageNavigation);
-//			map.put("pgno", param.get("pgno"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
+		for(int i = 0; i < list.size(); i++) {
+			ReviewCommentDTO now = list.get(i);
+			UserDTO commentUser = uService.getUserInfoFromReview(now.getUser_idx());
+			now.setUser_name(commentUser.getUser_name());
 		}
-		return resultMap;
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	// 리뷰 댓글 삭제
-	@DeleteMapping("/review/{review_idx}/comment/{review_comment_idx}")
-	public Map<String, Object> deleteReviewComment(@PathVariable("review_idx") String review_idx,
-			@PathVariable("review_comment_idx") String review_comment_idx, @RequestParam Map<String, String> param, HttpSession session){
-		Map<String, Object> resultMap = new HashMap<>();
-//		PageNavigation pageNavigation = service.makePageNavigation(param);
+	
+	@PostMapping("/review/{review_idx}/comment")
+	public ResponseEntity<Integer> createReviewComment(@PathVariable("review_idx") int review_idx,
+			@RequestBody ReviewCommentDTO reviewCommentDto){
+		logger.info("into postComment logic");
+		logger.info(reviewCommentDto.toString());
+		int result = -1;
 		try {
-			service.deleteReviewComment(Integer.parseInt(review_idx), Integer.parseInt(review_comment_idx));
-			resultMap.put("isSuccess", "true");
-//			map.put("navigation", pageNavigation);
-//			map.put("pgno", param.get("pgno"));
+			int rowCount = service.createReviewComment(reviewCommentDto);
+			result = reviewCommentDto.getComment_idx();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			resultMap.put("isSuccess", "false");
 		}
-		return resultMap;
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/review/{review_idx}/comment/{comment_idx}")
+	public ResponseEntity<String> deleteReviewComment(@PathVariable("review_idx") int review_idx, @PathVariable("comment_idx") int comment_idx){
+		
+		logger.info(review_idx + " " + comment_idx);
+		
+		try {
+			service.deleteReviewComment(review_idx, comment_idx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 }
  

@@ -129,15 +129,18 @@
 	
 	<delete id = "deleteReview" parameterType="int">
 		delete from		review
-		where			review_idx = #{reivewIdx}
+		where			review_idx = #{reviewIdx}
 	</delete>
 	
-	<delete id = "deleteReviewComment" parameterType="int">
+	<delete id = "deleteReviewCommentAll" parameterType="int">
 		delete from		review_comment
 		where			review_idx = #{reviewIdx}
-		<if test='review_comment_idx != 0'>
+	</delete>
+	
+	<delete id = "deleteReviewComment" parameterType="map">
+		delete from		review_comment
+		where			review_idx = #{reviewIdx}
 					and comment_idx = #{review_comment_idx}
-		</if>
 	</delete>
 	
 	<delete id = "deleteReviewImageAll" parameterType="int">
@@ -152,9 +155,12 @@
 	
 	<insert id = "createReviewComment" parameterType="reviewCommentDto">
 		insert into review_comment
-			(user_idx, review_idx, review_comment_content)
+			(user_idx, review_idx, review_comment_create, review_comment_content)
 		values
-			(#{user_idx}, #{review_idx}, #{review_comment_content})
+			(#{user_idx}, #{review_idx}, now(), #{review_comment_content})
+		<selectKey resultType="int" keyProperty="comment_idx" order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
 	
 	<select id = "getReviewComment" resultType="reviewCommentDto">
@@ -165,7 +171,7 @@
 				, review_comment_update
 				, review_comment_content
 		from	review_comment
-		where	review_idx = #{review_idx}
+		where	review_idx = #{reviewIdx}
 		
 	</select>
 

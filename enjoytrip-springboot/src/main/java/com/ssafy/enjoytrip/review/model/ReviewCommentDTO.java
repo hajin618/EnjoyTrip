@@ -4,9 +4,24 @@ public class ReviewCommentDTO {
 	private int review_idx;
 	private int comment_idx;
 	private int user_idx;
+	private String user_name;
 	private String review_comment_create;
 	private String review_comment_update;
 	private String review_comment_content;
+	
+	@Override
+	public String toString() {
+		return "ReviewCommentDTO [review_idx=" + review_idx + ", comment_idx=" + comment_idx + ", user_idx=" + user_idx
+				+ ", user_name=" + user_name + ", review_comment_create=" + review_comment_create
+				+ ", review_comment_update=" + review_comment_update + ", review_comment_content="
+				+ review_comment_content + "]";
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
 	public int getReview_idx() {
 		return review_idx;
 	}
@@ -43,12 +58,4 @@ public class ReviewCommentDTO {
 	public void setReview_comment_content(String review_comment_content) {
 		this.review_comment_content = review_comment_content;
 	}
-	
-	@Override
-	public String toString() {
-		return "ReviewCommentDTO [review_idx=" + review_idx + ", comment_idx=" + comment_idx + ", user_idx=" + user_idx
-				+ ", review_comment_create=" + review_comment_create + ", review_comment_update="
-				+ review_comment_update + ", review_comment_content=" + review_comment_content + "]";
-	}
-	
 }

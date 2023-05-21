@@ -129,7 +129,7 @@ const routes = [
         component: () => import("@/components/reviewboard/ReviewRegister.vue"),
       },
       {
-        path: "datail/:review_idx",
+        path: "detail/:review_idx",
         name: "reviewDetail",
         component: () => import("@/components/reviewboard/ReviewDetail.vue"),
       },

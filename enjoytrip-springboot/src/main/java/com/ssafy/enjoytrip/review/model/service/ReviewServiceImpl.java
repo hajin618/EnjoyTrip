@@ -99,6 +99,11 @@ public class ReviewServiceImpl implements ReviewService{
 		reviewMapper.deleteReviewImageAll(reviewIdx);
 		reviewMapper.deleteReview(reviewIdx);
 	}
+	
+	@Override
+	public void deleteAllReviewComment(int review_idx) throws Exception{
+		reviewMapper.deleteReviewCommentAll(review_idx);
+	}
 
 	@Override
 	public ReviewDTO getReview(int reviewIdx) throws Exception {
@@ -112,15 +117,18 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception {
-		reviewMapper.createReviewComment(reviewCommentDto);
+	public int createReviewComment(ReviewCommentDTO reviewCommentDto) throws Exception {
+		return reviewMapper.createReviewComment(reviewCommentDto);
 		
 	}
 
 	@Override
 	public void deleteReviewComment(int reviewIdx, int review_comment_idx) throws Exception {
-		reviewMapper.deleteReviewComment(reviewIdx, review_comment_idx);
-		
+		Map<String, Integer> params = new HashMap<>();
+		params.put("reviewIdx", reviewIdx);
+		params.put("review_comment_idx", review_comment_idx);
+
+		reviewMapper.deleteReviewComment(params);
 	}
 
 	@Override
