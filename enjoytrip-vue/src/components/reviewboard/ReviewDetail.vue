@@ -4,105 +4,56 @@
       <h2>여행 후기 게시판</h2>
     </div>
 
-    <div style="display: flex; flex-direction:row;">
-      <div class="findKidZone">
-        <div class="findTitle">실종 아동 정보</div>
+    <div class="mainContainer" style="width: 1000px; height:600px; margin: 0 auto; display: flex; flex-direction:column; justify-content: center;">
 
-        <div class="findImageBox">
-          <img width="100%" height="100%" src="../../assets/img/mainPageImg.png" alt="">
-        </div>
+    <div class="top-container" style="display:flex; flex-direction:row;">
+      <div class="postImageBox">
+        <b-carousel
+          id="carousel-1"
+          :interval="4000"
+          controls
+          indicators
+        >
+          <review-image-item
+            v-for="image in review_image"
+            :key="image.image_num"
+            v-bind="image"
+          />
+        </b-carousel>
+      </div>
+      <div class="right-container" style="margin-left:20px; display:flex; flex-direction:column;width:50%;justify-content: space-evenly;">
+       
+        <div class="titleBox" id="title">{{review.review_title}}</div>
 
-        <div class="findNameBox">
-          <label>이름 : </label>
-          <span>홍길동</span>
+                 
+        <div class="postContentBox" id="content">{{review.review_content}}</div>
+        <div style="display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;">
+          <div class="areaSelectbar col-6">
+                      {{getSidoName(review.sido_code)}}
+                    </div>
+          <div class="typeSelectbar col-6">
+                      {{review.review_type}}
+          </div>
         </div>
         
-        <div class="findAgeBox">
-          <label>나이 : </label>
-          <span>5</span>
-        </div>
-
-        <div class="findInfoBox">
-          <label>인적사항 1 : </label>
-          <span>마른 편</span>
-        </div>
-
-        <div class="findInfoBox">
-          <label>인적사항 2 : </label>
-          <span>눈이 이쁨</span>
-        </div>
-
-      </div>
-
-      <div class="postZone">
-        <div class="postImageBox">
-          <b-carousel
-            id="carousel-1"
-            :interval="4000"
-            controls
-            indicators
-          >
-            <review-image-item
-              v-for="image in review_image"
-              :key="image.image_num"
-              v-bind="image"
-            />
-          </b-carousel>
-        </div>
-
-        <div class="postInfoBox">
-          
-          <div class="postTitleBox">
-            <div class="titleBox" id="title">{{review.review_title}}</div>
-
-            <!-- <select class="areaSelectbar" v-model="selectedArea">
-              <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-                {{ item.name }}
-              </option>
-            </select> -->
-            <div class="areaSelectbar">
-              {{getSidoName(review.sido_code)}}
-            </div>
-            <div class="typeSelectbar">
-              {{review.review_type}}
-            </div>
-          </div>
-
-          <div class="postContentBox" id="content">{{review.review_content}}</div>
-
-
-        </div>
       </div>
     </div>
+      
 
-    <div class="buttonBox">
-      <div class="listBox">
+    <div class="buttonBox" style="margin-top:50px" >
+      <div style="margin-left:480px;">
         <button v-on:click.prevent="moveList" class="listBtn">목록</button>
       </div>
       
-      <div v-if="review.userDto.user_id === user_id">
-        <button v-on:click.prevent="edit" class="editBtn">수정</button>
+      <div v-if="review.userDto.user_id === user_id" class="editDeleteBox">
+        <button v-on:click.prevent="edit" style="margin-left:260px" class="editBtn">수정</button>
         <button v-on:click.prevent="del" class="deleteBtn">삭제</button>
       </div>
+    </div>    
+      
     </div>
-
-    <!-- <div style="text-align: center;" class="commentBox">
-      <h3 style="margin-bottom: 20px;">댓글</h3>
-
-      <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
-        <div class="commentUserName">{{comment.user_name}}</div>
-        <div class="commentDate">{{comment.review_comment_create}}</div>
-        <div class="commentContent">{{comment.review_comment_content}}</div>
-        <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)" class="deleteButton">삭제</button>
-      </div>
-    </div>
-
-    <div class="commentWriteBox">
-      <hr>
-      <div class="loggedInUserName">{{user_name}}</div>
-      <textarea placeholder="댓글을 입력하세요" v-model="context"></textarea>
-      <b-button v-on:click.prevent="confirm" class="commentButton">댓글달기</b-button>
-    </div> -->
 
     <div class="commentContainer">
       <div style="text-align: center;" class="commentBox">
@@ -148,7 +99,9 @@ export default {
     ReviewImageItem
   },
   mounted(){
-    document.getElementsByClassName("carousel-inner")[0].style.height="100%";
+    // document.getElementsByClassName("carousel-inner")[0].style.height="100%";
+    // document.getElementsByClassName("carousel-inner")[0].style.borderRadius="20px";
+    console.log(document.getElementsByClassName("carousel-inner")[0]);
   },
   created() {
     http.get(`/review/${this.$route.params.review_idx}`).then(({ data }) => {
@@ -276,20 +229,11 @@ export default {
 <style scoped> 
   .title{
     margin-top : 70px;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
     text-align : center;
   }
 
-.carousel-inner, .carousel-item {
-  height: 350px;
-}
-.carousel{
-  height: 350px;
-}
 
-[role="list"]{
-  height: 100% !important;
-}
   .findKidZone{
     margin-left: 40px;
     width: 350px;
@@ -299,8 +243,8 @@ export default {
     border-radius: 10px / 10px;
   }
 
+
   .postZone{
-    margin-left: 150px;
     width: 1200px;
     height: 500px;
     background-color: rgba(200, 235, 207, 0.5);
@@ -338,16 +282,13 @@ export default {
     margin-left: 60px;
     font-size: 20px;
   }
+  
 
   .buttonBox{
-    margin-top: 40px;
-    margin-bottom: 40px;
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
     display: flex; 
     flex-direction:row;
-  }
-
-  .listBox{
-    margin-left: 940px;
   }
 
   .listBtn{
@@ -359,7 +300,6 @@ export default {
   }
 
   .editBtn{
-    margin-left: 540px;
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);
@@ -377,20 +317,34 @@ export default {
   }
 
   .postImageBox{
-    margin-top: 70px;
-    margin-left: 100px;
-    width:350px;
-    height:350px;
-    background-color: #D9D9D9; 
+    /* width:1000px;
+    height:800px; */
+    width:50%;
+    height:500px;
   }
   .b-carousel-inner{
     height: 100%;
+    border-radius:20px;
   }
+
+.carousel-inner{
+  border-radius: 20px;
+}
 
   b-carousel-slide{
     width:100%;
     height:100%;
     object-fit:cover;
+  }
+  .carousel-inner, .carousel-item {
+    height: 100%;
+  }
+  .carousel{
+    height: 100%;
+  }
+
+  [role="list"]{
+    height: 100% !important;
   }
 
   .postImageArea{
@@ -400,134 +354,60 @@ export default {
   }
 
   .postTitleBox{
-    margin-left: 140px;
-    margin-top: 65px;
+    /* margin-left: 140px;
+    margin-top: 65px; */
     display: flex;
     flex-direction:row;
     text-align: center;
   }
 
   .titleBox{
-    width: 330px;
-    height: 40px;
-    background-color: #D9D9D9;
-    background-color: #D9D9D9;
+    /* width: 330px; */
+    height: 50px; 
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
-    line-height : 40px;
+    border-radius: 10px /10px;
+    text-align: center;
+    line-height : 50px;
   }
 
   .areaSelectbar{
     width: 90px;
-    height: 37px;
-    margin-left: 20px;
-    background-color: #D9D9D9;
+    height: 50px;
+    /* margin-left: 20px; */
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
-    line-height : 37px;
+    border-radius: 10px / 10px;
+    text-align: center;
+    line-height : 50px;
   }
 
   .typeSelectbar{
     width: 90px;
-    height: 37px;
-    margin-left: 20px;
-    background-color: #D9D9D9;
+    height: 50px;
+    /* margin-left: 20px; */
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
-    line-height : 37px;
+    border-radius: 10px / 10px;
+    text-align: center;
+    line-height : 50px;
   }
 
   .postContentBox{
-    margin-left: 140px;
+    /* margin-left: 140px;
     margin-top: 30px;
     width: 550px;
-    height: 280px;
-    background-color: #D9D9D9;
+    height: 280px; */
+    text-align: center;
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
+    border-radius: 10px / 10px;
     line-height : 280px;
   }
-
-/* .commentBox {
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.commentBox h3 {
-  margin-bottom: 20px;
-}
-
-.commentItem {
-  background-color: #ffffff;
-  border: 1px solid #e1e1e1;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.commentUserName {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.commentDate {
-  color: #777777;
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-.commentContent {
-  margin-bottom: 10px;
-}
-
-.deleteButton {
-  background-color: #ff5555;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.commentWriteBox {
-  padding-top: 20px;
-}
-
-.commentWriteBox hr {
-  border: none;
-  border-top: 1px solid #e1e1e1;
-  margin: 20px 0;
-}
-
-.loggedInUserName {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border: 1px solid #e1e1e1;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.commentButton {
-  background-color: #5555ff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-} */
+  
 .commentContainer {
-  max-width: 800px; /* 최대 너비 조정 */
-  margin: 0 auto; /* 중앙 정렬을 위해 좌우 마진을 auto로 설정 */
+  max-width: 1000px; /* 최대 너비 조정 */
+  margin: 50px auto; /* 중앙 정렬을 위해 좌우 마진을 auto로 설정 */
 }
 
 .commentBox {

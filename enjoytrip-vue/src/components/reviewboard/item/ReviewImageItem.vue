@@ -5,7 +5,7 @@
                 class="d-block img-fluid w-100"
                 :src="represent_imageUrl"
                 alt="image slot"
-                style="height:100%; object-fit:cover;"
+                style="height:500px; object-fit:cover;"
             >
         </template>
     </b-carousel-slide>
