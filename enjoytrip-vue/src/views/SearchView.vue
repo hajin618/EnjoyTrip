@@ -132,18 +132,52 @@
     </div>
 
     <div v-if="showModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-close-button">
-          <button class="closeModalBtn" v-on:click="closeModal">x</button>
-        </div>
-        <div class="modal-title">
-          <h4>{{modalSelectedItem.attraction_name}}</h4>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalSelectedItem.attraction_name }}</h4>
+        <button class="close-modal-btn" v-on:click="closeModal">x</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="address">
+          <strong>주소:</strong> {{ modalSelectedItem.address }}
         </div>
 
-         <!-- db child_attraction 테이블 컬럼명 쓰면 댐 -->
-        {{modalSelectedItem.road_address}}
+        <div class="category">
+          <strong>카테고리:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
+        </div>
+
+        <div class="phone-number">
+          <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
+        </div>
+
+        <div class="homepage">
+          <strong>homepage:</strong>
+          <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
+        </div>
+
+        <div class="operating-time">
+          <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
+        </div>
+
+        <div class="closed-day">
+          <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
+        </div>
+
+        <div class="stroller">
+          <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
+        </div>
+
+        <div class="nursing-room">
+          <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
+        </div>
+
+        <div class="admission-fee">
+          <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
+        </div>
       </div>
     </div>
+  </div>
 
   </div>
 </template>
@@ -547,33 +581,67 @@ export default {
   .goPlanBtn:hover{
     background-color : #c8d6cc;
   }
-
-  .modal {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 모달 배경색과 투명도 */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
-  .modal-title{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #000000;
-  }
 
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    width: 800px;
-  }
-  
-  .closeModalBtn{
-    float: right;
-    border : none;
-  }
+.modal-content {
+  background-color: #f5f1e7;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  margin: 0;
+  color: #7aab85;
+}
+
+.close-modal-btn {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-body {
+  margin-top: 10px;
+}
+
+.address,
+.category,
+.phone-number,
+.homepage,
+.operating-time,
+.closed-day,
+.stroller,
+.nursing-room,
+.admission-fee {
+  margin-bottom: 10px;
+}
+
+strong {
+  margin-right: 5px;
+  color: #7aab85;
+}
+
+
 
 </style>
