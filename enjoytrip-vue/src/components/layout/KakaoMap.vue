@@ -17,10 +17,8 @@ export default {
         };
     },
     created(){
-        console.log("kakao created attractions : " +this.attractions);
-        console.log("kakao created ChildAttractions : " +this.childAttractions);
-
-
+        //console.log("kakao created attractions : " +this.attractions);
+        //console.log("kakao created ChildAttractions : " +this.childAttractions);
     },
     props: {
         attractions: [],
