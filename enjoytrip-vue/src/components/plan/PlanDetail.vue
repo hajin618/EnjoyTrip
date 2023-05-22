@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="planMapDiv">
-                  지도
+                  <img width="100%" height="100%" :src="imageURL" alt="">
                 </diV>
 
                 <div class="planContentDiv">
@@ -61,18 +61,22 @@ export default {
 
     data(){
         return{
-            plan: {},
+            plan_idx : 0,
+            plan: [],
             planDetails: [],
             // attractions: [],
             // childAttractions: [],
             attractionList: [],     // attractions + childAttractions 
+            imageURL: '',
         };
     },
-
+    
     created(){
       http.get(`/plan/${this.$route.params.plan_idx}`).then(({ data }) => {
         // console.log(data);
         this.plan = data;
+        //console.log(this.plan.plan_idx);
+        this.plan_idx = data.plan_idx;
       }),
 
       http.get(`/planDetail/${this.$route.params.plan_idx}`).then(({ data }) => {
@@ -105,6 +109,10 @@ export default {
 
         }
       })
+    },
+    mounted(){
+      this.plan_idx = this.$route.params.plan_idx,
+      this.getImageURL();
     },
     methods:{
       listPlan(){
@@ -145,6 +153,14 @@ export default {
           })
 
       },
+      getImageURL(){
+        // const planIdx = this.plan_idx;
+        // console.log("plan : " + this.plan);
+        const baseURL = "http://localhost:80/upload/plan/";
+        const extractedPath = baseURL + this.plan_idx + ".png";
+        console.log("extractedPath : " + extractedPath);
+        this.imageURL = extractedPath;
+      }
     },
     computed: {
     ...mapState({
