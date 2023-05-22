@@ -5,10 +5,10 @@
       </div>
 
       <div class = "buttonDiv">
-            <button
+            <!-- <button
                 v-on:click="moveRegist"
                 class="registButton"
-                >등록</button>
+                >등록</button> -->
       </div>
 
       <div class = "contentDiv" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
