@@ -26,10 +26,10 @@
             </div>
 
             <div class="findKidZone">
-              <!-- <div>
-                여행 순서
-              </div> -->
-              <div v-for="detail in attractionList" :key="detail.attraction_idx">
+              <div class="textDiv">
+                <h5>여행 순서</h5>
+              </div>
+              <div v-for="detail in attractionList" :key="detail.attraction_idx" class="orderItem">
                 {{ detail.attraction_name }}
               </div>
             </div>
@@ -184,9 +184,10 @@ export default {
     margin-left: 40px;
     width: 25%;
     height: 620px;
-    background-color: rgba(200, 235, 207, 0.5);
-    border: 1px solid rgba(200, 235, 207, 0.5);
+    /* background-color: rgba(200, 235, 207, 0.5); */
+    /* border: 1px solid rgba(200, 235, 207, 0.5); */
     border-radius: 10px / 10px;
+    padding-top: 80px;
   }
 
   
@@ -238,6 +239,7 @@ export default {
     line-height : 50px;
     background-color:#e8ece8d1;
     border-radius: 20px / 20px;
+    padding-top: 10px;
   }
   .planChildBtnDiv{
     margin-left: 120px;
@@ -257,6 +259,8 @@ export default {
     height: 25%;
     border-radius: 20px / 20px;
     margin-bottom: 30px;
+    padding-top: 20px;
+    padding-left: 20px;
   }
   .Button{
     background-color:rgba(122, 187, 133, 0.5);
@@ -316,4 +320,22 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
+
+  .orderItem{
+    border-top : 1px solid #9b9b9bd1;
+    border-bottom : 1px solid #9b9b9bd1;
+    width: 100%;
+    height: 40px;
+    /* border-radius: 10px / 10px; */
+    margin-bottom : 5px;
+    padding-top: 6px;
+    background-color: #e8ece8d1;
+    text-align: center;
+  }
+  
+  .textDiv{
+    text-align: center;
+    margin-top : 10px;
+    margin-bottom: 20px;
+}
 </style>

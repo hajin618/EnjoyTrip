@@ -300,9 +300,10 @@ export default {
     height: 40px;
     background-color:rgba(122, 187, 133, 0.5);
     border-radius: 20px / 20px;
-    color: white;
+    color: rgb(0, 0, 0);
     border: 1px solid rgba(213, 120, 120, .2);
     line-height : 40px;
+    text-align: center;
 }
 .text{
     width: 100%;
