@@ -1,14 +1,15 @@
 <template lang="">
 <div class="cardDiv">
     <router-link :to="{name: 'planDetail', params: { plan_idx: plan_idx } }">
-        <b-card 
+        <!-- <b-card 
             img-src="https://picsum.photos/400/300/?image=41" 
             img-alt="Image" 
-            img-top >
-                <b-card-text> 
-                    <div class="planType">{{plan_type}}</div>
-                    <div class="planTitle">{{plan_title}}</div>
-                </b-card-text>
+            img-top > -->
+        <b-card :img-src="imageURL">
+            <b-card-text> 
+                <div class="planType">{{plan_type}}</div>
+                <div class="planTitle">{{plan_title}}</div>
+            </b-card-text>
 
             
         </b-card>
@@ -26,6 +27,23 @@ export default {
         plan_content: String,
         plan_type: String,
     },
+    data(){
+        return{
+            imageURL: '',
+        }
+    },
+    mounted(){
+        this.getImageURL();
+    },
+    methods: {
+        getImageURL(){
+            const planIdx = this.plan_idx;
+            const baseURL = "http://localhost:80/upload/plan/";
+            const extractedPath = baseURL + planIdx + ".png";
+            console.log("extractedPath : " + extractedPath);
+            this.imageURL = extractedPath;
+        }
+    }
 }
 </script>
 
