@@ -452,6 +452,7 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 37px;
+    
   }
 
   .attractionSelect{
@@ -462,6 +463,7 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 37px;
+    padding-left : 10px;
   }
 
   .searchWord{
@@ -472,6 +474,7 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 37px;
+    padding-left : 10px;
   }
 
   .searchBtn{
@@ -595,10 +598,10 @@ export default {
 }
 
 .modal-content {
-  background-color: #f5f1e7;
+  background-color: #fffcf6;
   padding: 20px;
   border-radius: 5px;
-  width: 400px;
+  width: 450px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -640,6 +643,10 @@ export default {
 strong {
   margin-right: 5px;
   color: #7aab85;
+}
+
+.listTitle{
+  text-align : center;
 }
 
 

@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip_dhj`.`plan` (
   `plan_like` INT NULL DEFAULT NULL,
   `plan_hit` INT NULL DEFAULT NULL,
   `plan_content` VARCHAR(1000) NULL,
-  `plan_type` VARCHAR(45) NOT NULL,
+  `plan_type` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`plan_idx`),
   INDEX `FK_user_TO_plan` (`user_idx` ASC) VISIBLE,
   CONSTRAINT `FK_user_TO_plan`
