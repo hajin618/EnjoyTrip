@@ -5,19 +5,14 @@
         </div>
 
         <div style="display: flex; flex-direction:row; margin-bottom:100px">
-            <div class="findKidZone">
-              <div>
-                여행 순서
-              </div>
-            </div>
-        
+            
             <div class="planDiv">
                 <div class="planTopDiv">
                     <div class="planTitleDiv"> 
-                        제목
+                        <h4>{{plan.plan_title}}</h4>
                     </div>
                     <div class="planChildBtnDiv">
-                        아이
+                        {{plan.plan_type}}
                     </div>
                 </div>
 
@@ -26,8 +21,17 @@
                 </diV>
 
                 <div class="planContentDiv">
-                  내용
+                  {{plan.plan_content}}
                 </div>
+            </div>
+
+            <div class="findKidZone">
+              <!-- <div>
+                여행 순서
+              </div> -->
+              <div v-for="detail in attractionList" :key="detail.attraction_idx">
+                {{ detail.attraction_name }}
+              </div>
             </div>
         </div>
 
@@ -58,14 +62,49 @@ export default {
     data(){
         return{
             plan: {},
+            planDetails: [],
+            // attractions: [],
+            // childAttractions: [],
+            attractionList: [],     // attractions + childAttractions 
         };
     },
 
     created(){
-      // http.get(`/plan/${this.$route.params.plan_idx}`).then(({ data }) => {
-      //     console.log(data);
-      //     this.plan = data.plan;
-      // });
+      http.get(`/plan/${this.$route.params.plan_idx}`).then(({ data }) => {
+        // console.log(data);
+        this.plan = data;
+      }),
+
+      http.get(`/planDetail/${this.$route.params.plan_idx}`).then(({ data }) => {
+        this.planDetails = data;
+        // console.log("planDetails : "+ this.planDetails);
+        for(var i=0; i<this.planDetails.length; i++){
+          let contentId = this.planDetails[i].content_id;
+
+          // 어린이 여행지인 경우
+          if(contentId >=1 && contentId <= 8580){
+            http.get(`/childAttraction/${contentId}`).then(({ data }) => {
+              //this.childAttractions.push(data);
+              this.attractionList.push({
+                attraction_name : data.attraction_name,
+                attraction_idx : data.attraction_idx,
+                attraction_type : "어린이",
+              });
+            })
+          }
+          // 어른 여행지인 경우
+          else{
+            http.get(`/attraction/${contentId}`).then(({ data }) => {
+              this.attractionList.push({
+                attraction_name : data.title,
+                attraction_idx : data.content_id,
+                attraction_type : "어른",
+              });
+            })
+          }
+
+        }
+      })
     },
     methods:{
       listPlan(){
@@ -73,22 +112,38 @@ export default {
       },
       modifyPlan(){
         this.$router.replace({
-          name: "planModify",
+          name: "planRegister",
           params: { plan_idx : this.plan.plan_idx },
         });
       },
       removePlan(){
-        http.delete(`/plan/${this.plan.plan_idx}`)
-        .then((response) => {
-          if(response.status == 200){
-            alert("계획 삭제 성공!")
-            this.listPlan();
-          }
-          else{
-            alert("계획 삭제 실패!");
-            this.listPlan();
-          }
-        })
+        // 계획 상세 삭제하기
+        http.delete(`/planDetail/${this.plan.plan_idx}`)
+          .then((response) => {
+            if(response.status == 200){
+              console.log("계획 상세 삭제 성공");
+
+              // 계획 삭제하기
+              http.delete(`/plan/${this.plan.plan_idx}`)
+              .then((response) => {
+              if(response.status == 200){
+                // alert("계획 삭제 성공!")
+                console.log("계획 삭제 성공")
+                alert("계획 삭제 성공");
+                this.listPlan();
+              }
+              else{
+                alert("계획 삭제 실패!");
+                this.listPlan();
+              }
+            })
+            }
+            else{
+                alert("계획 삭제 실패!");
+                this.listPlan();
+            }
+          })
+
       },
     },
     computed: {

@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <div id="whole">
         <div class = "title">
           <h2>여행 계획 등록</h2>
         </div>
@@ -155,7 +155,7 @@ export default {
         },
         captureScreen(){
             // mapDiv 캡쳐할거임
-            html2canvas(document.querySelector("#map")).then(canvas => {
+            html2canvas(document.querySelector("#mapDiv")).then(canvas => {
                 // 캔버스를 이미지 데이터 URL로 변환
 
                 const imageUrl = canvas.toDataURL('image/png'); // 또는 'image/png'으로 설정
@@ -183,7 +183,7 @@ export default {
                     console.log(response.status);
                     if(response.status == 200){
                     alert("사진 또한 등록 성공!!");
-                    this.$router.push({ name: "reviewBoardView" });
+                    this.$router.push({ name: "planList" });
                     }
                     else{
                     alert("사진 등록 실패!!");
