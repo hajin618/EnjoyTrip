@@ -14,7 +14,7 @@
                     <input class="planTitleDiv" v-model="plan.plan_title" id="title" autocomplete="off" type="text" placeholder="제목을 입력해주세요." >
                         
                 <select class="planChildBtnDiv" v-model="plan.plan_type">
-                    <option value='' selected>여행 타입 선택</option>
+                    <option value='null' selected>여행 타입 선택</option>
                     <option v-for="(item, index) in selectType" :key="index" :value="item.value">
                     {{ item.name }}
                     </option>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="orderDiv">
                         <draggable v-model="listForOrder">
-                            <div v-for="item in listForOrder" :key="item.attraction_idx">
+                            <div v-for="item in listForOrder" :key="item.attraction_idx" class="orderItem">
                                 {{item.attraction_name}}
                             </div>
                         </draggable>
@@ -38,7 +38,7 @@
 
         <div class="bottomBox">
             <div class="contentDiv">
-                <input v-model="plan.plan_content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+                <textarea v-model="plan.plan_content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required></textarea>
             </div>
 
             <div class="ButtonDiv">
@@ -67,17 +67,17 @@ export default {
     data(){
         return{
             plan:{
-                plan_title: '',
-                plan_content: '',
-                plan_type: '',
+                plan_title: null,
+                plan_content: null,
+                plan_type: null,
 
             },
-            // plan_title: '',
-            // plan_content: '',
-            // plan_type: '',
+            // plan_title: null,
+            // plan_content: null,
+            // plan_type: null,
 
             selectType: [
-                        {name: '아이', value: "아이"},
+                        {name: '어린이', value: "어린이"},
                         {name: '어른', value: "어른"},
                         ],
             planDetails : [],
@@ -138,13 +138,13 @@ export default {
     },
     methods:{
         confirm(){
-            if(this.plan_title == ''){
+            if(this.plan.plan_title == null){
                 alert("제목을 입력해주세요!");
             }
-            else if(this.plan_content == ''){
+            else if(this.plan.plan_content == null){
                 alert("내용을 입력해주세요!");
             }
-            else if(this.plan_type == ''){
+            else if(this.plan.plan_type == null){
                 alert("여행 타입을 선택해주세요!");
             }
             else{
@@ -275,7 +275,7 @@ export default {
     background-color:#e8ece8d1;
     width: 90%;
   
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .horDiv{
     display: flex; 
@@ -290,14 +290,15 @@ export default {
     height: 40px;
     background-color:#e8ece8d1;
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
+    border-radius: 10px / 10px;
     line-height : 40px;
+    padding-left: 5px;
 }
 .planChildBtnDiv{
     margin-left: 35px;
     width: 25%;
     height: 40px;
-    background-color:#7aab85;
+    background-color:rgba(122, 187, 133, 0.5);
     border-radius: 20px / 20px;
     color: white;
     border: 1px solid rgba(213, 120, 120, .2);
@@ -312,7 +313,7 @@ export default {
     width: 70%;
 }
 .orderDiv{
-    background-color: #7aab85;
+    /* background-color: #e8ece8d1; */
     height: 405px;
     width: 97%;
     margin-bottom:40px;
@@ -353,5 +354,21 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     margin-bottom:25px;
-  }
+}
+.orderItem{
+    border-top : 1px solid #9b9b9bd1;
+    border-bottom : 1px solid #9b9b9bd1;
+    width: 100%;
+    height: 40px;
+    /* border-radius: 10px / 10px; */
+    margin-bottom : 5px;
+    padding-top: 6px;
+    background-color: #e8ece8d1;
+}
+#content{
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
 </style>

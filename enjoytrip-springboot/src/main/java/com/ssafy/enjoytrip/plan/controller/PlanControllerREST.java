@@ -168,7 +168,7 @@ public class PlanControllerREST {
 	@PostMapping("/plan")
 	public ResponseEntity<Integer> createPlan(@RequestBody PlanDTO planDto){
 		int result = -1;
-		planDto.setPlan_type("어린이");
+//		planDto.setPlan_type("어린이");
 		try {
 			int rowCount = service.createPlan(planDto);
 			result = planDto.getPlan_idx();
