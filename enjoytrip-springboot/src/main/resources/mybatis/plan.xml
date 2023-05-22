@@ -100,13 +100,15 @@
 	<select id="getPlanDetail" parameterType="int"
 		resultType="planDetailDto">
 		select 
-				plan_idx
-			  , content_id
-			  , detail_order
+				  plan_idx
+			  	, content_id
+			  	, detail_order
 		from 
-				plan_detail
+				  plan_detail
 		where 
-				plan_idx = #{plan_idx}
+				  plan_idx = #{plan_idx}
+		order by
+				  detail_order
 	</select>
 
 	<select id="getPlanComment" parameterType="int"

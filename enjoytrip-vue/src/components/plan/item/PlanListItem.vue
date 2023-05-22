@@ -5,9 +5,11 @@
             img-src="https://picsum.photos/400/300/?image=41" 
             img-alt="Image" 
             img-top >
-                
-                <b-card-text> text text
+                <b-card-text> 
+                    <div class="planType">{{plan_type}}</div>
+                    <div class="planTitle">{{plan_title}}</div>
                 </b-card-text>
+
             
         </b-card>
     </router-link>
@@ -22,13 +24,14 @@ export default {
         plan_title: String,
         plan_details: Array,
         plan_content: String,
+        plan_type: String,
     },
 }
 </script>
 
 <style scoped>
     .card{
-    width: 17vw;
+    width: 18vw;
     /*
     height: 16vw;
     */
@@ -38,5 +41,13 @@ export default {
 
     .cardDiv{
     margin-right: 40px;
+    }
+
+    .planType{
+        white-space: nowrap;
+    }
+
+    .planTitle{
+        white-space: nowrap;
     }
 </style>
