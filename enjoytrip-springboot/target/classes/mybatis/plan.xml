@@ -159,4 +159,10 @@
 		delete from plan_like 
 		where plan_idx = #{planIdx} and user_idx = #{userIdx}
 	</delete>
+	
+	<select id="myPlanList" resultType="planDto">
+		select 		*
+		from		plan
+		where		user_idx = #{user_idx}
+	</select>
 </mapper>

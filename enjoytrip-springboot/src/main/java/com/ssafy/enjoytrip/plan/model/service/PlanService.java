@@ -47,4 +47,6 @@ public interface PlanService {
 	public void addLikePlan(int planIdx, int userIdx) throws Exception;
 	// 여행 계획 좋아요 취소
 	public void deleteLikePlan(int planIdx, int userIdx) throws Exception;
+	// 내 여행 계획 조회
+	public List<PlanDTO> myPlanList(int user_idx) throws Exception;
 }

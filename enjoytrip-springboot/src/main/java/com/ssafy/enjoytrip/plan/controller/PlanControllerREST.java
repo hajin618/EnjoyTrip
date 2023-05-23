@@ -199,7 +199,21 @@ public class PlanControllerREST {
 		else {
 			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
 		}
+	}
+	
+	@GetMapping("/myPlan/{user_idx}")
+	public ResponseEntity<List<PlanDTO>> getMyPlanList(@PathVariable("user_idx") String user_idx){
 		
+		List<PlanDTO> list = null;
+		try {
+			list = service.myPlanList(Integer.parseInt(user_idx));
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			return new ResponseEntity<List<PlanDTO>>(list, HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<PlanDTO>>(list, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/plan/{plan_idx}")

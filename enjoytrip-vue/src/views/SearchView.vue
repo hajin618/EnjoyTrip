@@ -86,14 +86,17 @@
               :key="item.content_id"
               @deleteAtt="deleteAtt"
               v-bind="item"/>
-            
+        </div>
+
+        <div class="rememberItem" v-if="savedChAttInfo.length">
             <saved-ch-attraction-item
               v-for="item in savedChAttInfo"
               :key="item.attraction_idx"
               @deleteChAtt="deleteChAtt"
               v-bind="item"/>
-            
         </div>
+
+        
         <!-- <div class="rememberItem" v-else>
           <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
         </div> -->
@@ -579,7 +582,7 @@ export default {
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 37px;
-    
+    padding-left : 10px;
   }
 
   .attractionSelect{
@@ -640,22 +643,22 @@ export default {
 
   .findNameBox{
     margin-top: 20px;
-    margin-left: 60px;
+    margin-left: 50px;
     font-size: 20px;
   }
 
   .findAgeBox{
-    margin-left: 60px;
+    margin-left: 50px;
     font-size: 20px;
   }
 
   .findGenderBox{
-    margin-left: 60px;
+    margin-left: 50px;
     font-size: 20px;
   }
 
   .findInfoBox{
-    margin-left: 60px;
+    margin-left: 50px;
     font-size: 20px;
     margin-right: 30px;
   }
