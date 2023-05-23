@@ -150,12 +150,20 @@ export default {
             console.log(response);
             // 사용가능 ID
             if(response.status == 200){
-              // alert("사용 가능 ID입니다!");
+                Swal.fire(
+                    '아이디 중복확인 성공!',
+                    '다음 스탭을 진행해주세요!',
+                    'success'
+                )
               this.idDuplicated = false;
             }
             // 사용불가 ID
             else{
-              // alert("사용 불가 ID입니다!");
+              Swal.fire({
+                icon: 'error',
+                title: '사용 불가 ID!',
+                text: '중복된 아이디입니다!',
+              })
               this.idDuplicated = true;
             }
         });
@@ -185,12 +193,20 @@ export default {
             console.log(response);
             // 사용가능 email
             if(response.status == 200){
-              // alert("사용 가능 email입니다!");
+              Swal.fire(
+                  '이메일 중복확인 성공!',
+                  '다음 스탭을 진행해주세요!',
+                  'success'
+              )
               this.emailDuplicated = false;
             }
             // 사용불가 email
             else{
-              // alert("사용 불가 email입니다!");
+              Swal.fire({
+                icon: 'error',
+                title: '사용 불가 이메일!',
+                text: '중복된 이메일입니다!',
+              })
               this.emailDuplicated = true;
             }
         });
@@ -257,19 +273,22 @@ export default {
             confirmButtonText: 'JOIN!'
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire(
-                '가입 성공!',
-                '회원 정보가 성공적으로 등록되었습니다!',
-                'success'
-              )
               http.post(`/user`, this.user).then(({data}) => { 
                 console.log(data);
                 if(data == "SUCCESS"){
-                  // alert("회원 가입 완료!");
+                  Swal.fire(
+                    '가입 성공!',
+                    '회원 정보가 성공적으로 등록되었습니다!',
+                    'success'
+                  )
                   this.$router.push({ name: "HomeView" });
                 }
                 else{
-                  // alert("회원 가입 실패!");
+                  Swal.fire({
+                    icon: 'error',
+                    title: '회원 등록 실패!',
+                    text: '서버 오류입니다!!',
+                  })
                 }
               });
             }

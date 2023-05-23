@@ -4,34 +4,34 @@
       <h2>여행 후기 수정</h2>
     </div>
 
-    <div class="InfoArea">
-        <div class="postTitleBox">
-            <input class="titleBox" v-model="review.review_title" id="title" autocomplete="off" type="text" required>
-            <!-- <select class="areaSelectbar" v-model="selectedArea">
-              <option v-for="(item, index) in selectList" :key="index" :value="item.value">
-                {{ item.name }}
-              </option>
-            </select> -->
-            <select class="areaSelectbar" v-model="review.sido_code">
+    <div class="mainContainer" style="width: 1000px; height:600px; margin: 0 auto; display: flex; flex-direction:column; justify-content: center;">
+
+    <div class="top-container" style="display:flex; flex-direction:row;">
+      
+      <div class="right-container" style="margin-left:20px; display:flex; flex-direction:column;width:100%;justify-content: space-evenly;">
+       
+        <input class="titleBox" v-model="review.review_title" id="title" autocomplete="off" type="text" required>
+
+        <div style="display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;">
+            <select class="areaSelectbar col-6" v-model="review.sido_code">
                 <option value=0 selected>시/도 재선택</option>
                 <option v-for="(item, index) in selectList" :key="index" :value="item.sido_code">
                 {{ item.sido_name }}
                 </option>
             </select>
-
-            <select class="typeSelectbar" v-model="review.review_type">
+            <select class="typeSelectbar col-6" v-model="review.review_type">
                 <option value="" selected>여행 타입 재선택</option>
                 <option v-for="(item, index) in selectType" :key="index" :value="item.value">
                 {{ item.name }}
                 </option>
             </select>
-          </div>
-
-        <div class="postContentArea">
-            <input class="postContentBox" v-model="review.review_content" id="content" autocomplete="off" type="text" required>
         </div>
+
+        <input class="postContentBox" v-model="review.review_content" id="content" autocomplete="off" type="text" required>
         
-        <div class="imageArea">
+        <div class="imageArea" style="text-align:center;">
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
           </div>
@@ -43,35 +43,49 @@
             </div>
 
           </div>
-
-
-            <!-- <button class="imageBtn">이미지 업로드</button>
-
-            <div class="imageTextArea">
-                이미지 url 생성 
-                이미지 삭제도 
-            </div> -->
         </div>
 
-        
+      </div>
     </div>
 
 
-    <div class="buttonArea">
-        <button v-on:click.prevent="confirm" class="registerBtn">수정</button>
-        <button v-on:click.prevent="cancel" class="cancelBtn">취소</button>
+    <div class="buttonBox" style="margin-top:50px" >
+      <div style="margin-left:470px;">
+        <button v-on:click.prevent="moveList" class="listBtn">목록</button>
+      </div>
+      
+      <div v-if="review.userDto.user_id === user_id" class="editDeleteBox">
+        <button v-on:click.prevent="edit" style="margin-left:260px" class="editBtn">수정</button>
+        <button v-on:click.prevent="del" class="deleteBtn">취소</button>
+      </div>
+    </div>    
+      
     </div>
+
+    <div class="commentContainer">
+      <div style="text-align: center;" class="commentBox">
+        <h3>댓글 관리</h3>
+
+        <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
+          <div class="commentUserName">{{comment.user_name}}</div>
+          <div class="commentDate">{{comment.review_comment_create}}</div>
+          <div class="commentContent">{{comment.review_comment_content}}</div>
+          <button v-on:click.prevent="deleteComment(comment.comment_idx)" class="deleteButton">삭제</button>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-    name: "ReviewModifyView",
-    components: {
-      
-    },
+  name: "ReviewModifyView",
     data(){
       return{
         review:[],
@@ -85,9 +99,38 @@ export default {
                     ],
         selectedFiles:[],
         deleteFiles:[],
+        comments: [],
       }
     },
-    methods:{
+  computed: {
+    ...mapState({
+      user_idx: state => state.userStore.userInfo.user_idx,
+      user_name: state => state.userStore.userInfo.user_name,
+      user_id: state => state.userStore.userInfo.user_id,
+      user_email: state => state.userStore.userInfo.user_email,
+    }),
+  },
+  methods:{
+    moveList(){
+      this.$router.push({ name: "reviewBoardView" });
+    },
+    deleteComment(comment_idx){
+      http.post(`review/${this.review.review_idx}/comment/${comment_idx}`)
+      .then((response) => {
+        if(response.status == 200){
+          const commentIndex = this.comments.findIndex(comment => comment.comment_idx === comment_idx);
+          this.comments.splice(commentIndex, 1);
+
+          console.log(this.review.review_idx);
+          console.log(comment_idx);
+          Swal.fire(
+            '댓글 삭제 성공!',
+            '안전하게 삭제되었습니다!',
+            'success'
+          )
+        }
+      })
+    },
       cancel(){
         this.$router.push({ name: "reviewBoardView" });
       },
@@ -96,16 +139,32 @@ export default {
       },
       confirm(){
         if(this.review.review_title == ''){
-          alert("제목을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '제목은 필수입니다!',
+          })
         }
         else if(this.review.review_content == ''){
-          alert("내용을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '내용은 필수입니다!',
+          })
         }
         else if(this.review.sido_code == ''){
-          alert("지역을 선택해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '지역은 필수입니다!',
+          })
         }
         else if(this.review.review_type == ''){
-          alert("여행 타입을 선택해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '여행 타입은 필수입니다!',
+          })
         }
         else{
           console.log(this.selectedFiles);
@@ -124,7 +183,6 @@ export default {
         }).then((response) => { 
             console.log(response.status);
             if(response.status == 200){
-              alert("리뷰 수정 성공!!");
 
               // 삭제 로직
               // 사진 삭제한거랑 새로 넣는거랑 생각해야해
@@ -132,7 +190,7 @@ export default {
               http.post(`/fileDelete`, this.deleteFiles)
                 .then((response) =>{
                   if(response.status == 200){
-                    alert("사진 삭제 성공!");
+                    console.log("사진 삭제 성공");
                   }
                 })
 
@@ -152,22 +210,33 @@ export default {
                 .then((response) => {
                   console.log(response.status);
                   if(response.status == 200){
-                    alert("사진 또한 수정 성공!!");
+                    Swal.fire(
+                      '리뷰 수정 성공!',
+                      '리뷰 페이지로 이동합니다!',
+                      'success'
+                    )
                   }
                   else{
-                    alert("사진 등록 실패!!");
+                    console.log("사진 수정 실패");
                   }
                 })
               }
             }
             else{
-              alert("리뷰 수정 실패!");
+              Swal.fire({
+                icon: 'error',
+                title: '수정 실패!',
+                text: '서버 오류입니다!',
+              })
             }
             this.$router.push({ name: "reviewBoardView" });
           });
       },
       addDeleteList(imageNum){
         this.deleteFiles.push(imageNum);
+      },
+      del(){
+        this.$router.push({ name: "reviewBoardView" });
       }
     },
     created(){
@@ -180,34 +249,82 @@ export default {
         console.log(data.sidoList);
         this.selectList = data.sidoList;
       });
+      http.get(`/review/${this.$route.params.review_idx}/comment`).then(({data}) => {
+      console.log(data);
+      this.comments = data;
+    })
     }
 }
+
 </script>
 
-<style scoped>
+
+<style scoped> 
   .title{
     margin-top : 70px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align : center;
   }
 
-  .InfoArea{
-    width: 1500px;
-    height: 530px;
-    margin-left: 220px;
 
-    background: rgba(200, 235, 207, 0.4);
-    border-radius: 20px;
+  .findKidZone{
+    margin-left: 40px;
+    width: 350px;
+    height: 500px;
+    background-color: rgba(200, 235, 207, 0.5);
+    border: 1px solid rgba(200, 235, 207, 0.5);
+    border-radius: 10px / 10px;
   }
 
-  .buttonArea{
-    margin-top: 50px;
-    margin-left: 870px;
-    margin-bottom: 30px;
+
+  .postZone{
+    width: 1200px;
+    height: 500px;
+    background-color: rgba(200, 235, 207, 0.5);
+    border: 1px solid rgba(200, 235, 207, 0.5);
+    border-radius: 10px / 10px;
+    display: flex;
+    flex-direction:row;
+  }
+  
+  .findTitle{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 25px;
   }
 
-    .registerBtn{
-    margin-right: 15px;
+  .findImageBox{
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 80%;
+    height: 220px;
+  }
+
+  .findNameBox{
+    margin-top: 20px;
+    margin-left: 60px;
+    font-size: 20px;
+  }
+
+  .findAgeBox{
+    margin-left: 60px;
+    font-size: 20px;
+  }
+
+  .findInfoBox{
+    margin-left: 60px;
+    font-size: 20px;
+  }
+  
+
+  .buttonBox{
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
+    display: flex; 
+    flex-direction:row;
+  }
+
+  .listBtn{
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);
@@ -215,87 +332,192 @@ export default {
     border-radius: 10px / 10px;
   }
 
-  .cancelBtn{
-    margin-right: 175px;
+  .editBtn{
     width: 80px;
     height: 35px;
     background-color:rgba(122, 187, 133, 0.5);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+
+  .deleteBtn{
+    margin-left: 20px;
+    width: 80px;
+    height: 35px;
+    background-color:rgba(122, 187, 133, 0.5);
+    border: 1px solid rgba(213, 120, 120, .2);
+    border-radius: 10px / 10px;
+  }
+
+  .postImageBox{
+    /* width:1000px;
+    height:800px; */
+    width:50%;
+    height:500px;
+  }
+  .b-carousel-inner{
+    height: 100%;
+    border-radius:20px;
+  }
+
+.carousel-inner{
+  border-radius: 20px;
+}
+
+  b-carousel-slide{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .carousel-inner, .carousel-item {
+    height: 100%;
+  }
+  .carousel{
+    height: 100%;
+  }
+
+  [role="list"]{
+    height: 100% !important;
+  }
+
+  .postImageArea{
+    margin-top: 20px;
+    width: 200px;
+    height: 300px;
   }
 
   .postTitleBox{
-    padding-left: 285px;
-    padding-top: 30px;
+    /* margin-left: 140px;
+    margin-top: 65px; */
     display: flex;
     flex-direction:row;
     text-align: center;
   }
 
   .titleBox{
-    width: 570px;
-    height: 40px;
-    background-color: #D9D9D9;
-    background-color: #D9D9D9;
+    /* width: 330px; */
+    height: 50px; 
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px;
-    line-height : 40px;
+    border-radius: 10px /10px;
+    text-align: center;
+    line-height : 50px;
   }
 
   .areaSelectbar{
-    width: 220px;
-    height: 37px;
-    margin-left: 20px;
-    background-color: #D9D9D9;
+    width: 90px;
+    height: 50px;
+    /* margin-left: 20px; */
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
-    line-height : 37px;
+    text-align: center;
+    line-height : 50px;
   }
 
   .typeSelectbar{
-    width: 110px;
-    height: 37px;
-    margin-left: 20px;
-    background-color: #D9D9D9;
+    width: 90px;
+    height: 50px;
+    /* margin-left: 20px; */
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
-    line-height : 37px;
+    text-align: center;
+    line-height : 50px;
   }
 
-    .postContentArea{
-    margin-left: 280px;
+  .postContentBox{
+    /* margin-left: 140px;
     margin-top: 30px;
-    }
-
-    .postContentBox{
-    width: 950px;
-    height: 230px;
-    background-color: #D9D9D9;
+    width: 550px;
+    height: 280px; */
+    text-align: center;
+    background-color:rgba(122, 187, 133, 0.2);
     border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 20px / 20px;
+    border-radius: 10px / 10px;
     line-height : 280px;
   }
+  
+.commentContainer {
+  max-width: 1000px; /* 최대 너비 조정 */
+  margin: 50px auto; /* 중앙 정렬을 위해 좌우 마진을 auto로 설정 */
+}
 
-  .imageBtn{
-    margin-left: 280px;
-    width: 180px;
-    height: 40px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px;
-  }
+.commentBox {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
 
-  .imageArea{
-    margin-top: 30px;
-    display: flex;
-  }
+.commentBox h3 {
+  margin-bottom: 20px;
+}
 
-  .imageTextArea{
-    margin-left: 50px;
-    width: 720px;
-    height: 120px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
-    border-radius: 10px / 10px;
-  }
+.commentItem {
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.commentUserName {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.commentDate {
+  color: #777777;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.commentContent {
+  margin-bottom: 10px;
+}
+
+.deleteButton {
+  background-color: #ff5555;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.commentWriteBox {
+  padding-top: 20px;
+}
+
+.commentWriteBox hr {
+  border: none;
+  border-top: 1px solid #e1e1e1;
+  margin: 20px 0;
+}
+
+.loggedInUserName {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.commentButton {
+  background-color: #7aab85;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
 </style>
