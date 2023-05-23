@@ -48,23 +48,29 @@
 
         <div class="findNameBox">
           <label>이름 : </label>
-          <span>홍길동</span>
+          <span>{{mChild.nm}}</span>
         </div>
         
         <div class="findAgeBox">
-          <label>나이 : </label>
-          <span>5</span>
+          <label>당시 나이 : </label>
+          <span>{{mChild.age1}}</span>
+        </div>
+
+        <div class="findGenderBox">
+          <label>성별 : </label>
+          <span>{{mChild.sexdstnDscd}}</span>
         </div>
 
         <div class="findInfoBox">
-          <label>인적사항 1 : </label>
-          <span>마른 편</span>
+          <label>인적사항 : </label>
+          <span>{{mChild.etcSpfeatr}}</span>
         </div>
 
-        <div class="findInfoBox"> 
-          <label>인적사항 2 : </label>
-          <span>눈이 이쁨</span>
+        <div class="findInfoBox">
+          <label>실종일자 : </label>
+          <span>{{mChild.detailDate1}}</span>
         </div>
+
       </div>
 
       <div class="mapZone">
@@ -274,6 +280,7 @@ export default {
       savedChAtt : [],        // 저장한 어린이 여행지 번호 저장
       savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
       plan_idx: 0,
+      mChild: [],
     }
   },
   computed: {
@@ -284,6 +291,11 @@ export default {
       //console.log(data.sidoList);
       this.sidoList = data.sidoList;
     });
+
+    http.get(`/mChild/2`).then(({ data }) => {
+      this.mChild = data;
+      // console.log(data);
+    })
   },
   
   // watch: {
@@ -563,7 +575,7 @@ export default {
     top: 200px;
     right: 300px;
     width: 350px;
-    height: 500px;
+    height: 600px;
     background-color: rgba(200, 235, 207, 0.5);
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 30px / 30px;
@@ -593,9 +605,15 @@ export default {
     font-size: 20px;
   }
 
+  .findGenderBox{
+    margin-left: 60px;
+    font-size: 20px;
+  }
+
   .findInfoBox{
     margin-left: 60px;
     font-size: 20px;
+    margin-right: 30px;
   }
 
   .mapZone{
