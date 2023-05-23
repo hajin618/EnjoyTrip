@@ -49,7 +49,7 @@ export default {
       selectedTab(newTab) {
         if (newTab === 'edit') {
           this.$nextTick(() => {
-            this.$refs.edit.style.backgroundColor = "#7aab85";
+            this.$refs.edit.style.backgroundColor = "#7aab85"; 
             this.$refs.plans.style.backgroundColor = "#C8EBCF";
             this.$refs.reviews.style.backgroundColor = "#C8EBCF";
           });
