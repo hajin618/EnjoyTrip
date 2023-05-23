@@ -251,6 +251,7 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
+import Swal from "sweetalert2";
 
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
 import SearchViewItem from "../components/layout/SearchViewItem.vue"
@@ -477,8 +478,11 @@ export default {
 
     goPlan(){
       if(this.savedAttInfo.length == 0 && this.savedChAttInfo.length == 0){
-        alert("여행지를 하나 이상 선택해주세요");
-        
+        Swal.fire({
+          icon: 'error',
+          title: '여행지 등록 실패!!',
+          text: '여행지를 하나 이상 선택해주세요',
+        })
       }
       else{
         // console.log(this.savedAtt);

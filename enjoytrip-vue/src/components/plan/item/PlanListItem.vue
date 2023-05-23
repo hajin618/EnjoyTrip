@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import imageUrl from "@/api/image";
 export default {
     name: "PlanListItem",
     props: {
@@ -38,7 +39,9 @@ export default {
     methods: {
         getImageURL(){
             const planIdx = this.plan_idx;
-            const baseURL = "http://localhost:80/upload/plan/";
+            // const baseURL = "http://localhost:80/upload/plan/";
+            // const baseURL = "http://192.168.208.85:80/upload/plan/";
+            const baseURL = imageUrl;
             const extractedPath = baseURL + planIdx + ".png";
             console.log("extractedPath : " + extractedPath);
             this.imageURL = extractedPath;

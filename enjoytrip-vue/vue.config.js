@@ -5,7 +5,7 @@ module.exports = defineConfig({
   ],
   devServer: {
     port: 8080,
-    proxy : "http://192.168.208.10:80/api"
-    // proxy : "http://192.168.208.10:80/api" 선진
+    proxy : "http://localhost:80/api"
+    // proxy : "http://192.168.208.85:80/api"
   }
 })

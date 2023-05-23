@@ -40,6 +40,7 @@
  
  <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
 
 export default {
@@ -61,17 +62,21 @@ export default {
   },
   created(){
       http.get(`/review`).then((response) => {
-          console.log(response.status);
-          console.log(response);
+          //console.log(response.status);
+          //console.log(response);
           if(response.status == 200){
             this.reviews = response.data;
           }
           else{
-            alert("후기들 불러오기 실패!!!");
+            Swal.fire({
+              icon: 'error',
+              title: '데이터 불러오기 실패!',
+              text: '서버 오류입니다!',
+            })
           }
       });
       http.get(`/sido`).then(({ data }) => {
-        console.log(data.sidoList);
+        //console.log(data.sidoList);
         this.selectList = data.sidoList;
       });
   },
@@ -80,7 +85,7 @@ export default {
       this.$router.push({ name: "reviewRegister" });
     },
     sort(){
-      console.log(this.selectedArea, this.selectedType);
+      //console.log(this.selectedArea, this.selectedType);
       http.get(`/reviewsort`, {
         params: {
           sido_code: this.selectedArea,
@@ -88,12 +93,16 @@ export default {
         }
       })
       .then((response) => {
-        console.log(response.status);
+        //console.log(response.status);
         if(response.status == 200){
           this.reviews = response.data;
         }
         else{
-          alert("검색 실패!");
+          Swal.fire({
+            icon: 'error',
+            title: '정렬 실패!',
+            text: '서버 오류입니다!',
+          })
         }
       })
     }

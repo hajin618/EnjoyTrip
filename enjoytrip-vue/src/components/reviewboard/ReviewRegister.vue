@@ -29,23 +29,7 @@
         <div class="imageArea">
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
-            <!-- <button class="imageRegistBtn" @click="uploadFiles">사진 첨부 완료하기</button> -->
           </div>
-
-          <!-- <form action="fileupload" id="fileupload" method="post"
-            enctype="multipart/form-data">
-            파일 : <input type="file" name="upfile" multiple="multiple"> 
-            <input v-model="review_idx">
-            <input type="submit" value="업로드" id="upfile">
-
-          </form> -->
-            <!-- 이미지 업로드 성공되면 안에 하나씩 채워져야함 -->
-            <!-- <div class="imageTextArea">
-                <div>
-                  <span>http://localhost:8080</span>
-                  <button class="itemDeleteBtn">삭제</button>
-                </div>
-            </div> -->
         </div>
     </div>
     
@@ -58,7 +42,7 @@
 
 <script>
 import http from "@/api/http";
-
+import Swal from "sweetalert2";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
@@ -101,19 +85,39 @@ export default {
       },
       confirm(){
         if(this.title == ''){
-          alert("제목을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '제목은 필수입니다!',
+          })
         }
         else if(this.content == ''){
-          alert("내용을 입력해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '내용은 필수입니다!',
+          })
         }
         else if(this.selectedArea == ''){
-          alert("지역을 선택해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '지역은 필수입니다!',
+          })
         }
         else if(this.selectedType == ''){
-          alert("여행 타입을 선택해주세요!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '여행 타입은 필수입니다!',
+          })
         }
         else if(this.selectedFiles.length == 0){
-          alert("후기 게시판은 사진 한 장 이상이 필수입니다!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '사진 한장은 필수입니다!',
+          })
         }
         else{
           console.log(this.selectedFiles);
@@ -134,7 +138,6 @@ export default {
         }).then((response) => { 
             console.log(response.status);
             if(response.status == 200){
-              alert("리뷰 등록 성공!!");
               this.review_idx = response.data;
               console.log("review_idx",response.data);
               // Swal.fire({
@@ -160,17 +163,29 @@ export default {
               .then((response) => {
                 console.log(response.status);
                 if(response.status == 200){
-                  alert("사진 또한 등록 성공!!");
+                  Swal.fire(
+                    '등록 성공!',
+                    '리뷰 페이지로 이동합니다!',
+                    'success'
+                  )
                   this.$router.push({ name: "reviewBoardView" });
                 }
                 else{
-                  alert("사진 등록 실패!!");
+                  Swal.fire({
+                    icon: 'error',
+                    title: '등록 실패!',
+                    text: '서버 오류입니다! 잠시 후 다시 이용해주세요.',
+                  })
                 }
               })
               
             }
             else{
-              alert("리뷰 등록 실패!");
+              Swal.fire({
+                icon: 'error',
+                title: '등록 실패!',
+                text: '서버 오류입니다! 잠시 후 다시 이용해주세요.',
+              })
             }
           });
       },

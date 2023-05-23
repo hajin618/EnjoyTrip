@@ -47,6 +47,7 @@
 </template>
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 const userStore = "userStore";
@@ -92,14 +93,17 @@ export default {
                 notice_content : this.notice.notice_content,
             })
             .then(({ res }) => {
-                let msg = "등록 완료";
                 
                 console.log(res);
-                
+                Swal.fire(
+                    '등록 성공!',
+                    '공지사항이 등록되었습니다!',
+                    'success'
+                )
                 // if(res === "true"){
                 //     msg = " 등록시 문제 발생";
                 // }
-                alert(msg);
+                
                 this.moveList();
             })
         },
@@ -110,9 +114,12 @@ export default {
                 notice_content : this.notice.notice_content,
             })
             .then(({ res }) => {
-                let msg = "수정 완료";
                 console.log(res);
-                alert(msg);
+                Swal.fire(
+                    '수정 성공!',
+                    '공지사항이 수정되었습니다!',
+                    'success'
+                )
                 this.$router.push({name: "noticeDetail", params: { notice_idx: this.notice.notice_idx}});
             })
         },
