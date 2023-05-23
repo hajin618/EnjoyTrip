@@ -112,4 +112,9 @@ public class PlanServiceImpl implements PlanService {
 	public int createPlanDetail(PlanDetailDTO planDetailDto) throws Exception {
 		return planMapper.createPlanDetail(planDetailDto);
 	}
+
+	@Override
+	public List<PlanDTO> myPlanList(int user_idx) throws Exception {
+		return planMapper.myPlanList(user_idx);
+	}
 }
