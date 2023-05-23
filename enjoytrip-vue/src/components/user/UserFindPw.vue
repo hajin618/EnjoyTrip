@@ -2,13 +2,13 @@
   <div class="main">
     <div class="left">
       <div class="findPwBox">
-        <div class="findPwBoxHeader" style="padding-top: 110px; padding-left: 300px;">
-          <router-link to="/" style="padding-left: 20px; font-weight: 550;"><img src="../../assets/img/family.png" width="50px" height="50px" alt=""></router-link>
+        <div class="findPwBoxHeader" style="padding-top: 50px; padding-left: 250px;">
+          <router-link to="/" style="padding-left: 20px; font-weight: 550;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
         </div>
 
         <!-- 이메일로 인증번호 받기 -->
-        <form v-show="!getEmail" style="padding-top: 40px; padding-left: 150px;">
-          <div style="padding-left: 40px;   font-weight: 550;">
+        <form v-show="!getEmail" style="padding-top: 45px; padding-left: 100px;">
+          <div style="padding-left: 60px;   font-weight: 550;">
             회원 정보에 등록된 이메일을 입력해주세요.
           </div>
           <div class="findPwform">
@@ -21,13 +21,13 @@
         </form>
 
         <!--  인증번호 입력 -->
-        <form v-show="putConfirmNumber" style="padding-top: 40px; padding-left: 150px;">
+        <form v-show="putConfirmNumber" style="padding-top: 80px; padding-left: 100px;">
           <div style="font-weight: 550;">
             {{email}}로 받은 인증번호를 입력해주세요!
           </div>
           <div class="findPwform">
             <div>
-              <input style="margin-top: 20px;" v-model="userConfirmNumber" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="인증번호 입력"
+              <input style="margin-top: 30px;" v-model="userConfirmNumber" class="emailBox" id="pwd" autocomplete="off" type="text" placeholder="인증번호 입력"
                 required>
             </div>
           </div>
@@ -35,7 +35,7 @@
         </form>
 
                 <!-- 버튼에 onclick 비밀번호 로직 수행후 메인으로 라우팅 -->
-        <form v-show="nowChangePwd" style="padding-top: 40px; padding-left: 150px;">
+        <form v-show="nowChangePwd" style="padding-top: 45px; padding-left: 100px;">
           <div style="font-weight: 550;">
             변경할 비밀번호를 입력해주세요!
           </div>
@@ -48,9 +48,6 @@
           <button style="margin-top: 20px; text-align: center; color: white;" v-on:click.prevent="changePwd" class="findBtn" type="submit">비밀번호 변경</button>
         </form>
       </div>
-    </div>
-    <div class="right">
-      <img src="../../assets/img/userPageImg.png" class="mainImage" alt="">
     </div>
   </div>
 </template>
@@ -220,14 +217,14 @@ a {
 }
 
 .findPwBox {
-  width: 700px;
-  height: 500px;
-  background-color: #F1F4F1;
-  margin-top: 150px;
-  margin-left: 150px;
+          width: 600px;
+        height: 400px;
+        background-color : rgba(255, 255, 255 , 0.5);
+        margin-top: 250px;
+        margin-left: 250px;
 
-  border-radius: 10%;
-  align-content: center;
+        border-radius: 10%;
+        align-content: center;
 }
 
 .mainImage {
@@ -238,9 +235,11 @@ a {
 }
 
 .main {
-  background-color: #C8EBCF;
-  height: 850px;
-  width: 100%;
+        width: 100%;
+        height: 1000px;
+        background-image: url("../../assets/img/background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
 }
 
 div.left {

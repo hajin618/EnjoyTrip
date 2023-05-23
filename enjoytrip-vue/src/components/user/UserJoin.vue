@@ -193,11 +193,11 @@ export default {
             console.log(response);
             // 사용가능 email
             if(response.status == 200){
-              Swal.fire(
-                  '이메일 중복확인 성공!',
-                  '다음 스탭을 진행해주세요!',
-                  'success'
-              )
+              // Swal.fire(
+              //     '이메일 중복확인 성공!',
+              //     '다음 스탭을 진행해주세요!',
+              //     'success'
+              // )
               this.emailDuplicated = false;
             }
             // 사용불가 email

@@ -1,10 +1,6 @@
 <template lang="">
 <div class="cardDiv">
     <router-link :to="{name: 'planDetail', params: { plan_idx: plan_idx } }">
-        <!-- <b-card 
-            img-src="https://picsum.photos/400/300/?image=41" 
-            img-alt="Image" 
-            img-top > -->
         <b-card :img-src="imageURL">
             <b-card-text> 
                 <div class="planType">{{plan_type}}</div>

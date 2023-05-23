@@ -1,70 +1,44 @@
 <template>
-    <div>
+    <div class="mainImage">
         <header-navi-bar></header-navi-bar>
-        <div class="main">
-            <div class="left">
-                <img src="../assets/img/mainPageImg.png" class="mainImage" alt="">
-            </div>
-            <div class="right">
-                <div class="mainTextBox">
-
-                </div>
-            </div>
+        <div style="font-size:60px; font-weight:bold; margin-left:300px; margin-top:80px;">
+            FAMILY
         </div>
-        <div class="footer">
-            <footer-area></footer-area>
-        </div> 
+
+        <div style="font-size:40px; font-weight:bold; margin-left:340px;">
+            UNFORGOTTABLE
+        </div>
+
+        <div style="font-size:60px; font-weight:bold; margin-left:420px;">
+            YOUTH
+        </div>
+
+        <div style="border: 1px solid black; display: inline-block; padding: 5px; margin-left:250px; width:150px; height:50px; text-align:center; line-height:40px;">
+            <router-link style="text-decoration: none; color: black;" to="/search">SEARCH</router-link>
+        </div>
     </div>
 </template>
 
 <script>
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue"
-import FooterArea from "../components/layout/FooterArea.vue";
+// import FooterArea from "../components/layout/FooterArea.vue";
 
 export default{
     name: "HomeView",
     components: {
         HeaderNaviBar,
-        FooterArea,
+        // FooterArea,
     }
 }
 
 </script>
 
 <style scoped>
-    .mainTextBox{
-        width: 500px;
-        height: 450px;
-        background-color : #C8EBCF;
-        background-color:rgba(C8, EB, CF, 0.4);
-        margin-top: 150px;
-        margin-left: 200px;
-
-        border-radius: 50px / 50px;
-        align-content: center;
-    }
-    .mainImage{
-        width: 700px;
-        height: 700px;
-    }
-    .main {
+    .mainImage {
         width: 100%;
-        height: 785px;
-    }
-    div.left {
-        width: 50%;
-        float: left;
-        padding-top: 30px;
-        padding-left: 200px;
-        box-sizing: border-box;
-    }
-    div.right {
-        width: 50%;
-        float: right;
-        box-sizing: border-box;
-    }
-
-    .footer{
-        clear: both;
+        height: 1000px;
+        background-image: url("../assets/img/background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 </style>
