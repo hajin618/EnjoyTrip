@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
@@ -76,7 +77,7 @@ public class AttractionControllerRest {
 		return resultMap;
 	}
 	
-	// 어른 여행지 검색 
+	// 어른 여행지 검색
 	@PostMapping("/attraction")
 	public ResponseEntity<List<AttractionInfoDTO>> attractionList(@RequestBody AttractionSelectDTO attractionSelectDTO){
 		
@@ -120,7 +121,7 @@ public class AttractionControllerRest {
 		}
 	}
 	
-	// 여행지 저장 할 때 사용
+	// 어른 여행지 검색 : 여행지 저장 할 때 사용 : attraction_info 테이블에서
 	@GetMapping("/attraction/{content_id}")
 	public ResponseEntity<AttractionInfoDTO> savedAttractionList(@PathVariable("content_id") String content_id){
 		
@@ -140,7 +141,22 @@ public class AttractionControllerRest {
 		return new ResponseEntity<AttractionInfoDTO>(attractionInfoDto, HttpStatus.OK);
 	}
 	
-	// 여행지 저장 할 때 사용 (어린이용 관광지)
+	// 어른 여행지 검색 : 모달 띄울 때 사용 : attraction_description 테이블에서
+	@GetMapping("/attractionDesc/{content_id}")
+	public ResponseEntity<AttractionDescriptionDTO> getAttractionDesc(@PathVariable("content_id") String content_id){
+		AttractionDescriptionDTO attractionDescriptionDto = null;
+		
+		try {
+			attractionDescriptionDto = service.searchAttractionDesc(Integer.parseInt(content_id));
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			return new ResponseEntity<AttractionDescriptionDTO>(attractionDescriptionDto, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<AttractionDescriptionDTO>(attractionDescriptionDto, HttpStatus.OK);
+	}
+	
+	// 어린이 여행지 검색 : 여행지 저장 할 때 사용 (어린이용 관광지)
 	@GetMapping("/childAttraction/{attraction_idx}")
 	public ResponseEntity<ChildAttractionDTO> savedChildAttractionList(@PathVariable("attraction_idx") String attraction_idx){
 		

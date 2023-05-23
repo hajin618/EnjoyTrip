@@ -6,7 +6,7 @@
     <b-td v-else>
       <img width="100px" height="100px" :src="first_image" alt="">
     </b-td>
-    <b-td>
+    <b-td @click="openModal2(content_id)">
       {{title}}
     </b-td>
     <b-td>
@@ -33,6 +33,9 @@ export default {
       console.log(this.content_id);
       // emit 이벤트명 : saveAtt
       this.$emit("saveAtt", this.content_id); 
+    },
+    openModal2(content_id){
+      this.$emit('openModal2', content_id);
     },
   },
 }

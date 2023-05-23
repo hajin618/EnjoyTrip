@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.attraction.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
@@ -22,4 +23,6 @@ public interface AttractionService {
 	public AttractionInfoDTO searchAttractionById(int content_id) throws Exception;
 	// 아이 여행지 검색 (attraction_idx)
 	public ChildAttractionDTO searchChildAttractionById(int attraction_idx) throws Exception;
+	// 여행지 정보 검색 (attraction_description 테이블)
+	public AttractionDescriptionDTO searchAttractionDesc(int content_id) throws Exception;
 }
