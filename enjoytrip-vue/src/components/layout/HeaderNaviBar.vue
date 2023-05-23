@@ -62,6 +62,7 @@ export default{
 <style scoped>
     .toorbar{
         padding-top: 7px;
+        font-size: 18px;
     }
 
     /* 라우터 링크 처리 */
@@ -77,7 +78,7 @@ export default{
     header{
         height: 70px;
         width: 100%;
-        background-color: #7aab85;
+        background-color: #A4CCE6;
         border-bottom: 1px #ececec solid;
         box-shadow: 0 4px 4px -4px black;
     }

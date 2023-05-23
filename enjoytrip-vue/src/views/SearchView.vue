@@ -110,7 +110,7 @@
 
     <div class="searchedArea"> 
       <div class="tabBar">
-        <button class="tabBarBtn" @click="selectedTab = 'attraction'" ref="attraction" style="background-color:#7aab85; border-top-left-radius:1rem; border-bottom-left-radius:1rem;">관광지 정보</button>
+        <button class="tabBarBtn" @click="selectedTab = 'attraction'" ref="attraction" style="background-color:#1F92FD54; border-top-left-radius:1rem; border-bottom-left-radius:1rem;">관광지 정보</button>
         <button class="tabBarBtn" @click="selectedTab = 'children'" ref="children" style="border-top-right-radius:1rem; border-bottom-right-radius:1rem;">어린이 놀이시설 정보</button>
       </div>
       <b-row>
@@ -330,14 +330,14 @@ export default {
       selectedTab(newTab) {
         if (newTab === 'attraction') {
           this.$nextTick(() => {
-            this.$refs.attraction.style.backgroundColor = "#7aab85"; 
-            this.$refs.children.style.backgroundColor = "#C8EBCF";
+            this.$refs.attraction.style.backgroundColor = "#1F92FD54"; 
+            this.$refs.children.style.backgroundColor = "#007BFF14";
           });
         }
         else if(newTab === 'children'){
           this.$nextTick(() => {
-            this.$refs.attraction.style.backgroundColor = "#C8EBCF";
-            this.$refs.children.style.backgroundColor = "#7aab85";
+            this.$refs.attraction.style.backgroundColor = "#007BFF14";
+            this.$refs.children.style.backgroundColor = "#1F92FD54";
           });
         }
       }
@@ -556,7 +556,7 @@ export default {
     height: 40px;
     color: black;
     width: 240px;
-    background-color: #C8EBCF;
+    background-color: #007BFF14;
     border: 1px solid rgba(213, 120, 120, .2);
   }
 
@@ -623,7 +623,7 @@ export default {
     right: 300px;
     width: 350px;
     height: 600px;
-    background-color: rgba(200, 235, 207, 0.5);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 30px / 30px;
   }
@@ -675,8 +675,8 @@ export default {
   .rememberSpotZone{
     width: 350px;
     padding-bottom: 20px;
-    background-color: rgba(200, 235, 207, 0.5);
-    border: 1px solid rgba(200, 235, 207, 0.5);
+    background-color: #cfcfcf80;
+    /* border: 1px solid rgba(200, 235, 207, 0.5); */
     border-radius: 30px / 30px;
     text-align: center;
   }
@@ -712,13 +712,13 @@ export default {
     width: 200px;
     height: 50px;
     font-size: 15px;
-    background-color: #F1F4F1;
+    background-color: #cfcfcf80;
     border: 1px solid rgba(103, 132, 177, 0.2);
     border-radius: 10px / 10px;
   }
 
   .goPlanBtn:hover{
-    background-color : #c8d6cc;
+    background-color : #828ea280;
   }
 .modal {
   position: fixed;

@@ -41,7 +41,7 @@ export default {
             const planIdx = this.plan_idx;
             // const baseURL = "http://localhost:80/upload/plan/";
             // const baseURL = "http://192.168.208.85:80/upload/plan/";
-            const baseURL = imageUrl;
+            const baseURL = imageUrl + "/plan/";
             const extractedPath = baseURL + planIdx + ".png";
             console.log("extractedPath : " + extractedPath);
             this.imageURL = extractedPath;
