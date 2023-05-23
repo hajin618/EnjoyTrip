@@ -1,14 +1,14 @@
 <template>
   <div class="main">
     <div class="left">
-      <div class="findId">
-        <div class="findIdHeader" style="padding-top: 110px; padding-left: 300px;">
+      <div class="box">
+          <div class="findIdHeader" style="padding-top: 50px; padding-left: 250px;">
           <router-link to="/" style="padding-left: 20px; font-weight: 550;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
         </div>
 
         <!-- 이메일 찾을 경우 -->
-        <form v-if="!getId" style="padding-top: 40px; padding-left: 150px;">
-          <div style="padding-left: 40px;   font-weight: 550;">
+        <form v-if="!getId" style="padding-top: 45px; padding-left: 100px;">
+          <div style="padding-left: 60px;   font-weight: 550;">
             회원 정보에 등록된 이메일을 입력해주세요.
           </div>
           <div class="findIdform">
@@ -21,7 +21,7 @@
 
         <!-- 이메일 찾은 경우 -->
         <!-- 버튼에 onclick 로그인페이지로 라우팅 -->
-        <div v-else style="padding-top: 80px; padding-left: 150px;">
+        <div v-else style="padding-top: 80px; padding-left: 100px;">
           <div style="font-weight: 550;">
               회원님의 아이디는 {{ id }}입니다.
           </div>
@@ -29,10 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="right">
-      <img src="../../assets/img/userPageImg.png" class="mainImage" alt="">
-
-    </div>
+    
   </div>
 </template>
 
@@ -91,6 +88,12 @@ export default {
 </script>
 
 <style scoped>
+
+.left{
+          width: 50%;
+        float: left;
+        box-sizing: border-box;
+}
 /* 라우터 링크 처리 */
 a {
   color: black;
@@ -104,6 +107,17 @@ a {
   background-color: #F1F4F1;
   border: 1px solid rgba(213, 120, 120, .2);
   border-radius: 10px / 10px;
+}
+
+.box{
+          width: 600px;
+        height: 400px;
+        background-color : rgba(255, 255, 255 , 0.5);
+        margin-top: 250px;
+        margin-left: 250px;
+
+        border-radius: 10%;
+        align-content: center;
 }
 
 .findBtn {
@@ -133,9 +147,11 @@ a {
 }
 
 .main {
-  background-color: #C8EBCF;
-  height: 850px;
-  width: 100%;
+        width: 100%;
+        height: 1000px;
+        background-image: url("../../assets/img/background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
 }
 
 div.left {
