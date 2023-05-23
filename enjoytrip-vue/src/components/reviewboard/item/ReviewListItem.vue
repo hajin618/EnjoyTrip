@@ -24,7 +24,7 @@
 </template>
 
 <script>
-
+import imageUrl from "@/api/image";
 export default { 
     name: "ReviewListItem",
     props: {
@@ -48,7 +48,9 @@ export default {
         console.log(this.review_image[0].image_url);
         const filePath = this.review_image[0].image_url;
         const uploadPath = "\\upload";
-        const baseURL = "http://localhost:80/upload";  // 애플리케이션의 기본 URL을 입력하세요.
+        // const baseURL = "http://localhost:80/upload";  // 애플리케이션의 기본 URL을 입력하세요.
+        // const baseURL = "http://192.168.208.85:80/upload";  // 애플리케이션의 기본 URL을 입력하세요.
+        const baseURL = imageUrl;
         const parts = filePath.split(uploadPath);
         const extractedPath = baseURL + parts[1].replaceAll('\\', '/');
         console.log(extractedPath);
