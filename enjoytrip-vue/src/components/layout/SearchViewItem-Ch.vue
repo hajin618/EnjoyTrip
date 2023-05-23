@@ -19,7 +19,7 @@
 export default {
   name: "SearchViewItem-Ch",
   data(){
-    return{
+    return{ 
 
     }
   },

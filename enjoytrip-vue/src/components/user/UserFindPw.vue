@@ -107,18 +107,18 @@ export default {
               // 6자리 랜덤한 인증번호 
 
               //  실제 email 보내는 부분
-              // this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+              this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
 
-              // let templateParams = {
-              //   user_email: this.email,
-              //   sys_code: this.confirmNumber,
-              // };
-              // emailjs.init("c0nz-ynLc-qYrorYn");
-              // emailjs.send("service_enjoyYourLife", "template_enjoyYourLife", templateParams);
+              let templateParams = {
+                user_email: this.email,
+                sys_code: this.confirmNumber,
+              };
+              emailjs.init("c0nz-ynLc-qYrorYn");
+              emailjs.send("service_enjoyYourLife", "template_enjoyYourLife", templateParams);
 
               // test 코드
-              this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
-              console.log(this.confirmNumber);
+              // this.confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+              // console.log(this.confirmNumber);
               Swal.fire({
                 position: 'center-center',
                 icon: 'success',

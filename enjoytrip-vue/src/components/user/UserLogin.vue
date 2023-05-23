@@ -63,19 +63,19 @@ export default {
             let token = sessionStorage.getItem("access-token");
             if (this.isLogin) {
                 await this.getUserInfo(token);
-                // Swal.fire(
-                //     '로그인 성공!',
-                //     '성공적으로 로그인 되었습니다!',
-                //     'success'
-                // )
+                Swal.fire(
+                    '로그인 성공!',
+                    '성공적으로 로그인 되었습니다!',
+                    'success'
+                )
                 this.$router.push({ name: "HomeView" });
             }
             else{
-                // Swal.fire({
-                //     icon: 'error',
-                //     title: '로그인 실패!',
-                //     text: '사용자 인증에 실패하였습니다!',
-                // })
+                Swal.fire({
+                    icon: 'error',
+                    title: '로그인 실패!',
+                    text: '사용자 인증에 실패하였습니다!',
+                })
             }
         },
     },
