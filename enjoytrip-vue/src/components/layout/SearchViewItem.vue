@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "SearchViewItem",
+  name: "SearchViewItem", 
   props: {
     content_id: Number,
     first_image: String,

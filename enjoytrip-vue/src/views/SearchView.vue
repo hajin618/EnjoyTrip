@@ -105,7 +105,11 @@
       </div>
     </div>
 
-    <div class="searchedArea">
+    <div class="searchedArea"> 
+      <div class="tabBar">
+        <button class="tabBarBtn" @click="selectedTab = 'attraction'" ref="attraction" style="background-color:#7aab85; border-top-left-radius:1rem; border-bottom-left-radius:1rem;">관광지 정보</button>
+        <button class="tabBarBtn" @click="selectedTab = 'children'" ref="children" style="border-top-right-radius:1rem; border-bottom-right-radius:1rem;">어린이 놀이시설 정보</button>
+      </div>
       <b-row>
         <b-col v-if="attractions.length">
           <b-table-simple hover responsive>
@@ -117,13 +121,17 @@
                 <b-th>저장</b-th>
               </b-tr>
             </b-thead> 
-            <tbody>
-              <search-view-item
+            <tbody v-if="selectedTab === 'attraction'">
+
+              <search-view-item 
                 v-for="att in attractions"
                 :key="att.content_id"
                 @saveAtt="saveAtt"
                 @openModal2="openModal2"
                 v-bind="att"/>
+
+            </tbody>
+            <tbody v-if="selectedTab === 'children'">
 
               <search-view-item-ch
                 v-for="att in childAttractions"
@@ -281,6 +289,8 @@ export default {
       savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
       plan_idx: 0,
       mChild: [],
+      selectedTab: 'attraction' // 초기 선택 탭 설정
+
     }
   },
   computed: {
@@ -312,6 +322,22 @@ export default {
   //     console.log("savedAttInfo ::: "+this.savedAttInfo);
   //   }
   // },
+  watch: {
+      selectedTab(newTab) {
+        if (newTab === 'attraction') {
+          this.$nextTick(() => {
+            this.$refs.attraction.style.backgroundColor = "#7aab85"; 
+            this.$refs.children.style.backgroundColor = "#C8EBCF";
+          });
+        }
+        else if(newTab === 'children'){
+          this.$nextTick(() => {
+            this.$refs.attraction.style.backgroundColor = "#C8EBCF";
+            this.$refs.children.style.backgroundColor = "#7aab85";
+          });
+        }
+      }
+    },
   methods: {
     getGuGun(){
       // console.log("시도 : "+this.sidoSelected);
@@ -513,6 +539,20 @@ export default {
 </script>
 
 <style scoped>
+  .tabBar{
+    margin-bottom: 20px;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+  }
+  .tabBarBtn{
+    height: 40px;
+    color: black;
+    width: 240px;
+    background-color: #C8EBCF;
+    border: 1px solid rgba(213, 120, 120, .2);
+  }
+
   .title{
     margin-top : 70px;
     text-align : center;

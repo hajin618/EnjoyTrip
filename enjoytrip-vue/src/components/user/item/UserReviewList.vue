@@ -21,7 +21,7 @@ import { mapState  } from "vuex";
 
 export default {
   name: "UserLikeListView",
-  components: {
+  components: { 
     ReviewListItem,
   },
   data(){

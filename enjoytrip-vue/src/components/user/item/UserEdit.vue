@@ -81,7 +81,7 @@ export default {
                 sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
                 // Swal.fire({
                 //   'Alert 실행!!.',  // Alert 제목
-                //   'Alert 내용이 나타나는 곳.',  // 내용
+                //   'Alert 내용이 나타나는 곳.',  // 내용 
                 //   'success',  // icon
                 // });
                 this.$router.push({ name: "HomeView" });
@@ -119,12 +119,11 @@ export default {
           }).then(({data}) => { 
             console.log(data);
             if(data == "SUCCESS"){
-              alert("정보 수정 완료!");
-              // Swal.fire({
-              //   'Alert 실행!!.',  // Alert 제목
-              //   'Alert 내용이 나타나는 곳.',  // 내용
-              //   'success',  // icon
-              // });
+              Swal.fire(
+                '회원 정보 변경 성공!',
+                '새로운 비밀번호로 로그인하세요!',
+                'success'
+              )
               this.$router.push({ name: "HomeView" });
             }
             else{
