@@ -40,6 +40,7 @@
  
  <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
 
 export default {
@@ -67,7 +68,11 @@ export default {
             this.reviews = response.data;
           }
           else{
-            alert("후기들 불러오기 실패!!!");
+            Swal.fire({
+              icon: 'error',
+              title: '데이터 불러오기 실패!',
+              text: '서버 오류입니다!',
+            })
           }
       });
       http.get(`/sido`).then(({ data }) => {
@@ -93,7 +98,11 @@ export default {
           this.reviews = response.data;
         }
         else{
-          alert("검색 실패!");
+          Swal.fire({
+            icon: 'error',
+            title: '정렬 실패!',
+            text: '서버 오류입니다!',
+          })
         }
       })
     }

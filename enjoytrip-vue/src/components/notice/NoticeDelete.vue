@@ -4,6 +4,7 @@
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 
 export default {
     name: "NoticeDelete",
@@ -16,10 +17,14 @@ export default {
     created() {
         http.delete(`/notice/${this.$route.params.notice_idx}`)
         .then(({ res }) => {
-                let msg = "삭제 완료";
+                // let msg = "삭제 완료";
                 
                 console.log(res);
-                alert(msg);
+                Swal.fire(
+                    '삭제 성공!',
+                    '안전하게 삭제되었습니다!',
+                    'success'
+                )
                 this.moveList();
         })
     },
