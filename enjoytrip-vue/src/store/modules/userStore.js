@@ -95,7 +95,7 @@ const userStore = {
       },
       async getUserInfo({ commit, dispatch }, token) {
         let decodeToken = jwtDecode(token);
-        console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+        // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
         await findById(
           decodeToken.userid,
           ({ data }) => {
@@ -107,7 +107,8 @@ const userStore = {
             }
           },
           async (error) => {
-            console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+            // console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+            console.log(error);
             commit("SET_IS_VALID_TOKEN", false);
             await dispatch("tokenRegeneration");
           }

@@ -62,8 +62,8 @@ export default {
   },
   created(){
       http.get(`/review`).then((response) => {
-          console.log(response.status);
-          console.log(response);
+          //console.log(response.status);
+          //console.log(response);
           if(response.status == 200){
             this.reviews = response.data;
           }
@@ -76,7 +76,7 @@ export default {
           }
       });
       http.get(`/sido`).then(({ data }) => {
-        console.log(data.sidoList);
+        //console.log(data.sidoList);
         this.selectList = data.sidoList;
       });
   },
@@ -85,7 +85,7 @@ export default {
       this.$router.push({ name: "reviewRegister" });
     },
     sort(){
-      console.log(this.selectedArea, this.selectedType);
+      //console.log(this.selectedArea, this.selectedType);
       http.get(`/reviewsort`, {
         params: {
           sido_code: this.selectedArea,
@@ -93,7 +93,7 @@ export default {
         }
       })
       .then((response) => {
-        console.log(response.status);
+        //console.log(response.status);
         if(response.status == 200){
           this.reviews = response.data;
         }
