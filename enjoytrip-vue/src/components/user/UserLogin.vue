@@ -36,7 +36,7 @@
 <script>
 
 import { mapState, mapActions } from "vuex";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 const userStore = "userStore";
 

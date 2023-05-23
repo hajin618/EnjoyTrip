@@ -58,7 +58,7 @@
 <script>
 import http from "@/api/http";
 import Swal from "sweetalert2";
-// import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
 
 export default {
     name: "UserFindPwView",
