@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import imageUrl from "@/api/image";
 import http from "@/api/http";
 import { mapState } from "vuex";
 import KakaoMap from "@/components/layout/KakaoMap.vue";
@@ -160,7 +161,9 @@ export default {
       getImageURL(){
         // const planIdx = this.plan_idx;
         // console.log("plan : " + this.plan);
-        const baseURL = "http://localhost:80/upload/plan/";
+        // const baseURL = "http://localhost:80/upload/plan/";
+        // const baseURL = "http://192.168.208.85:80/upload/plan/";
+        const baseURL = imageUrl;
         const extractedPath = baseURL + this.plan_idx + ".png";
         console.log("extractedPath : " + extractedPath);
         this.imageURL = extractedPath;
