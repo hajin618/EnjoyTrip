@@ -181,6 +181,7 @@ export default {
         background-color: #F1F4F1;
         border: 1px solid rgba(255, 255, 255, .2);
         border-radius: 20px / 20px;
+        padding-left : 10px;
     }
     .editBtn{
       margin-top: 60px;

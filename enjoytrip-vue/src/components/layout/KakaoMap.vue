@@ -61,7 +61,7 @@ export default {
         loadScript() {
             const script = document.createElement("script");
             script.src =
-                "//dapi.kakao.com/v2/maps/sdk.js?appkey=8820d3277f771b41fa361424002a1649&autoload=false"; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
+                "//dapi.kakao.com/v2/maps/sdk.js?appkey=7b49f209072b38291c3376198f4f5a16&autoload=false"; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
             script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
 
             document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가
