@@ -311,7 +311,6 @@ export default {
       // console.log(data);
     })
   },
-  
   // watch: {
   //   // 저장한 여행지 정보 변할 때 마다 수행
   //   savedAtt(){
@@ -627,6 +626,7 @@ export default {
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 30px / 30px;
   }
+
 
   .findTitle{
     margin-top: 20px;

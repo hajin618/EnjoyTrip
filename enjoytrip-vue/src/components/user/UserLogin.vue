@@ -2,12 +2,11 @@
     <div class="main">
         <div class="left">
             <div class="loginBox">
-                <div class="loginBoxHeader" style="padding-top: 80px; padding-left: 300px;">
-                    <span><img src="../../assets/img/family.png"  width="50px" height="50px" alt=""></span>
-                    <router-link to="/" style="padding-left: 20px; font-weight: 550;">여행객</router-link>
+                <div class="loginBoxHeader" style="padding-top: 40px; padding-left: 250px;">
+                    <router-link to="/" style="padding-left: 20px; font-weight: 550;"><img src="../../assets/img/logo.png"  width="50px" height="50px" alt=""></router-link>
                 </div>
 
-                <form style="padding-top: 20px; padding-left: 200px;">
+                <form style="padding-top: 20px; padding-left: 150px;">
                     <div class="loginform">
                         <div>
                             <input class="idBox" id="Nick" v-model="user.user_id" autocomplete="off" type="text" placeholder="아이디" required>
@@ -25,10 +24,6 @@
                     <router-link to="/user/join">회원가입</router-link>
                 </div>
             </div>
-        </div>
-        <div class="right">
-            <img src="../../assets/img/userPageImg.png" class="mainImage" alt="">
-            
         </div>
     </div>
 </template>
@@ -86,8 +81,8 @@ export default {
 <style scoped>
     .linker{
         width: 40%;
-        margin-top: 40px;
-        margin-left: 200px;
+        margin-top: 20px;
+        margin-left: 170px;
         display: flex;
         justify-content: space-between;
     }
@@ -115,11 +110,11 @@ export default {
         border: 1px solid rgba(213, 120, 120, .2);
     }
     .loginBox{
-        width: 700px;
-        height: 500px;
-        background-color : #F1F4F1;
-        margin-top: 150px;
-        margin-left: 150px;
+        width: 600px;
+        height: 400px;
+        background-color : rgba(255, 255, 255 , 0.5);
+        margin-top: 250px;
+        margin-left: 250px;
 
         border-radius: 10%;
         align-content: center;
@@ -133,9 +128,11 @@ export default {
     }
 
     .main{
-        background-color: #C8EBCF;
-        height: 850px;
         width: 100%;
+        height: 850px;
+        background-image: url("../../assets/img/background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
     }
     div.left {
         width: 50%;
