@@ -55,6 +55,7 @@
 <script>
 import imageUrl from "@/api/image";
 import http from "@/api/http";
+import Swal from "sweetalert2";
 import { mapState } from "vuex";
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 
@@ -134,25 +135,35 @@ export default {
         http.delete(`/planDetail/${this.plan.plan_idx}`)
           .then((response) => {
             if(response.status == 200){
-              console.log("계획 상세 삭제 성공");
+              // console.log("계획 상세 삭제 성공");
 
               // 계획 삭제하기
               http.delete(`/plan/${this.plan.plan_idx}`)
               .then((response) => {
-              if(response.status == 200){
-                // alert("계획 삭제 성공!")
-                console.log("계획 삭제 성공")
-                alert("계획 삭제 성공");
+              if(response.status == 200){ 
+                Swal.fire(
+                  '계획 삭제 성공!',
+                  '계획 리스트 페이지로 이동합니다!',
+                  'success'
+                )
                 this.listPlan();
               }
               else{
-                alert("계획 삭제 실패!");
+                Swal.fire({
+                  icon: 'error',
+                  title: '계획 삭제 실패!',
+                  text: '서버 오류입니다. 다시 시도해주세요!',
+                })
                 this.listPlan();
               }
             })
             }
             else{
-                alert("계획 삭제 실패!");
+                Swal.fire({
+                  icon: 'error',
+                  title: '계획 삭제 실패!',
+                  text: '서버 오류입니다. 다시 시도해주세요!',
+                })
                 this.listPlan();
             }
           })

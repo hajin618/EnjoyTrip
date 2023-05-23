@@ -48,6 +48,7 @@
 
 <script>
 // import http from "@/api/http";
+import Swal from "sweetalert2";
 
 import { mapState } from "vuex";
 
@@ -72,13 +73,25 @@ export default {
     methods:{
         confirm(){
             if(this.title == ''){
-                alert("제목을 입력해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 수정 실패!',
+                    text: '제목은 빈 칸이 안됩니다!',
+                })
             }
             else if(this.content == ''){
-                alert("내용을 입력해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 수정 실패!',
+                    text: '내용은 빈 칸이 안됩니다!',
+                })
             }
             else if(this.selectedType == ''){
-                alert("여행 타입을 선택해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 수정 실패!',
+                    text: '타입을 선택해주세요!',
+                })
             }
             else{
                 this.editPlan();

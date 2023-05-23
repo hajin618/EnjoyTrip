@@ -53,6 +53,7 @@
 import http from "@/api/http";
 import KakaoMap from "@/components/layout/KakaoMap.vue";
 import { mapState } from "vuex";
+import Swal from "sweetalert2";
 import draggable from 'vuedraggable';
 import html2canvas from 'html2canvas';
 
@@ -139,18 +140,29 @@ export default {
     methods:{
         confirm(){
             if(this.plan.plan_title == null){
-                alert("제목을 입력해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 등록 실패!',
+                    text: '제목은 빈 칸이 안됩니다!',
+                })
             }
             else if(this.plan.plan_content == null){
-                alert("내용을 입력해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 등록 실패!',
+                    text: '내용은 빈 칸이 안됩니다!',
+                })
             }
             else if(this.plan.plan_type == null){
-                alert("여행 타입을 선택해주세요!");
+                Swal.fire({
+                    icon: 'error',
+                    title: '계획 등록 실패!',
+                    text: '여행 타입을 선택해주세요!',
+                })
             }
             else{
                 this.captureScreen();
                 this.registPlan();
-                
             }
         },
         captureScreen(){
@@ -182,11 +194,11 @@ export default {
                 .then((response) => {
                     console.log(response.status);
                     if(response.status == 200){
-                    alert("사진 또한 등록 성공!!");
+                    // alert("사진 또한 등록 성공!!");
                     this.$router.push({ name: "planList" });
                     }
                     else{
-                    alert("사진 등록 실패!!");
+                    // alert("사진 등록 실패!!");
                     }
                 })
             });
@@ -204,7 +216,11 @@ export default {
             plan_type : this.plan.plan_type,
            }).then((response) => {
             if(response.status == 200){
-                alert("등록 성공");
+                Swal.fire(
+                  '계획 등록 성공!',
+                  '계획 리스트 페이지로 이동합니다!',
+                  'success'
+                )
 
                 /*
                 현재 plan_idx로 등록되어 있는 모든 detail 삭제하고
@@ -213,7 +229,6 @@ export default {
                http.delete(`/planDetail/${this.plan.plan_idx}`)
                .then((response) => {
                 if(response.status == 200){
-                    console.log("detail 삭제 성공");
 
                     /*
                     기존 plan_detail 삭제했으면 listForOrder 순서대로 planDetail 생성하기
