@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.data.model.service;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
+import com.ssafy.enjoytrip.data.model.MissingChildDTO;
 import com.ssafy.enjoytrip.data.model.mapper.DataMapper;
 
 @Service("DataServiceImpl")
@@ -23,6 +24,11 @@ public class DataServiceImpl implements DataService{
 	@Override
 	public int getGugunCode(int sido_code, String gugun_name) throws Exception {
 		return dataMapper.getGugunCode(sido_code, gugun_name);
+	}
+
+	@Override
+	public MissingChildDTO getMissingChild(int child_idx) throws Exception {
+		return dataMapper.getMissingChild(child_idx);
 	}
 
 }

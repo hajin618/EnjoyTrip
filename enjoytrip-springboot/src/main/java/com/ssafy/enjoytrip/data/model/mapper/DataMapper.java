@@ -16,4 +16,7 @@ public interface DataMapper {
 	
 	// 구군 코드 찾기
 	public int getGugunCode(@Param("sido_code") int sido_code, @Param("gugun_name") String gugun_name) throws Exception;
+	
+	// 실종 아동 정보
+	public MissingChildDTO getMissingChild(int child_idx) throws Exception;
 }

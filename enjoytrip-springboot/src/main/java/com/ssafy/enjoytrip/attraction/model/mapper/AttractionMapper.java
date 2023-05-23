@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
@@ -30,4 +31,7 @@ public interface AttractionMapper {
 	
 	// 아이 여행지 검색 (attraction_idx)
 	public ChildAttractionDTO searchChildAttractionById(int attraction_idx) throws Exception;
+	
+	// 여행지 검색 (attraction info 테이블)
+	public AttractionDescriptionDTO searchAttractionDesc(int content_id) throws Exception;
 }

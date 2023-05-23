@@ -47,6 +47,18 @@
 		where	sido_code = #{sido_code}
 	</select>
 	
+	<select id= "searchAttractionDesc" resultType="attractionDescriptionDto">
+		
+		select	content_id
+			  , homepage
+			  , overview
+			  , telname
+	
+		from	attraction_description
+		where	content_id = #{content_id}
+			  
+	</select>
+	
 	<select id = "searchAttractionById" resultType="attractionInfoDto">
 	
 		select 	content_id,

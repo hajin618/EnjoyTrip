@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
@@ -50,6 +51,11 @@ public class AttractionServiceImpl implements AttractionService{
 	@Override
 	public ChildAttractionDTO searchChildAttractionById(int attraction_idx) throws Exception {
 		return attractionMapper.searchChildAttractionById(attraction_idx);
+	}
+
+	@Override
+	public AttractionDescriptionDTO searchAttractionDesc(int content_id) throws Exception {
+		return attractionMapper.searchAttractionDesc(content_id);
 	}
 
 }

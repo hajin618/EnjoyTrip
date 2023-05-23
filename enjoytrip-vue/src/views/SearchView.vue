@@ -48,23 +48,29 @@
 
         <div class="findNameBox">
           <label>이름 : </label>
-          <span>홍길동</span>
+          <span>{{mChild.nm}}</span>
         </div>
         
         <div class="findAgeBox">
-          <label>나이 : </label>
-          <span>5</span>
+          <label>당시 나이 : </label>
+          <span>{{mChild.age1}}</span>
+        </div>
+
+        <div class="findGenderBox">
+          <label>성별 : </label>
+          <span>{{mChild.sexdstnDscd}}</span>
         </div>
 
         <div class="findInfoBox">
-          <label>인적사항 1 : </label>
-          <span>마른 편</span>
+          <label>인적사항 : </label>
+          <span>{{mChild.etcSpfeatr}}</span>
         </div>
 
-        <div class="findInfoBox"> 
-          <label>인적사항 2 : </label>
-          <span>눈이 이쁨</span>
+        <div class="findInfoBox">
+          <label>실종일자 : </label>
+          <span>{{mChild.detailDate1}}</span>
         </div>
+
       </div>
 
       <div class="mapZone">
@@ -121,6 +127,7 @@
                 v-for="att in attractions"
                 :key="att.content_id"
                 @saveAtt="saveAtt"
+                @openModal2="openModal2"
                 v-bind="att"/>
 
             </tbody>
@@ -139,53 +146,101 @@
       </b-row>
     </div>
 
-    <div v-if="showModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">{{ modalSelectedItem.attraction_name }}</h4>
-        <button class="close-modal-btn" v-on:click="closeModal">x</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="address">
-          <strong>주소:</strong> {{ modalSelectedItem.address }}
+    <div v-if="showModal2" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ modal2SelectedItem.title }}</h4>
+          <button class="close-modal-btn" v-on:click="closeModal2">x</button>
         </div>
 
-        <div class="category">
-          <strong>카테고리:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
-        </div>
+        <div class="modal-body">
+          <div class="address">
+            <strong>주소:</strong> {{ modal2SelectedItem.addr1 }}
+          </div>
 
-        <div class="phone-number">
-          <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
-        </div>
+           <div class="category">
+            <strong>설명:</strong> {{ modal2SelectedItemDesc.overview }}
+          </div>
+<!--
+          <div class="phone-number">
+            <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
+          </div>
 
-        <div class="homepage">
-          <strong>homepage:</strong>
-          <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
-        </div>
+          <div class="homepage">
+            <strong>homepage:</strong>
+            <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
+          </div>
 
-        <div class="operating-time">
-          <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
-        </div>
+          <div class="operating-time">
+            <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
+          </div>
 
-        <div class="closed-day">
-          <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
-        </div>
+          <div class="closed-day">
+            <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
+          </div>
 
-        <div class="stroller">
-          <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
-        </div>
+          <div class="stroller">
+            <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
+          </div>
 
-        <div class="nursing-room">
-          <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
-        </div>
+          <div class="nursing-room">
+            <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
+          </div>
 
-        <div class="admission-fee">
-          <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
+          <div class="admission-fee">
+            <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
+          </div> -->
         </div>
       </div>
     </div>
-  </div>
+
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ modalSelectedItem.attraction_name }}</h4>
+          <button class="close-modal-btn" v-on:click="closeModal">x</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="address">
+            <strong>주소:</strong> {{ modalSelectedItem.address }}
+          </div>
+
+          <div class="category">
+            <strong>카테고리:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
+          </div>
+
+          <div class="phone-number">
+            <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
+          </div>
+
+          <div class="homepage">
+            <strong>homepage:</strong>
+            <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
+          </div>
+
+          <div class="operating-time">
+            <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
+          </div>
+
+          <div class="closed-day">
+            <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
+          </div>
+
+          <div class="stroller">
+            <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
+          </div>
+
+          <div class="nursing-room">
+            <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
+          </div>
+
+          <div class="admission-fee">
+            <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -215,8 +270,11 @@ export default {
   },
   data(){
     return{
-      showModal: false,     // 모달 열림/닫힘 상태
-      modalSelectedItem: null,   // 선택한 항목 데이터
+      showModal: false,     // 어린이 모달 열림/닫힘 상태
+      showModal2: false,    // 어른 모달 열림/닫힘 상태
+      modalSelectedItem: null,   // 어린이 모달 선택한 항목 데이터
+      modal2SelectedItem: null,  // 어른 모달 선택한 항목 데이터
+      modal2SelectedItemDesc: null, // 어른 모달 선택한 항목 데이터 description
       searchWord: null,
       sidoSelected: null,
       sidoList: [],
@@ -230,7 +288,9 @@ export default {
       savedChAtt : [],        // 저장한 어린이 여행지 번호 저장
       savedChAttInfo : [],    // 저장한 어린이 여행지 번호로 조회한 정보 저장
       plan_idx: 0,
+      mChild: [],
       selectedTab: 'attraction' // 초기 선택 탭 설정
+
     }
   },
   computed: {
@@ -241,6 +301,11 @@ export default {
       //console.log(data.sidoList);
       this.sidoList = data.sidoList;
     });
+
+    http.get(`/mChild/2`).then(({ data }) => {
+      this.mChild = data;
+      // console.log(data);
+    })
   },
   
   // watch: {
@@ -373,6 +438,21 @@ export default {
         this.savedChAttInfo.splice(index2, 1);
       }
     },
+    openModal2(content_id){
+      this.showModal2 = true;
+
+      for(var i=0; i<this.attractions.length; i++){
+        if(this.attractions[i].content_id == content_id){
+          this.modal2SelectedItem = this.attractions[i];
+          //console.log(this.modal2SelectedItem);
+        }
+      }
+
+      http.get(`/attractionDesc/${content_id}`).then(({ data }) => {
+        this.modal2SelectedItemDesc = data;
+        // console.log(data);
+      })
+    },
 
     openModal(attraction_idx){
       this.showModal = true;
@@ -386,6 +466,10 @@ export default {
     
     closeModal(){
       this.showModal = false;
+    },
+
+    closeModal2(){
+      this.showModal2 = false;
     },
 
     goPlan(){
@@ -531,7 +615,7 @@ export default {
     top: 200px;
     right: 300px;
     width: 350px;
-    height: 500px;
+    height: 600px;
     background-color: rgba(200, 235, 207, 0.5);
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 30px / 30px;
@@ -561,9 +645,15 @@ export default {
     font-size: 20px;
   }
 
+  .findGenderBox{
+    margin-left: 60px;
+    font-size: 20px;
+  }
+
   .findInfoBox{
     margin-left: 60px;
     font-size: 20px;
+    margin-right: 30px;
   }
 
   .mapZone{

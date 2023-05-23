@@ -13,11 +13,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
+import com.ssafy.enjoytrip.data.model.MissingChildDTO;
 import com.ssafy.enjoytrip.data.model.service.DataService;
 
 @RestController
@@ -167,7 +171,23 @@ public class DataControllerREST {
 		}
 		
 		return resultMap;
-	}	
+	}
 	
+	
+	@GetMapping("/mChild/{child_idx}")
+	public ResponseEntity<MissingChildDTO> getChildInfo(@PathVariable("child_idx") String child_idx){
+		
+		MissingChildDTO missingChildDto = null;
+		
+		try {
+			missingChildDto = service.getMissingChild(Integer.parseInt(child_idx));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			
+			return new ResponseEntity<MissingChildDTO>(missingChildDto, HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<MissingChildDTO>(missingChildDto, HttpStatus.OK);
+	}
 	
 }

@@ -4,6 +4,12 @@
 	
 <mapper namespace="com.ssafy.enjoytrip.data.model.mapper.DataMapper">
 
+	<select id = "getMissingChild" resultType="missingChildDto">
+		select 	*
+		from	missing_child
+		where	child_idx = #{child_idx}
+	</select>
+
 	<select id = "getGugunCode" resultType="int">
 		select 	
 				gugun_code
