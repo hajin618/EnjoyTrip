@@ -39,7 +39,7 @@
 
 <script>
 import http from "@/api/http";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 const userStore = "userStore";
