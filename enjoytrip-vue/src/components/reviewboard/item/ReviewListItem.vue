@@ -10,7 +10,8 @@
           <router-link class="blacklink" :to="{ name: 'reviewDetail', params: { review_idx: review_idx } }">{{review_title}}</router-link>
           <!-- <router-link class="blacklink" :to="{ name: 'reviewDetail', params: { review_idx: 1 } }">{{review_title}}</router-link>   -->
         </div>
-        <div class="hitArea">
+        <div class="txt-container">
+          <div class="hitArea">
           <span>조회 {{ review_hit }}</span>
         </div>
         <div class="boxArea">
@@ -19,7 +20,7 @@
         <div class="boxArea">
           <span class="typeText">{{review_type}}</span>
         </div>
-        
+        </div>
     </div>
 </template>
 
@@ -91,11 +92,21 @@ export default {
 </script>
 
 <style scoped>
+  .txt-container{
+    display:flex;
+    flex-direction:row;
+  }
   .box{
+    display:flex;
+    flex-direction: column;
     width: 400px;
-    height: 450px;
+    /* height: 450px;*/
+    height: 55vmin; 
     background-color: #F1F4F1;
     text-align: center;
+    align-items: center;
+    border-radius: 2vmin;
+    margin: 4vmin;
   }
 
   .blacklink{
@@ -107,11 +118,11 @@ export default {
     display: inline-block;
     width: 80%;
     height: 300px;
+    margin: 3vmin;
     background-color: rgba(200, 235, 207, 0.5);
   }
 
   .boxTitle{
-    margin-top: 30px;
     font-size: 30px;
   }
 

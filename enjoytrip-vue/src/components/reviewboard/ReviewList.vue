@@ -20,16 +20,17 @@
       </select>
 
       <button v-on:click.prevent="sort" class="searchBtn">검색</button>
+       
       <div> 
         <button v-on:click.prevent="register" class="registerBtn">등록</button> 
       </div>
-    </div>
+   </div>
 
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
-    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; margin-bottom:30px; align-content:space-evenly;">
+    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; align-content:space-around;">
       <!-- justify-content: space-evenly;  -->
       <review-list-item
-        style="margin-left:60px; margin-bottom:60px;"
+        style=""
         v-for="review in reviews"
         :key="review.review_idx"
         v-bind="review"
