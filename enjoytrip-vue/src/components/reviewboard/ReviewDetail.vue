@@ -81,6 +81,7 @@
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 import ReviewImageItem from "@/components/reviewboard/item/ReviewImageItem.vue";
 
 import { mapState } from "vuex";
@@ -129,18 +130,30 @@ export default {
       http.delete(`/review/${this.review.review_idx}`)
       .then((response) => {
         if(response.status == 200){
-          alert("리뷰 삭제 성공!")
+          Swal.fire(
+            '리뷰 등록 성공!',
+            '리뷰 리스트 페이지로 이동합니다!',
+            'success'
+          )
           this.moveList(); 
         }
         else{
-          alert("리뷰 삭제 실패!");
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '서버 에러입니다!',
+          })
           this.moveList();
         }
       })
     },
     confirm(){
       if(this.context == ''){
-        alert("댓글을 입력해주세요!")
+          Swal.fire({
+            icon: 'error',
+            title: '등록 실패!',
+            text: '내용을 작성해주세요!!',
+          })
       }
       else{
         this.commentRegister();
@@ -170,7 +183,11 @@ export default {
           tmpComment.comment_idx = comment_idx;
           this.comments.push(tmpComment);
           this.context = '';
-          alert("댓글 등록 성공!");
+          Swal.fire(
+            '댓글 등록 성공!',
+            '댓글은 타인을 비방하면 안됩니다!',
+            'success'
+          )
         }
       })
     },
@@ -183,7 +200,11 @@ export default {
 
           console.log(this.review.review_idx);
           console.log(comment_idx);
-          alert("댓글 삭제 성공!");
+          Swal.fire(
+            '댓글 삭제 성공!',
+            '안전하게 삭제되었습니다!',
+            'success'
+          )
         }
       })
     },

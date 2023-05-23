@@ -66,6 +66,7 @@
 
 <script>
 import http from "@/api/http";
+import Swal from "sweetalert2";
 
 export default {
     name: "ReviewModifyView",
@@ -124,7 +125,6 @@ export default {
         }).then((response) => { 
             console.log(response.status);
             if(response.status == 200){
-              alert("리뷰 수정 성공!!");
 
               // 삭제 로직
               // 사진 삭제한거랑 새로 넣는거랑 생각해야해
@@ -132,7 +132,7 @@ export default {
               http.post(`/fileDelete`, this.deleteFiles)
                 .then((response) =>{
                   if(response.status == 200){
-                    alert("사진 삭제 성공!");
+                    console.log("사진 삭제 성공");
                   }
                 })
 
@@ -152,16 +152,24 @@ export default {
                 .then((response) => {
                   console.log(response.status);
                   if(response.status == 200){
-                    alert("사진 또한 수정 성공!!");
+                    Swal.fire(
+                      '리뷰 수정 성공!',
+                      '리뷰 페이지로 이동합니다!',
+                      'success'
+                    )
                   }
                   else{
-                    alert("사진 등록 실패!!");
+                    console.log("사진 수정 실패");
                   }
                 })
               }
             }
             else{
-              alert("리뷰 수정 실패!");
+              Swal.fire({
+                icon: 'error',
+                title: '수정 실패!',
+                text: '서버 오류입니다!',
+              })
             }
             this.$router.push({ name: "reviewBoardView" });
           });
