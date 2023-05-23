@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="planMapDiv">
-                  <img width="100%" height="100%" :src="imageURL" alt="">
+                  <kakao-map :attractions="attractions" :childAttractions="childAttractions"></kakao-map>
                 </diV>
 
                 <div class="planContentDiv">
@@ -55,17 +55,20 @@
 <script>
 import http from "@/api/http";
 import { mapState } from "vuex";
+import KakaoMap from "@/components/layout/KakaoMap.vue";
 
 export default {
     name: "PlanDetailView",
-
+    components: {
+      KakaoMap,
+    },
     data(){
         return{
             plan_idx : 0,
             plan: [],
             planDetails: [],
-            // attractions: [],
-            // childAttractions: [],
+            attractions: [],
+            childAttractions: [],
             attractionList: [],     // attractions + childAttractions 
             imageURL: '',
         };
@@ -88,7 +91,7 @@ export default {
           // 어린이 여행지인 경우
           if(contentId >=1 && contentId <= 8580){
             http.get(`/childAttraction/${contentId}`).then(({ data }) => {
-              //this.childAttractions.push(data);
+              this.childAttractions.push(data);
               this.attractionList.push({
                 attraction_name : data.attraction_name,
                 attraction_idx : data.attraction_idx,
@@ -99,6 +102,7 @@ export default {
           // 어른 여행지인 경우
           else{
             http.get(`/attraction/${contentId}`).then(({ data }) => {
+              this.attractions.push(data);
               this.attractionList.push({
                 attraction_name : data.title,
                 attraction_idx : data.content_id,
@@ -251,7 +255,7 @@ export default {
   }
   .planMapDiv{
     background-color:#e8ece8d1;
-    height: 60%;
+    height: 70%;
     margin-bottom: 30px;
   }
   .planContentDiv{
