@@ -98,12 +98,7 @@ export default {
   },
   components:{
     ReviewImageItem
-  },
-  mounted(){
-    // document.getElementsByClassName("carousel-inner")[0].style.height="100%";
-    // document.getElementsByClassName("carousel-inner")[0].style.borderRadius="20px";
-    console.log(document.getElementsByClassName("carousel-inner")[0]);
-  },
+  }, 
   created() {
     http.get(`/review/${this.$route.params.review_idx}`).then(({ data }) => {
            console.log(data);
@@ -114,7 +109,6 @@ export default {
       console.log(data);
       this.comments = data;
     })
-    
   },
   methods:{
     moveList(){
@@ -131,7 +125,7 @@ export default {
       .then((response) => {
         if(response.status == 200){
           Swal.fire(
-            '리뷰 등록 성공!',
+            '리뷰 삭제 성공!',
             '리뷰 리스트 페이지로 이동합니다!',
             'success'
           )
@@ -140,7 +134,7 @@ export default {
         else{
           Swal.fire({
             icon: 'error',
-            title: '등록 실패!',
+            title: '삭제 실패!',
             text: '서버 에러입니다!',
           })
           this.moveList();
@@ -211,10 +205,10 @@ export default {
   },
   computed: {
     ...mapState({
-      user_idx: state => state.userStore.userInfo.user_idx,
-      user_name: state => state.userStore.userInfo.user_name,
-      user_id: state => state.userStore.userInfo.user_id,
-      user_email: state => state.userStore.userInfo.user_email,
+      user_idx: state => state.userStore?.userInfo?.user_idx,
+      user_name: state => state.userStore?.userInfo?.user_name,
+      user_id: state => state.userStore?.userInfo?.user_id,
+      user_email: state => state.userStore?.userInfo?.user_email,
     }),
     // 숫자를 지역명으로 변환하는 computed 속성
     getSidoName() {

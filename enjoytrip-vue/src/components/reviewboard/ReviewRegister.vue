@@ -29,23 +29,7 @@
         <div class="imageArea">
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
-            <!-- <button class="imageRegistBtn" @click="uploadFiles">사진 첨부 완료하기</button> -->
           </div>
-
-          <!-- <form action="fileupload" id="fileupload" method="post"
-            enctype="multipart/form-data">
-            파일 : <input type="file" name="upfile" multiple="multiple"> 
-            <input v-model="review_idx">
-            <input type="submit" value="업로드" id="upfile">
-
-          </form> -->
-            <!-- 이미지 업로드 성공되면 안에 하나씩 채워져야함 -->
-            <!-- <div class="imageTextArea">
-                <div>
-                  <span>http://localhost:8080</span>
-                  <button class="itemDeleteBtn">삭제</button>
-                </div>
-            </div> -->
         </div>
     </div>
     
