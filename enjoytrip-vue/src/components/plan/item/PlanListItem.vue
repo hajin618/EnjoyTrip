@@ -1,10 +1,6 @@
 <template lang="">
 <div class="cardDiv">
     <router-link :to="{name: 'planDetail', params: { plan_idx: plan_idx } }">
-        <!-- <b-card 
-            img-src="https://picsum.photos/400/300/?image=41" 
-            img-alt="Image" 
-            img-top > -->
         <b-card :img-src="imageURL">
             <b-card-text> 
                 <div class="planType">{{plan_type}}</div>
@@ -41,7 +37,7 @@ export default {
             const planIdx = this.plan_idx;
             // const baseURL = "http://localhost:80/upload/plan/";
             // const baseURL = "http://192.168.208.85:80/upload/plan/";
-            const baseURL = imageUrl;
+            const baseURL = imageUrl + "/plan/";
             const extractedPath = baseURL + planIdx + ".png";
             console.log("extractedPath : " + extractedPath);
             this.imageURL = extractedPath;
