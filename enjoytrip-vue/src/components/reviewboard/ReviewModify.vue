@@ -1,11 +1,9 @@
 <template>
   <div>
+    <div class="mainContainer" style="width: 1000px; height:800px; margin: 0 auto; display: flex; flex-direction:column; justify-content: center;">
     <div class = "title">
       <h2>여행 후기 수정</h2>
     </div>
-
-    <div class="mainContainer" style="width: 1000px; height:600px; margin: 0 auto; display: flex; flex-direction:column; justify-content: center;">
-
     <div class="top-container" style="display:flex; flex-direction:row;">
       
       <div class="right-container" style="margin-left:20px; display:flex; flex-direction:column;width:100%;justify-content: space-evenly;">
@@ -31,15 +29,15 @@
 
         <input class="postContentBox" v-model="review.review_content" id="content" autocomplete="off" type="text" required>
         
-        <div class="imageArea" style="text-align:center;">
+        <div class="imageArea" style="padding-top: 10px; text-align:right;">
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
           </div>
 
           <div v-if="review_image.length">
-            <div v-for="image in review_image" :key="image.image_num">
+            <div v-for="image in review_image" :key="image.image_num" style="margin-bottom:10px;">
               <span>{{image.image_name}}</span>
-              <button v-on:click.prevent="addDeleteList(image.image_num); review_image = review_image.filter(item => item.image_num !== image.image_num)">삭제하기</button>
+              <button style="margin-left:10px; color: #ffffff; width:70px; border-radius:10px / 10px; background-color: #e98585; border: 1px solid rgba(213, 120, 120, .2);" v-on:click.prevent="addDeleteList(image.image_num); review_image = review_image.filter(item => item.image_num !== image.image_num)">삭제하기</button>
             </div>
 
           </div>
@@ -50,14 +48,14 @@
 
 
     <div class="buttonBox" style="margin-top:50px" >
-      <div style="margin-left:470px;">
+      <span style="margin-left:460px;">
         <button v-on:click.prevent="moveList" class="listBtn">목록</button>
-      </div>
+      </span>
       
-      <div v-if="review.userDto.user_id === user_id" class="editDeleteBox">
-        <button v-on:click.prevent="edit" style="margin-left:260px" class="editBtn">수정</button>
+      <span v-if="review.userDto.user_id === user_id" class="editDeleteBox">
+        <button v-on:click.prevent="edit" style="margin-left:280px" class="editBtn">수정</button>
         <button v-on:click.prevent="del" class="deleteBtn">취소</button>
-      </div>
+      </span>
     </div>    
       
     </div>
@@ -327,7 +325,7 @@ export default {
   .listBtn{
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -335,7 +333,7 @@ export default {
   .editBtn{
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -344,7 +342,7 @@ export default {
     margin-left: 20px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -397,7 +395,7 @@ export default {
   .titleBox{
     /* width: 330px; */
     height: 50px; 
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color:rgb(118 154 189 / 20%);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px /10px;
     text-align: center;
@@ -408,7 +406,7 @@ export default {
     width: 90px;
     height: 50px;
     /* margin-left: 20px; */
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color:rgb(118 154 189 / 20%);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     text-align: center;
@@ -419,7 +417,7 @@ export default {
     width: 90px;
     height: 50px;
     /* margin-left: 20px; */
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color:rgb(118 154 189 / 20%);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     text-align: center;
@@ -432,7 +430,7 @@ export default {
     width: 550px;
     height: 280px; */
     text-align: center;
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color:rgb(118 154 189 / 20%);
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 280px;
@@ -478,7 +476,7 @@ export default {
 }
 
 .deleteButton {
-  background-color: #ff5555;
+  background-color: #e98585;
   color: #ffffff;
   border: none;
   border-radius: 4px;

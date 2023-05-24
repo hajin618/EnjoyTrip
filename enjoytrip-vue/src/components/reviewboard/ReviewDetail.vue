@@ -21,36 +21,36 @@
           />
         </b-carousel>
       </div>
-      <div class="right-container" style="margin-left:20px; display:flex; flex-direction:column;width:50%;justify-content: space-evenly;">
+      <div class="right-container" style="margin-left:20px; display:flex; flex-direction:column;width:50%;justify-content: space-between;">
        
         <div class="titleBox" id="title">{{review.review_title}}</div>
-
+        <div style="display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;">
+              <div class="areaSelectbar col-6">
+                          {{getSidoName(review.sido_code)}}
+                        </div>
+              <div class="typeSelectbar col-6">
+                          {{review.review_type}}
+              </div>
+            </div>
                  
         <div class="postContentBox" id="content">{{review.review_content}}</div>
-        <div style="display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;">
-          <div class="areaSelectbar col-6">
-                      {{getSidoName(review.sido_code)}}
-                    </div>
-          <div class="typeSelectbar col-6">
-                      {{review.review_type}}
-          </div>
-        </div>
+        
         
       </div>
     </div>
       
 
     <div class="buttonBox" style="margin-top:50px" >
-      <div style="margin-left:480px;">
+      <span style="margin-left:460px;">
         <button v-on:click.prevent="moveList" class="listBtn">목록</button>
-      </div>
+      </span>
       
-      <div v-if="review.userDto.user_id === user_id" class="editDeleteBox">
-        <button v-on:click.prevent="edit" style="margin-left:260px" class="editBtn">수정</button>
+      <span v-if="review.userDto.user_id === user_id" class="editDeleteBox">
+        <button v-on:click.prevent="edit" style="margin-left:280px" class="editBtn">수정</button>
         <button v-on:click.prevent="del" class="deleteBtn">삭제</button>
-      </div>
+      </span>
     </div>    
       
     </div>
@@ -58,7 +58,7 @@
     <div class="commentContainer">
       <div style="text-align: center;" class="commentBox">
         <h3>댓글</h3>
-
+ 
         <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
           <div class="commentUserName">{{comment.user_name}}</div>
           <div class="commentDate">{{comment.review_comment_create}}</div>
@@ -262,7 +262,7 @@ export default {
   .postZone{
     width: 1200px;
     height: 500px;
-    background-color: rgba(200, 235, 207, 0.5);
+    background-color: #98cfc4;
     border: 1px solid rgba(200, 235, 207, 0.5);
     border-radius: 10px / 10px;
     display: flex;
@@ -309,7 +309,7 @@ export default {
   .listBtn{
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -317,7 +317,7 @@ export default {
   .editBtn{
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -326,7 +326,7 @@ export default {
     margin-left: 20px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -379,7 +379,7 @@ export default {
   .titleBox{
     /* width: 330px; */
     height: 50px; 
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px /10px;
     text-align: center;
@@ -390,7 +390,7 @@ export default {
     width: 90px;
     height: 50px;
     /* margin-left: 20px; */
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     text-align: center;
@@ -401,7 +401,7 @@ export default {
     width: 90px;
     height: 50px;
     /* margin-left: 20px; */
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     text-align: center;
@@ -414,7 +414,7 @@ export default {
     width: 550px;
     height: 280px; */
     text-align: center;
-    background-color:rgba(122, 187, 133, 0.2);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     line-height : 280px;
@@ -460,7 +460,7 @@ export default {
 }
 
 .deleteButton {
-  background-color: #ff5555;
+  background-color: #e98585;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -471,6 +471,7 @@ export default {
 
 .commentWriteBox {
   padding-top: 20px;
+  text-align: center;
 }
 
 .commentWriteBox hr {
@@ -494,8 +495,8 @@ textarea {
 }
 
 .commentButton {
-  background-color: #7aab85;
-  color: #ffffff;
+  background-color: #d1deec;
+  color: #000000;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
