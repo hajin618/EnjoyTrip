@@ -148,7 +148,7 @@ export default {
     width: 150px;
     margin-right: 30px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 20px / 20px;
   }
@@ -157,7 +157,7 @@ export default {
     width: 300px;
     height: 35px;
     margin-right: 30px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #cfcfcf80;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 20px / 20px;
   }

@@ -42,7 +42,7 @@
       <div class="findKidZone">
         <div class="findTitle">실종 아동 정보</div>
         <div class="findImageBox">
-          <img width="100%" height="100%" src="../assets/img/mainPageImg.png" alt="">
+          <img width="100%" height="100%" src="../assets/img/sadChild2.png" alt="">
         </div>
 
         <div class="findNameBox">
@@ -588,7 +588,7 @@ export default {
   }
 
   .searchWord{
-    width: 400px;
+    width: 330px;
     height: 37px;
     margin-left: 70px;
     background-color: #F1F4F1;

@@ -4,7 +4,7 @@
     <div class="main">
       <div class="tabBar">
         <button class="tabBarBtn" @click="selectedTab = 'plans'" ref="plans" style="border-top-left-radius:1rem; border-bottom-left-radius:1rem;">나의 계획들 보기</button>
-        <button class="tabBarBtn" @click="selectedTab = 'edit'" ref="edit" style="background-color:#7aab85;">회원 정보 수정</button>
+        <button class="tabBarBtn" @click="selectedTab = 'edit'" ref="edit" style="background-color:#1F92FD54;">회원 정보 수정</button>
         <button class="tabBarBtn" @click="selectedTab = 'reviews'" ref="reviews" style="border-top-right-radius:1rem; border-bottom-right-radius:1rem;">나의 후기들 보기</button>
       </div>
 
@@ -15,9 +15,9 @@
 
       <div class="title" v-if="selectedTab === 'edit'">
         회원 정보 수정
-      </div>
+      </div> 
       <user-edit v-if="selectedTab === 'edit'"></user-edit>
-
+ 
       <div class="title" v-if="selectedTab === 'reviews'">
         나의 후기들
       </div>
@@ -49,23 +49,23 @@ export default {
       selectedTab(newTab) {
         if (newTab === 'edit') {
           this.$nextTick(() => {
-            this.$refs.edit.style.backgroundColor = "#7aab85"; 
-            this.$refs.plans.style.backgroundColor = "#C8EBCF";
-            this.$refs.reviews.style.backgroundColor = "#C8EBCF";
+            this.$refs.edit.style.backgroundColor = "#1F92FD54"; 
+            this.$refs.plans.style.backgroundColor = "#007BFF14";
+            this.$refs.reviews.style.backgroundColor = "#007BFF14";
           });
         }
         else if(newTab === 'plans'){
           this.$nextTick(() => {
-            this.$refs.edit.style.backgroundColor = "#C8EBCF";
-            this.$refs.plans.style.backgroundColor = "#7aab85";
-            this.$refs.reviews.style.backgroundColor = "#C8EBCF";
+            this.$refs.edit.style.backgroundColor = "#007BFF14";
+            this.$refs.plans.style.backgroundColor = "#1F92FD54";
+            this.$refs.reviews.style.backgroundColor = "#007BFF14";
           });
         }
         else if(newTab === 'reviews'){
           this.$nextTick(() => {
-            this.$refs.edit.style.backgroundColor = "#C8EBCF";
-            this.$refs.plans.style.backgroundColor = "#C8EBCF";
-            this.$refs.reviews.style.backgroundColor = "#7aab85";
+            this.$refs.edit.style.backgroundColor = "#007BFF14";
+            this.$refs.plans.style.backgroundColor = "#007BFF14";
+            this.$refs.reviews.style.backgroundColor = "#1F92FD54";
           });
         }
       }
@@ -84,7 +84,7 @@ export default {
     height: 40px;
     color: black;
     width: 240px;
-    background-color: #C8EBCF;
+    background-color: #007BFF14;
     border: 1px solid rgba(213, 120, 120, .2);
   }
   .titleEdit{
