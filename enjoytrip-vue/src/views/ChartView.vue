@@ -15,6 +15,7 @@
 import HeaderNaviBar from "../components/layout/HeaderNaviBar.vue";
 import FooterArea from "../components/layout/FooterArea.vue";
 import { Chart, registerables } from 'chart.js';
+import http from "../api/http.js";
 
 Chart.register(...registerables);
 
@@ -27,23 +28,32 @@ export default {
   data(){
     return {
       myChart: null,
-      sido: null,
-      attraction: null,
+      sido: [],
+      attraction: [],
+      sidoLabel : [],
+      sidoCount : [],
+      attractionLabel: [],
+      attractionCount: [],
     }
   },
   methods: {
     fillData(){
       const ctx = document.getElementById('chart1').getContext('2d');
+
+      if (this.myChart) {
+        this.myChart.destroy();
+      }
+
       this.myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
           // 시도 이름
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: [this.sidoLabel[0], this.sidoLabel[1], this.sidoLabel[2], this.sidoLabel[3], this.sidoLabel[4], this.sidoLabel[5]],
           datasets: [
             {
               label: '많이 검색된 도시',
               // 검색된 횟수
-              data: [12, 19, 3, 5, 2, 3],
+              data: [this.sidoCount[0], this.sidoCount[1], this.sidoCount[2], this.sidoCount[3], this.sidoCount[4], this.sidoCount[5]],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -64,9 +74,18 @@ export default {
             }
           ]
         },
-        option: {
-          maintainAspectRatio: false,
-          responsive: false,
+        options: {
+          // maintainAspectRatio: false,
+          // responsive: false,
+          plugins: {
+            title: {
+              display: true,
+              text: '가장 많이 검색된 도시',
+              font: {
+                size: 25
+              }
+            }
+          }
         }
       });
 
@@ -75,12 +94,12 @@ export default {
         type: 'doughnut',
         data: {
           // 관광지 이름
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: [this.attractionLabel[0], this.attractionLabel[1], this.attractionLabel[2], this.attractionLabel[3], this.attractionLabel[4], this.attractionLabel[5]],
           datasets: [
             {
               label: '많이 검색된 관광지',
               // 관광지 검색 횟수
-              data: [6, 5, 4, 3, 2, 1],
+              data: [this.attractionCount[0], this.attractionCount[1], this.attractionCount[2], this.attractionCount[3], this.attractionCount[4], this.attractionCount[5]],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -101,24 +120,70 @@ export default {
             }
           ]
         },
-        option: {
-          maintainAspectRatio: false,
-          responsive: false, // 차트 크기를 고정
+        options: {
+          // maintainAspectRatio: false,
+          // responsive: false, // 차트 크기를 고정
+          plugins: {
+            title: {
+              display: true,
+              text: '가장 많이 검색된 관광지',
+              font: {
+                size: 25
+              }
+            }
+          }
         }
       });
     }
   },
   mounted(){
-    this.fillData();
-        const canvas = document.getElementById('chart1');
-        canvas.style.width = '500px'; // 원하는 가로 크기로 변경
-        canvas.style.height = '500px'; // 원하는 세로 크기로 변경
+    const canvas = document.getElementById('chart1');
+    canvas.style.width = '500px'; // 원하는 가로 크기로 변경
+    canvas.style.height = '500px'; // 원하는 세로 크기로 변경
   },
   created() {
     // getMapping 시도
     // sido에 데이터 넣기
     // getMapping 관광지
     // attraction에 데이터 넣기
+    http.get(`/topSido`)
+    .then((response) => {
+      console.log(response.status);
+      if(response.status == 200){
+        this.sido = response.data;
+        console.log(response.data);
+        console.log(this.sido);
+        for(let i = 0; i < 6; i++){
+          this.sidoLabel[i] = this.sido[i].sido_name;
+          this.sidoCount[i] = this.sido[i].cnt;
+        }
+        console.log(this.sidoLabel);
+        console.log(this.sidoCount);
+      }
+    })
+    .catch((error) =>{
+      console.log(error);
+    })
+
+    http.get(`/topAtt`)
+    .then((response) => {
+      console.log(response.status);
+      if(response.status == 200){
+        this.attraction = response.data;
+        for(let i = 0; i < 6; i++){
+          this.attractionLabel[i] = this.attraction[i].attraction_name;
+          this.attractionCount[i] = this.attraction[i].cnt;
+        }
+        this.fillData();
+        console.log(this.attractionLabel);
+        console.log(this.attractionCount);
+      }
+    })
+    .catch((error) =>{
+      console.log(error);
+    })
+
+
   }
 }
 </script>
