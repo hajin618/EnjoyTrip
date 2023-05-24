@@ -204,13 +204,11 @@ export default {
     width: 1500px;
     height: 530px;
     margin-left: 220px;
-
-    background: rgba(200, 235, 207, 0.4);
+    /* background: rgb(0 123 255 / 7%); */
     border-radius: 20px;
   }
 
   .buttonArea{
-    margin-top: 50px;
     margin-left: 870px;
     margin-bottom: 30px;
   }
@@ -219,7 +217,7 @@ export default {
     margin-right: 15px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -228,7 +226,7 @@ export default {
     margin-right: 175px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
   }
@@ -244,31 +242,31 @@ export default {
   .titleBox{
     width: 570px;
     height: 40px;
-    background-color: #D9D9D9;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
+    
+    background-color: white;
+    border: 4px solid #007bff45;
+
     border-radius: 10px / 10px;
-    line-height : 40px;
+    /* line-height : 40px; */
   }
 
   .areaSelectbar{
     width: 220px;
     height: 37px;
     margin-left: 20px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
+    background-color: white;
+    border: 4px solid #007bff45;
     border-radius: 10px / 10px;
-    line-height : 37px;
+    /* line-height : 37px; */
   }
 
   .typeSelectbar{
     width: 110px;
     height: 37px;
     margin-left: 20px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
+    background-color: white;
+    border: 4px solid #007bff45;
     border-radius: 10px / 10px;
-    line-height : 37px;
   }
 
     .postContentArea{
@@ -279,8 +277,8 @@ export default {
     .postContentBox{
     width: 950px;
     height: 230px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
+    background-color: white;
+    border: 4px solid #007bff45;
     border-radius: 20px / 20px;
     line-height : 280px;
   }
@@ -289,8 +287,8 @@ export default {
     margin-left: 280px;
     width: 950px;
     height: 40px;
-    background-color: #D9D9D9;
-    border: 1px solid rgba(213, 120, 120, .2);
+    background-color: white;
+    border: 4px solid #007bff45;
     border-radius: 10px / 10px;
   }
 

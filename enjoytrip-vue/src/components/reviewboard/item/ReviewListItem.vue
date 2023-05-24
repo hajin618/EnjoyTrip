@@ -102,7 +102,7 @@ export default {
     width: 400px;
     /* height: 450px;*/
     height: 55vmin; 
-    background-color: #F1F4F1;
+    background-color: #e3ecec;
     text-align: center;
     align-items: center;
     border-radius: 2vmin;
@@ -132,7 +132,7 @@ export default {
     font-size: 20px;
     float: right;
     margin-right: 20px;
-    background-color: #7aab85;
+    background-color: #98cfc4;
     border-radius: 10px / 10px;
     border: 1px solid rgba(213, 120, 120, .2);
   }
