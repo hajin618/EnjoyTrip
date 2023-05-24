@@ -298,25 +298,12 @@ export default {
       this.sidoList = data.sidoList;
     });
 
-    http.get(`/mChild/2`).then(({ data }) => {
+    let randomNumber = 2;
+    randomNumber = Math.floor(Math.random() * 42) + 1;
+    http.get(`/mChild/${randomNumber}`).then(({ data }) => {
       this.mChild = data;
-      // console.log(data);
     })
   },
-  // watch: {
-  //   // 저장한 여행지 정보 변할 때 마다 수행
-  //   savedAtt(){
-  //     // this.savedAttInfo = [];
-  //     this.savedAtt.forEach(item =>{
-  //       http.get(`/attraction/${item}`).then(({ data }) =>{
-  //         console.log(data);
-  //         this.savedAttInfo.push(data);
-          
-  //       })
-  //     });
-  //     console.log("savedAttInfo ::: "+this.savedAttInfo);
-  //   }
-  // },
   watch: {
       selectedTab(newTab) {
         if (newTab === 'attraction') {
