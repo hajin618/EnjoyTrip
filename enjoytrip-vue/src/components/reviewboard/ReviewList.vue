@@ -139,7 +139,7 @@ export default {
     width: 60px;
     margin-right: 30px;
     height: 35px;
-    background-color: #F1F4F1;
+    background-color: #d1deec;
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 20px / 20px;
   }
@@ -164,12 +164,12 @@ export default {
 
   .registerBtn{
     margin-top: 20px;
-    margin-left: 430px;
+    margin-left: 440px;
     margin-bottom: 30px;
     width: 130px;
     height: 35px;
-    color: #F1F4F1;
-    background-color: #7aab85;
+    color: black;
+    background-color: #d1deec;
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 10px / 10px;
   }
