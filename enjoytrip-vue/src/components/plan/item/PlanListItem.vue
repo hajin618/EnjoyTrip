@@ -67,7 +67,8 @@ export default {
         margin-top: 30px;
         font-size: 17px;
         float: right;
-        margin-right: 20px;
+        text-align: center;
+        margin-right: 5px;
         background-color: #97b1cd;
         border-radius: 10px / 10px;
         white-space: nowrap;
@@ -75,7 +76,9 @@ export default {
     }
 
     .planTitle{
-        font-size: 20px;
+        font-size: 21px;
+        /* padding-left: 20%; */
         white-space: nowrap;
+        text-align: left;
     }
 </style>

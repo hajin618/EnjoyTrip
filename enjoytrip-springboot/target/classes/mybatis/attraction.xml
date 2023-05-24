@@ -108,7 +108,14 @@
 			</if>
 			
 		</if>
-			limit 20;
+		
+		<if test='searchWord != null'>
+			and attraction_name like concat('%', #{searchWord}, '%')
+		</if>
+		
+		order by rand()
+		
+		limit 30;
 			
 	</select>
 	
@@ -158,7 +165,46 @@
 		<if test='searchWord != null'>
 			and info.title like concat('%', #{searchWord}, '%')
 		</if>
-			limit 20;
 		
+		order by rand()
+		
+		limit 30;
+		
+	</select>
+	
+	<!-- statistics 테이블에 데이터 삽입하기 -->
+	<insert id="insertStatisticsData" parameterType="statisticsDataDto">
+		insert into 	statistics
+			(sido_code, attraction_name, sido_name)
+		values
+			(#{sido_code}, #{attraction_name}, (select 	sido_name 
+												from 	sido
+												where	sido_code = #{sido_code}))
+	</insert>
+	
+	<!-- 시도코드 저장 많은 순서대로  -->
+	<select id="getTopSido" resultType="sidoStatisticsDto">
+		select		
+					count(*) as cnt
+				  , sido_name
+		from	
+					statistics
+		group by 
+					sido_name	
+		order by
+					cnt desc
+	</select>	
+	
+	<!-- 여행지 이름 저장 많은 순서대로 -->
+	<select id="getTopAttractions" resultType="attractionStatisticsDto">
+		select		
+					count(*) as cnt
+				  , attraction_name
+		from	
+					statistics
+		group by 
+					attraction_name	
+		order by
+					cnt desc	
 	</select>
 </mapper>

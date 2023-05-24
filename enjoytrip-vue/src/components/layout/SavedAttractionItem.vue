@@ -12,7 +12,7 @@
         </span>
         </div>
         <div class="itemInfo">
-        <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
+        <button class="findChildSpotBtn" v-on:click="searchAnotherCh">어린이를 위한 장소 찾기</button>
         <button class="itemDeleteBtn" v-on:click="deleteAtt">X</button>
         </div>
     </div>
@@ -30,6 +30,9 @@ export default {
             console.log(this.content_id);
             // emit 이벤트 명: deleteAtt
             this.$emit("deleteAtt", this.content_id);
+        },
+        searchAnotherCh(){
+            this.$emit("searchAnotherCh")
         }
     }
 }

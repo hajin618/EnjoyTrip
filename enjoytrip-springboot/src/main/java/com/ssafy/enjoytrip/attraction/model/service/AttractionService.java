@@ -6,8 +6,11 @@ import java.util.Map;
 import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
+import com.ssafy.enjoytrip.attraction.model.AttractionStatisticsDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.attraction.model.SidoStatisticsDTO;
+import com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 
 public interface AttractionService {
@@ -25,4 +28,10 @@ public interface AttractionService {
 	public ChildAttractionDTO searchChildAttractionById(int attraction_idx) throws Exception;
 	// 여행지 정보 검색 (attraction_description 테이블)
 	public AttractionDescriptionDTO searchAttractionDesc(int content_id) throws Exception;
+	// statistics 테이블에 데이터 삽입
+	public int insertStatisticsData(StatisticsDataDTO statisticsDataDto) throws Exception;
+	// 시도코드 저장 많은 순서대로
+	public List<SidoStatisticsDTO> getTopSido() throws Exception;
+	// 여행지 이름 저장 많은 순서대로
+	public List<AttractionStatisticsDTO> getTopAttractions() throws Exception;
 }

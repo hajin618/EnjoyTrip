@@ -119,7 +119,7 @@ export default {
     width: 80%;
     height: 300px;
     margin: 3vmin;
-    background-color: rgba(200, 235, 207, 0.5);
+    background-color: rgba(196, 198, 197, 0.5);
   }
 
   .boxTitle{

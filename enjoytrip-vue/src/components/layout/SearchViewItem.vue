@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import http from "@/api/http";
+
 export default {
   name: "SearchViewItem", 
   props: {
@@ -27,13 +29,29 @@ export default {
     title: String,
     addr1: String,
     savedAtt : Array,
+    sido_code: Number,
   },
   methods: {
     saveAtt(){
       console.log(this.content_id);
       // emit 이벤트명 : saveAtt
       this.$emit("saveAtt", this.content_id); 
+
+      // statistics 테이블에 저장하기
+      http.post(`/statistics`, {
+        sido_code : this.sido_code,
+        attraction_name : this.title,
+      }).then((response) => {
+        //console.log("result:  " + response.status);
+        if(response.status == 200){
+          console.log("success insert data");
+        }
+        else{
+          console.log("fail insert data");
+        }
+      })
     },
+
     openModal2(content_id){
       this.$emit('openModal2', content_id);
     },

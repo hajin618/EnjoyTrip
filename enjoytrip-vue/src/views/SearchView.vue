@@ -84,6 +84,7 @@
               v-for="item in savedAttInfo"
               :key="item.content_id"
               @deleteAtt="deleteAtt"
+              @searchAnotherCh="searchAnotherCh"
               v-bind="item"/>
         </div>
 
@@ -92,6 +93,7 @@
               v-for="item in savedChAttInfo"
               :key="item.attraction_idx"
               @deleteChAtt="deleteChAtt"
+              @searchAnother="searchAnother"
               v-bind="item"/>
         </div>
         <button class = "goPlanBtn" v-on:click="goPlan">계획 생성하러 가기</button>
@@ -420,6 +422,42 @@ export default {
         this.savedChAttInfo.splice(index2, 1);
       }
     },
+
+    // 어린이 여행지에서 다른 여행지 검색 눌렀을 때
+    searchAnother(){
+        // 어른 여행지 다시 검색
+        http.post(`/attraction`, {
+        sido_code : this.sidoSelected,
+        gugun_code : this.gugunSelected,
+        content_type_id : this.content_type_id,
+        searchWord : this.searchWord,
+      })
+      .then(({ data }) => {
+        this.attractions = data;
+      });
+
+      // 탭 바꾸기
+      this.selectedTab = 'attraction'
+
+    },
+
+    // 어른 여행지에서 어린이 검색 눌렀을 때
+    searchAnotherCh(){
+      // 어린이 여행지 다시 검색
+      http.post(`/childAttraction`, {
+        sido_code : this.sidoSelected,
+        gugun_code : this.gugunSelected,
+        content_type_id : this.content_type_id,
+        searchWord : this.searchWord,
+      })
+      .then(({ data }) => {
+        this.childAttractions = data;
+      });
+
+      // 탭 바꾸기
+      this.selectedTab = 'children'
+    },
+
     openModal2(content_id){
       this.showModal2 = true;
 
