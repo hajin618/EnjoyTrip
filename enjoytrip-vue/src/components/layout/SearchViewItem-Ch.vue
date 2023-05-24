@@ -48,14 +48,14 @@ export default {
 <style scoped>
   .btn{
     border-color:#98c2a182;
-    background-color : #cfcfcf80;
+    background-color : #d1deec;
     border-radius: 10px;
     width: 80px;
     height: 35px;
     margin-left: 70px;
   }
   .btn:hover{
-    background-color : #828ea280;
+    background-color : #97b1cd;
   }
   .img{
     margin: 12px;

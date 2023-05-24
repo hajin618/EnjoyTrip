@@ -641,9 +641,13 @@ export default {
     margin-left: 70px;
     width: 100px;
     height: 37px;
-    background-color: #F1F4F1;
+    background-color: #d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+
+  .searchBtn:hover{
+    background-color: #97b1cd;
   }
 
   .findKidZone{
@@ -748,13 +752,13 @@ export default {
     width: 200px;
     height: 50px;
     font-size: 15px;
-    background-color: #cfcfcf80;
+    background-color: #d1deec;
     border: 1px solid rgba(103, 132, 177, 0.2);
     border-radius: 10px / 10px;
   }
 
   .goPlanBtn:hover{
-    background-color : #828ea280;
+    background-color : #97b1cd;
   }
 .modal {
   position: fixed;
@@ -770,7 +774,7 @@ export default {
 }
 
 .modal-content {
-  background-color: #fffcf6;
+  background-color: #fbf9f4;
   padding: 20px;
   border-radius: 5px;
   width: 450px;
@@ -785,7 +789,7 @@ export default {
 
 .modal-title {
   margin: 0;
-  color: #7aab85;
+  color: #7087a0;
 }
 
 .close-modal-btn {
@@ -814,7 +818,7 @@ export default {
 
 strong {
   margin-right: 5px;
-  color: #7aab85;
+  color: #657b92;
 }
 
 .listTitle{
