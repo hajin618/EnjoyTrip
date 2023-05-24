@@ -241,32 +241,33 @@ export default {
 
   .titleBox{
     width: 570px;
-    height: 40px;
+    height: 50px;
     
     background-color: white;
     border: 4px solid #007bff45;
-
     border-radius: 10px / 10px;
     /* line-height : 40px; */
   }
 
   .areaSelectbar{
     width: 220px;
-    height: 37px;
+    height: 50px;
     margin-left: 20px;
     background-color: white;
     border: 4px solid #007bff45;
     border-radius: 10px / 10px;
     /* line-height : 37px; */
+    text-align: center;
   }
 
   .typeSelectbar{
     width: 110px;
-    height: 37px;
+    height: 50px;
     margin-left: 20px;
     background-color: white;
     border: 4px solid #007bff45;
     border-radius: 10px / 10px;
+    text-align: center;
   }
 
     .postContentArea{
@@ -276,7 +277,7 @@ export default {
 
     .postContentBox{
     width: 950px;
-    height: 230px;
+    height: 250px;
     background-color: white;
     border: 4px solid #007bff45;
     border-radius: 20px / 20px;
@@ -285,7 +286,7 @@ export default {
   .imageBtn{
     margin-left: 280px;
     width: 950px;
-    height: 40px;
+    height: 45px;
     background-color: white;
     border: 4px solid #007bff45;
     border-radius: 10px / 10px;

@@ -109,6 +109,9 @@ export default {
         border-radius: 10px / 10px;
         border: 1px solid rgba(213, 120, 120, .2);
     }
+    .loginBtn:hover{
+        background-color: #97b1cd;
+    }
     .loginBox{
         width: 600px;
         height: 400px;

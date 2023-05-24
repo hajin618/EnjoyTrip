@@ -368,6 +368,13 @@ export default {
         
         //console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
       }
+      else{
+        Swal.fire({
+          icon: 'error',
+          title: '저장 실패!',
+          text: '이미 저장된 여행지입니다!'
+        })
+      }
       // console.log(this.savedAtt);
       // console.log("savedAttInfo length ::: "+this.savedAttInfo.length);
     },
@@ -381,6 +388,13 @@ export default {
         http.get(`/childAttraction/${value}`).then(({ data }) =>{
           this.savedChAttInfo.push(data);
         });
+      }
+      else{
+        Swal.fire({
+          icon: 'error',
+          title: '저장 실패!',
+          text: '이미 저장된 여행지입니다!'
+        })
       }
     },
 

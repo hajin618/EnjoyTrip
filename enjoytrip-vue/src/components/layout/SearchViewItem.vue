@@ -37,7 +37,7 @@ export default {
       // emit 이벤트명 : saveAtt
       this.$emit("saveAtt", this.content_id); 
 
-      // statistics 테이블에 저장하기
+      // statistics 테이블에 저장하기 
       http.post(`/statistics`, {
         sido_code : this.sido_code,
         attraction_name : this.title,
