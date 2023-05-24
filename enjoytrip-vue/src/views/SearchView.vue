@@ -2,10 +2,6 @@
   <div>
     <header-navi-bar></header-navi-bar>
 
-    <div class="title">
-      <h2>여행지 검색</h2>
-    </div>
-
     <div class="searchBar">
       <select class="sidoSelect" v-model="sidoSelected" @change="getGuGun()">
         <option value="null">시/도 선택</option>
@@ -38,8 +34,11 @@
       <button class="searchBtn" v-on:click="searchAtt">검색</button>
     </div>
 
-    <div style="display: flex; flex-direction: row; margin-bottom: 50px;">
 
+
+    
+
+    <div style="display: flex; flex-direction: row; margin-bottom: 50px;">
       <div class="findKidZone">
         <div class="findTitle">실종 아동 정보</div>
         <div class="findImageBox">
@@ -95,16 +94,7 @@
               @deleteChAtt="deleteChAtt"
               v-bind="item"/>
         </div>
-
-        
-        <!-- <div class="rememberItem" v-else>
-          <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
-        </div> -->
-
-        <!-- <div class="goPlanBtnDiv"> -->
-          <button class = "goPlanBtn" v-on:click="goPlan">계획 생성하러 가기</button>
-        <!-- </div> -->
-
+        <button class = "goPlanBtn" v-on:click="goPlan">계획 생성하러 가기</button>
       </div>
     </div>
 
@@ -148,6 +138,8 @@
         </b-col>
       </b-row>
     </div>
+
+
 
     <div v-if="showModal2" class="modal">
       <div class="modal-content">
@@ -616,10 +608,9 @@ export default {
   }
 
   .findKidZone{
-    margin-left: 40px;
-    position: sticky;
-    top: 200px;
-    right: 300px;
+    margin-left: 20px;
+    position: fixed;
+    left: 30px;
     width: 350px;
     height: 600px;
     background-color: #cfcfcf80;
@@ -664,21 +655,27 @@ export default {
   }
 
   .mapZone{
-    margin-left: 40px;
+    margin-left: 23%;
     margin-right: 40px;
     width: 1000px;
     height: 500px;
     background-color: rgb(200, 235, 207);
     border-radius: 10px / 10px;
+    text-align: center;
   }
 
   .rememberSpotZone{
     width: 350px;
+    height: 600px;
     padding-bottom: 20px;
     background-color: #cfcfcf80;
     /* border: 1px solid rgba(200, 235, 207, 0.5); */
     border-radius: 30px / 30px;
     text-align: center;
+    position: fixed;
+    left: 78%;
+    right: 100px;
+    overflow-y: scroll;
   }
 
   .rememberTitle{
@@ -693,7 +690,7 @@ export default {
   }
 
   .searchedArea{
-    position: absolute; left: 432px; top: 870px;
+    position: absolute; left: 432px; top: 760px;
     width: 1000px;
   }
 
@@ -784,7 +781,5 @@ strong {
 .listTitle{
   text-align : center;
 }
-
-
 
 </style>
