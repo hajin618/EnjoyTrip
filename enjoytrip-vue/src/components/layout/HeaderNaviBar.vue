@@ -2,7 +2,7 @@
     <header>
         <div class="toorbar">
             <router-link class="blacklink" to="/">
-                    <img src="../../assets/img/logo.png" width="60px" height="60px"></router-link>
+                    <img src="../../assets/img/logo.png" width="90px" height="60px"></router-link>
             <router-link class="whitelink" style="margin-left: 700px;" to="/notice">공지사항</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/plan">여행 계획</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/review">여행 후기</router-link>
