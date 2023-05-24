@@ -23,9 +23,9 @@
           </div>
 
         <div class="postContentArea">
-            <input class="postContentBox" v-model="content" id="content" autocomplete="off" type="text" placeholder="내용을 입력해주세요." required>
+          <textarea name="content" id="content" class="postContentBox" v-model="content" type="textarea" rows="10" placeholder="내용을 입력해주세요!" required></textarea>
         </div>
-        
+
         <div class="imageArea">
           <div>
             <input class="imageBtn" type="file" multiple @change="handleFileUpload">
@@ -280,7 +280,6 @@ export default {
     background-color: white;
     border: 4px solid #007bff45;
     border-radius: 20px / 20px;
-    line-height : 280px;
   }
 
   .imageBtn{

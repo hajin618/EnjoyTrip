@@ -5,19 +5,25 @@
       <button v-on:click.prevent="kakaoLogin" class="kakaoLoginBtn">카카오톡으로 간편 로그인하기</button>
     </div>
 
-      <form action="">
+    <div class="joinBox" style="display: flex;
+    flex-direction: column;">
       <div class="title">
-        <router-link to="/" style="margin-left:50px; font-weight: 550;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
+        <router-link to="/" style="margin-left:50px; font-weight: 550; margin-top: 2vmin;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
         
       </div>
-
-      <div class="name">
-        <span>이름</span>
+      <div class="name" style="margin: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center">
+        <span style="width: 20%;">이름</span>
         <input class="box" id="name" v-model="user.user_name" autocomplete="off" type="text" required>
       </div>
 
-      <div class="id">
-        <span>아이디</span>
+      <div class="id" style="margin: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center">
+        <span style="width: 20%;">아이디</span>
         <input class="box" id="id" v-model="user.user_id" autocomplete="off" @focusout="idCheck" type="text" required>
       </div>
 
@@ -25,22 +31,31 @@
         중복된 아이디입니다.
       </span>
 
-      <div class="pwd">
-        <span>비밀번호</span>
+      <div class="pwd" style="margin: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center">
+        <span style="width: 20%;">비밀번호</span>
         <input class="box" id="pwd" v-model="user.user_pwd" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
-      <div class="pwdCheck">
-        <span>비밀번호 확인</span>
-        <input class="box" style="margin-left:70px;" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
+      <div class="pwdCheck" style="margin: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center">
+        <span style="width: 20%; font-size:16px;">비밀번호 확인</span>
+        <input class="box" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
       <span v-show="pwdNotCorrect" class="idDuplicate">
         비밀번호를 다시 확인해주세요!
       </span>
 
-      <div class="email">
-        <span>이메일</span>
+      <div class="email" style="margin: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center">
+        <span style="width: 20%;">이메일</span>
         <input class="box" id="email" v-model="user.user_email" autocomplete="off" @focusout="emailCheck" type="text" required>
       </div> 
 
@@ -48,8 +63,14 @@
         중복된 이메일입니다.
       </span>
 
-      <button v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
-    </form>
+      <button style="margin-left: 10vmin;
+    margin-top: 2vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; text-align: center; align-items: center" v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
+    </div>
+
+      
     
   </div>
 
@@ -313,9 +334,8 @@ export default {
     }
 
     .joinBtn{
-        margin-top: 60px;
-        margin-left: 560px;
         height: 40px;
+        font-size: 20px;
         color: white;
         width: 300px;
         background-color: #1F92FD54;
@@ -325,7 +345,8 @@ export default {
 
     .kakao{
       padding-top: 150px;
-      margin-left: 500px;
+      margin-bottom: 30px;
+      margin-left: 470px;
     }
 
     .main{
@@ -340,45 +361,33 @@ export default {
     }
 
     .name{
-      margin-top: 40px;
-      margin-left: 470px;
       font-size: 20px;
     }
 
     .id{
-      margin-top: 40px;
-      margin-left: 450px;
       font-size: 20px;
     }
 
     .pwd{
-      margin-top: 40px;
-      margin-left: 430px;
       font-size: 20px;
     }
 
     .pwdCheck{
-      margin-top: 40px;
-      margin-left: 380px;
       font-size: 20px;
     }
 
     .email{
-      margin-top: 40px;
-      margin-left: 450px;
       font-size: 20px;
     }
 
     .title{
-      margin-top: 40px;
-      margin-left: 630px;
       color: black;
+      margin-left: 170px;
       font-size: 20px;
       font-weight: 550;
     }
 
     .box{
-        margin-left: 60px;
         height: 40px;
         color: black;
         width: 300px;
@@ -388,8 +397,16 @@ export default {
     }
 
     .idDuplicate{
-      margin-left: 640px;
-      margin-top: 30px;
+      margin-left: 160px;
       color: red;
+    }
+
+    .joinBox{
+      margin-left:400px;
+      width: 500px;
+      height: 550px;
+        background-color : rgba(255, 255, 255 , 0.5);
+      border-radius: 10px / 10px;
+      border: 1px solid rgba(213, 120, 120, .2);
     }
 </style>
