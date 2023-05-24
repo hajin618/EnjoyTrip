@@ -60,7 +60,7 @@
         <h3>댓글</h3>
  
         <div class="commentItem" v-for="comment in comments" :key="comment.comment_idx">
-          <div class="commentUserName">{{comment.user_name}}</div>
+          <div class="commentUserName">{{comment.user_name}}<span v-if="review.userDto.user_name === comment.user_name">(작성자)</span></div>
           <div class="commentDate">{{comment.review_comment_create}}</div>
           <div class="commentContent">{{comment.review_comment_content}}</div>
           <button v-if="comment.user_name === user_name" v-on:click.prevent="deleteComment(comment.comment_idx)" class="deleteButton">삭제</button>

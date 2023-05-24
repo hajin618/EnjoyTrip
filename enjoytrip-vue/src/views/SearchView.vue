@@ -34,15 +34,11 @@
       <button class="searchBtn" v-on:click="searchAtt">검색</button>
     </div>
 
-
-
-    
-
     <div style="display: flex; flex-direction: row; margin-bottom: 50px;">
       <div class="findKidZone">
         <div class="findTitle">실종 아동 정보</div>
         <div class="findImageBox">
-          <img width="100%" height="100%" src="../assets/img/sadChild2.png" alt="">
+          <img width="100%" height="100%" src="../assets/img/sadChild4.jpg" alt="">
         </div>
 
         <div class="findNameBox">
@@ -140,8 +136,6 @@
         </b-col>
       </b-row>
     </div>
-
-
 
     <div v-if="showModal2" class="modal">
       <div class="modal-content">

@@ -27,7 +27,7 @@
             </select>
         </div>
 
-        <input class="postContentBox" v-model="review.review_content" id="content" autocomplete="off" type="text" required>
+        <textarea class="postContentBox" v-model="review.review_content" id="content" type="textarea" rows="10" placeholder="내용을 입력해주세요!" required></textarea>
         
         <div class="imageArea" style="padding-top: 10px; text-align:right;">
           <div>
