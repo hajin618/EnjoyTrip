@@ -366,13 +366,13 @@ export default {
 .Button{
     width: 80px;
     height: 35px;
-    background-color:#cfcfcf80;
+    background-color: #d1deec;  
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
     margin-bottom:25px;
 }
 .Button:hover{
-    background-color : #828ea280;
+    background-color : #97b1cd;
 }
 .orderItem{
     border-top : 1px solid #9b9b9bd1;
