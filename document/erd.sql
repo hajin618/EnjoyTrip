@@ -374,6 +374,15 @@ CREATE TABLE IF NOT EXISTS `enjoytrip_dhj`.`child_attraction` (
 ENGINE = InnoDB;
 
 
+CREATE TABLE `statistics` (
+  `statistics_idx` int NOT NULL AUTO_INCREMENT,
+  `sido_code` int DEFAULT NULL,
+  `sido_name` varchar(45) DEFAULT NULL,
+  `attraction_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`statistics_idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
