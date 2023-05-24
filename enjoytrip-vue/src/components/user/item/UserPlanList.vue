@@ -1,14 +1,14 @@
 <template>
     <div>
-    <div v-if="plans.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
-
-      <plan-list-item
-        v-for="plan in plans"
-        :key="plan.plan_idx"
-        v-bind="plan"
-      />
-
-    </div>        
+        <div class = "contentDiv" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
+            <b-card-group deck v-if="plans.length" id="listItem">
+            <plan-list-item
+                v-for="plan in plans"
+                :key="plan.plan_idx"
+                v-bind="plan"
+            />
+            </b-card-group>
+        </div>       
     </div>
 </template>
 <script>
@@ -44,6 +44,12 @@ export default {
     }
 }
 </script>
-<style lang="">
-    
+<style scoped>
+  .contentDiv{
+    text-align : center;
+    clear:both;
+    padding-bottom: 50px;
+    display: flex;
+    padding-left : 200px;
+  }    
 </style>

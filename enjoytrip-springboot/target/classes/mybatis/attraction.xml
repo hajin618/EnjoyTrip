@@ -108,7 +108,14 @@
 			</if>
 			
 		</if>
-			limit 20;
+		
+		<if test='searchWord != null'>
+			and attraction_name like concat('%', #{searchWord}, '%')
+		</if>
+		
+		order by rand()
+		
+		limit 30;
 			
 	</select>
 	
@@ -158,7 +165,10 @@
 		<if test='searchWord != null'>
 			and info.title like concat('%', #{searchWord}, '%')
 		</if>
-			limit 20;
+		
+		order by rand()
+		
+		limit 30;
 		
 	</select>
 </mapper>

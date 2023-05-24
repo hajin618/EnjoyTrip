@@ -27,13 +27,18 @@ export default {
     title: String,
     addr1: String,
     savedAtt : Array,
+    sido_code: Number,
   },
   methods: {
     saveAtt(){
       console.log(this.content_id);
       // emit 이벤트명 : saveAtt
       this.$emit("saveAtt", this.content_id); 
+
+      // statistics 테이블에 저장하기
+      
     },
+
     openModal2(content_id){
       this.$emit('openModal2', content_id);
     },

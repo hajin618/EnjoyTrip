@@ -5,9 +5,9 @@
         <span class="itemName">
             {{attraction_name}}
         </span>
-        </div>
+        </div> 
         <div class="itemInfo">
-        <button class="findChildSpotBtn">어린이를 위한 장소 찾기</button>
+        <button class="findChildSpotBtn" v-on:click="searchAnother">다른 여행지 찾기</button>
         <button class="itemDeleteBtn" v-on:click="deleteChAtt">X</button>
         </div>
     </div>
@@ -24,6 +24,9 @@ export default {
             console.log(this.attraction_idx);
             // emit 이벤트 명: deleteChAtt
             this.$emit("deleteChAtt", this.attraction_idx);
+        },
+        searchAnother(){
+            this.$emit("searchAnother");
         }
     }
 }

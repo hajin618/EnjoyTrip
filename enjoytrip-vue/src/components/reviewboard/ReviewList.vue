@@ -114,6 +114,7 @@ export default {
 
  
  <style scoped>
+
   .card-deck .card {
     flex: none;
     
