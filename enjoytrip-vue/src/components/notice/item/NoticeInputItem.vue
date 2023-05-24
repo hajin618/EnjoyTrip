@@ -170,7 +170,7 @@ export default {
 }
 .Button{
     border-color:#98c2a182;
-    background-color : #98c2a182;
+    background-color: #cfcfcf80;
     border-radius: 10px;
     width: 80px;
     height: 35px;
