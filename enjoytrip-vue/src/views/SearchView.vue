@@ -596,7 +596,7 @@ export default {
   }
 
   .searchWord{
-    width: 400px;
+    width: 330px;
     height: 37px;
     margin-left: 70px;
     background-color: #F1F4F1;
