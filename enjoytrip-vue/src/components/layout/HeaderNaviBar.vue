@@ -3,9 +3,10 @@
         <div class="toorbar">
             <router-link class="blacklink" to="/">
                     <img src="../../assets/img/logo.png" width="90px" height="60px"></router-link>
-            <router-link class="whitelink" style="margin-left: 700px;" to="/notice">공지사항</router-link>
+            <router-link class="whitelink" style="margin-left: 600px;" to="/notice">공지사항</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/plan">여행 계획</router-link>
             <router-link class="whitelink" style="margin-left: 30px;" to="/review">여행 후기</router-link>
+            <router-link class="whitelink" style="margin-left: 30px;" to="/chart">오늘의 여행지</router-link>
 
             <!-- 로그인 안된 경우 -->
             <span v-if="!userInfo">
