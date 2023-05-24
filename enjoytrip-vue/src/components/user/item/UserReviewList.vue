@@ -1,7 +1,7 @@
 <template>
   <div>
   <!-- align-content:space-evenly 이거 하면 행간 띄운다는데 안 먹음 -->
-    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-bottom:30px;">
+    <div v-if="reviews.length" style="display: flex; flex-direction: row; flex-wrap: wrap; align-content:space-around;">
 
       <review-list-item
         v-for="review in reviews"
@@ -20,7 +20,7 @@ import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
 import { mapState  } from "vuex";
 
 export default {
-  name: "UserLikeListView",
+  name: "UserLikeListView", 
   components: { 
     ReviewListItem,
   },

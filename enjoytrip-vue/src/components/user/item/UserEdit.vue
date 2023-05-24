@@ -19,7 +19,7 @@
 
       <div class="pwdCheck">
         <span>비밀번호 확인</span>
-        <input class="box" v-model="pwdCheck" id="pwdCheck" autocomplete="off" type="password" @focusout="pwdChecked" required>
+        <input class="box" style="margin-left:70px;"  v-model="pwdCheck" id="pwdCheck" autocomplete="off" type="password" @focusout="pwdChecked" required>
       </div>
 
       <span v-show="pwdNotCorrect" class="idDuplicate">
@@ -187,9 +187,9 @@ export default {
       margin-top: 60px;
       margin-left: 30px;
       height: 40px;
-      color: white;
+      color: black;
       width: 300px;
-      background-color: #7aab85;
+      background-color: #1F92FD54;
       border: 1px solid rgba(213, 120, 120, .2);
       border-radius: 20px / 20px;
     }
@@ -198,9 +198,9 @@ export default {
       margin-top: 60px;
       margin-left: 690px;
       height: 40px;
-      color: white;
+      color: black;
       width: 150px;
-      background-color: #7aab85;
+      background-color: #1F92FD54;
       border: 1px solid rgba(213, 120, 120, .2);
       border-radius: 20px / 20px;
     }

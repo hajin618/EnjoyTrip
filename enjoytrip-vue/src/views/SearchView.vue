@@ -43,7 +43,7 @@
       <div class="findKidZone">
         <div class="findTitle">실종 아동 정보</div>
         <div class="findImageBox">
-          <img width="100%" height="100%" src="../assets/img/mainPageImg.png" alt="">
+          <img width="100%" height="100%" src="../assets/img/sadChild2.png" alt="">
         </div>
 
         <div class="findNameBox">
