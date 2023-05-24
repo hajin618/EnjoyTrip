@@ -8,8 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
+import com.ssafy.enjoytrip.attraction.model.AttractionStatisticsDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.attraction.model.SidoStatisticsDTO;
 import com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 
@@ -38,4 +40,10 @@ public interface AttractionMapper {
 	
 	// statistics 테이블에 데이터 삽입
 	public int insertStatisticsData(StatisticsDataDTO statisticsDataDto) throws Exception;
+	
+	// 시도코드 저장 많은 순서대로
+	public List<SidoStatisticsDTO> getTopSido() throws Exception;
+	
+	// 여행지 이름 저장 많은 순서대로
+	public List<AttractionStatisticsDTO> getTopAttractions() throws Exception;
 }

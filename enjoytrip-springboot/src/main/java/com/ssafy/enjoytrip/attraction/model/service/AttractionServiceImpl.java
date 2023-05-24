@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ssafy.enjoytrip.attraction.model.AttractionDescriptionDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
+import com.ssafy.enjoytrip.attraction.model.AttractionStatisticsDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.attraction.model.SidoStatisticsDTO;
 import com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO;
 import com.ssafy.enjoytrip.attraction.model.mapper.AttractionMapper;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
@@ -62,6 +64,16 @@ public class AttractionServiceImpl implements AttractionService{
 	@Override
 	public int insertStatisticsData(StatisticsDataDTO statisticsDataDto) throws Exception {
 		return attractionMapper.insertStatisticsData(statisticsDataDto);
+	}
+
+	@Override
+	public List<SidoStatisticsDTO> getTopSido() throws Exception {
+		return attractionMapper.getTopSido();
+	}
+
+	@Override
+	public List<AttractionStatisticsDTO> getTopAttractions() throws Exception {
+		return attractionMapper.getTopAttractions();
 	}
 
 }

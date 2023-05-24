@@ -181,4 +181,30 @@
 												from 	sido
 												where	sido_code = #{sido_code}))
 	</insert>
+	
+	<!-- 시도코드 저장 많은 순서대로  -->
+	<select id="getTopSido" resultType="sidoStatisticsDto">
+		select		
+					count(*) as cnt
+				  , sido_name
+		from	
+					statistics
+		group by 
+					sido_name	
+		order by
+					cnt desc
+	</select>	
+	
+	<!-- 여행지 이름 저장 많은 순서대로 -->
+	<select id="getTopAttractions" resultType="attractionStatisticsDto">
+		select		
+					count(*) as cnt
+				  , attraction_name
+		from	
+					statistics
+		group by 
+					attraction_name	
+		order by
+					cnt desc	
+	</select>
 </mapper>
