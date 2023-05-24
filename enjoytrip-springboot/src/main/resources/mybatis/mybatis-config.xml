@@ -53,6 +53,9 @@
 		<typeAlias
 			type="com.ssafy.enjoytrip.data.model.MissingChildDTO"
 			alias="missingChildDto" />
+		<typeAlias
+			type="com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO"
+			alias="statisticsDataDto" />
 	</typeAliases>
 
 	<mappers>

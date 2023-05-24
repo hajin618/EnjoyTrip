@@ -10,6 +10,7 @@ import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 
 @Mapper
@@ -34,4 +35,7 @@ public interface AttractionMapper {
 	
 	// 여행지 검색 (attraction info 테이블)
 	public AttractionDescriptionDTO searchAttractionDesc(int content_id) throws Exception;
+	
+	// statistics 테이블에 데이터 삽입
+	public int insertStatisticsData(StatisticsDataDTO statisticsDataDto) throws Exception;
 }

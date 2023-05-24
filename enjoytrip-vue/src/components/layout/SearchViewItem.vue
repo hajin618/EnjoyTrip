@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import http from "@/api/http";
+
 export default {
   name: "SearchViewItem", 
   props: {
@@ -36,7 +38,18 @@ export default {
       this.$emit("saveAtt", this.content_id); 
 
       // statistics 테이블에 저장하기
-      
+      http.post(`/statistics`, {
+        sido_code : this.sido_code,
+        attraction_name : this.title,
+      }).then((response) => {
+        //console.log("result:  " + response.status);
+        if(response.status == 200){
+          console.log("success insert data");
+        }
+        else{
+          console.log("fail insert data");
+        }
+      })
     },
 
     openModal2(content_id){

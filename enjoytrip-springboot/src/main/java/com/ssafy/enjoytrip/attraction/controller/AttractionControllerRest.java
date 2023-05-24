@@ -23,6 +23,7 @@ import com.ssafy.enjoytrip.attraction.model.AttractionInfoDTO;
 import com.ssafy.enjoytrip.attraction.model.AttractionSelectDTO;
 import com.ssafy.enjoytrip.attraction.model.GugunDTO;
 import com.ssafy.enjoytrip.attraction.model.SidoDTO;
+import com.ssafy.enjoytrip.attraction.model.StatisticsDataDTO;
 import com.ssafy.enjoytrip.attraction.model.service.AttractionService;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 import com.ssafy.enjoytrip.user.controller.UserControllerREST;
@@ -176,5 +177,21 @@ public class AttractionControllerRest {
 		return new ResponseEntity<ChildAttractionDTO>(childAttractionDto, HttpStatus.OK);
 	}
 	
-	
+	// statistics 테이블에 데이터 삽입
+	@PostMapping("/statistics")
+	public ResponseEntity<Integer> createStatisticsData(@RequestBody StatisticsDataDTO statisticsDataDto){
+		int result = -1;
+		try {
+			result = service.insertStatisticsData(statisticsDataDto);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result != -1) {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<Integer>(result, HttpStatus.NO_CONTENT);
+		}
+	}
 }

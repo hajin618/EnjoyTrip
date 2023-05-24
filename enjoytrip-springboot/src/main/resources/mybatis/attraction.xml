@@ -171,4 +171,14 @@
 		limit 30;
 		
 	</select>
+	
+	<!-- statistics 테이블에 데이터 삽입하기 -->
+	<insert id="insertStatisticsData" parameterType="statisticsDataDto">
+		insert into 	statistics
+			(sido_code, attraction_name, sido_name)
+		values
+			(#{sido_code}, #{attraction_name}, (select 	sido_name 
+												from 	sido
+												where	sido_code = #{sido_code}))
+	</insert>
 </mapper>
