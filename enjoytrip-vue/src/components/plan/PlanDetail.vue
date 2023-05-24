@@ -316,27 +316,36 @@ export default {
   .listBtn{
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color:#d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+  .listBtn:hover{
+    background-color: #97b1cd;
   }
 
   .editBtn{
     margin-left: 540px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color:#d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+  .editBtn:hover{
+    background-color: #97b1cd;
   }
 
   .deleteBtn{
     margin-left: 20px;
     width: 80px;
     height: 35px;
-    background-color:rgba(122, 187, 133, 0.5);
+    background-color:#d1deec;
     border: 1px solid rgba(213, 120, 120, .2);
     border-radius: 10px / 10px;
+  }
+  .deleteBtn:hover{
+    background-color: #97b1cd;
   }
 
   .orderItem{

@@ -170,14 +170,14 @@ export default {
 }
 .Button{
     border-color:#98c2a182;
-    background-color: #cfcfcf80;
+    background-color: #d1deec;
     border-radius: 10px;
     width: 80px;
     height: 35px;
     margin-right: 5px;
   }
   .Button:hover{
-    background-color : #c8d6cc;
+    background-color : #97b1cd;
   }
   .ButtonDiv{
     text-align: center;

@@ -3,7 +3,9 @@
     <router-link :to="{name: 'planDetail', params: { plan_idx: plan_idx } }">
         <b-card :img-src="imageURL">
             <b-card-text> 
-                <div class="planType">{{plan_type}}</div>
+                <div class="planType">
+                    <span class="typeText">{{plan_type}}</span>
+                </div>
                 <div class="planTitle">{{plan_title}}</div>
             </b-card-text>
 
@@ -61,10 +63,19 @@ export default {
     }
 
     .planType{
+        width: 70px;
+        margin-top: 30px;
+        font-size: 17px;
+        float: right;
+        margin-right: 20px;
+        background-color: #97b1cd;
+        border-radius: 10px / 10px;
         white-space: nowrap;
+        color: white;
     }
 
     .planTitle{
+        font-size: 20px;
         white-space: nowrap;
     }
 </style>
