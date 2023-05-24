@@ -2,19 +2,19 @@
     <div>
         <router-view></router-view>
         <div class="footer">
-            <footer-area></footer-area>
+            <!-- <footer-area></footer-area> -->
         </div> 
     </div>
     
 </template>
 
 <script>
-import FooterArea from "../components/layout/FooterArea.vue";
+// import FooterArea from "../components/layout/FooterArea.vue";
 
 export default{
     name: "UserView",
     components: {
-        FooterArea,
+        // FooterArea,
     }
 }
 
