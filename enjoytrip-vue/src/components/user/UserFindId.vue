@@ -128,6 +128,10 @@ a {
   border: 1px solid rgba(213, 120, 120, .2);
 }
 
+.findBtn:hover{
+  background-color: #97b1cd;
+}
+
 .findId {
   width: 700px;
   height: 500px;

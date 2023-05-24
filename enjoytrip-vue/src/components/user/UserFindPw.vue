@@ -216,15 +216,19 @@ a {
   border: 1px solid rgba(213, 120, 120, .2);
 }
 
-.findPwBox {
-          width: 600px;
-        height: 400px;
-        background-color : rgba(255, 255, 255 , 0.5);
-        margin-top: 250px;
-        margin-left: 250px;
+.findBtn:hover{
+  background-color: #97b1cd;
+}
 
-        border-radius: 10%;
-        align-content: center;
+.findPwBox {
+  width: 600px;
+  height: 400px;
+  background-color : rgba(255, 255, 255 , 0.5);
+  margin-top: 250px;
+  margin-left: 250px;
+
+  border-radius: 10%;
+  align-content: center;
 }
 
 .mainImage {

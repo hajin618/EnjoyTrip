@@ -38,9 +38,9 @@
     </div>
 
    </div>
- </template>
+</template>
  
- <script>
+<script>
 import http from "@/api/http";
 import Swal from "sweetalert2";
 import ReviewListItem from "@/components/reviewboard/item/ReviewListItem.vue";
@@ -131,18 +131,22 @@ export default {
   }
   
   .searchBar{
-    margin-left: 1300px;
+    margin-left: 1200px;
     width: 100%;
     margin-top: 20px;
   }
 
   .searchBtn{
-    width: 60px;
+    width: 90px;
     margin-right: 30px;
     height: 35px;
     background-color: #d1deec;
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 20px / 20px;
+  }
+
+  .searchBtn:hover{
+    background-color: #97b1cd;
   }
 
   .typeSelectbar{
@@ -164,9 +168,9 @@ export default {
   }
 
   .registerBtn{
-    margin-top: 20px;
-    margin-left: 440px;
-    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-left: 470px;
+    margin-bottom: 20px;
     width: 130px;
     height: 35px;
     color: black;
@@ -174,6 +178,11 @@ export default {
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 10px / 10px;
   }
+
+  .registerBtn:hover{
+    background-color: #97b1cd;
+  }
+
   .blacklink{
       color: black;
   }

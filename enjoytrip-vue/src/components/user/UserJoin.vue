@@ -8,7 +8,7 @@
     <div class="joinBox" style="display: flex;
     flex-direction: column;">
       <div class="title">
-        <router-link to="/" style="margin-left:50px; font-weight: 550; margin-top: 2vmin;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
+        <router-link to="/" style="margin-left:50px; font-weight: 550; margin-top: 2vmin;"><img src="../../assets/img/logo.png" width="80px" height="60px" alt=""></router-link>
         
       </div>
       <div class="name" style="margin: 2vmin;
@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly; text-align: center; align-items: center">
-        <span style="width: 20%; font-size:16px;">비밀번호 확인</span>
+        <span style="width: 20%; font-size:17px;">비밀번호 확인</span>
         <input class="box" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
@@ -64,7 +64,7 @@
       </span>
 
       <button style="margin-left: 10vmin;
-    margin-top: 2vmin;
+    margin-top: 4vmin;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly; text-align: center; align-items: center" v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
@@ -333,6 +333,10 @@ export default {
         border-radius: 20px / 20px;
     }
 
+    .kakaoLoginBtn:hover{
+      background-color: #97b1cd;
+    }
+
     .joinBtn{
         height: 40px;
         font-size: 20px;
@@ -341,6 +345,10 @@ export default {
         background-color: #1F92FD54;
         border: 1px solid rgba(170, 207, 241, 0.1);
         border-radius: 20px / 20px;
+    }
+
+    .joinBtn:hover{
+      background-color: #97b1cd;
     }
 
     .kakao{
