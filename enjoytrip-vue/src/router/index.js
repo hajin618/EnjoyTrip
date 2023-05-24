@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SearchView from '../views/SearchView.vue'
+import ChartView from '../views/ChartView.vue'
 import store from "@/store";
 import Swal from "sweetalert2";
 
@@ -38,6 +39,11 @@ const routes = [
     name: "SearchView",
     component: SearchView,
     beforeEnter: onlyAuthUser,
+  },
+  {
+    path: "/chart",
+    name: "ChartView",
+    component: ChartView,
   },
   {
     path: "/user",
