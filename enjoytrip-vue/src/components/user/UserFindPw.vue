@@ -21,7 +21,7 @@
         </form>
 
         <!--  인증번호 입력 -->
-        <form v-show="putConfirmNumber" style="padding-top: 80px; padding-left: 100px;">
+        <form v-show="putConfirmNumber" style="padding-top: 40px; padding-left: 100px;">
           <div style="font-weight: 550;">
             {{email}}로 받은 인증번호를 입력해주세요!
           </div>
@@ -211,7 +211,7 @@ a {
 .findBtn {
   height: 40px;
   width: 400px;
-  background-color: #7aab75;
+  background-color: #1F92FD54;
   border-radius: 10px / 10px;
   border: 1px solid rgba(213, 120, 120, .2);
 }
@@ -236,7 +236,7 @@ a {
 
 .main {
         width: 100%;
-        height: 1000px;
+        height: 970px;
         background-image: url("../../assets/img/background.jpg");
         background-size: cover;
         background-repeat: no-repeat;

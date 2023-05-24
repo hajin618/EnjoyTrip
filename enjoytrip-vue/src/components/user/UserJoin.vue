@@ -5,10 +5,10 @@
       <button v-on:click.prevent="kakaoLogin" class="kakaoLoginBtn">카카오톡으로 간편 로그인하기</button>
     </div>
 
-    <form action="">
-
+      <form action="">
       <div class="title">
-        회원가입
+        <router-link to="/" style="margin-left:50px; font-weight: 550;"><img src="../../assets/img/logo.png" width="50px" height="50px" alt=""></router-link>
+        
       </div>
 
       <div class="name">
@@ -32,7 +32,7 @@
 
       <div class="pwdCheck">
         <span>비밀번호 확인</span>
-        <input class="box" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
+        <input class="box" style="margin-left:70px;" id="pwdCheck" v-model="user.userPwdCheck" autocomplete="off" type="password" @focusout="pwdCheck" required>
       </div>
 
       <span v-show="pwdNotCorrect" class="idDuplicate">
@@ -50,6 +50,7 @@
 
       <button v-on:click.prevent="register" v-on:keyup.enter="register" class="joinBtn" type="submit">가입하기</button>
     </form>
+    
   </div>
 
 </template>
@@ -306,66 +307,71 @@ export default {
         height: 50px;
         color: white;
         width: 300px;
-        background-color: #7aab85;
-        border: 1px solid rgba(213, 120, 120, .2);
+        background-color: #1F92FD54;
+        border: 1px solid rgba(94, 157, 216, 0.1);
         border-radius: 20px / 20px;
     }
 
     .joinBtn{
         margin-top: 60px;
-        margin-left: 870px;
+        margin-left: 560px;
         height: 40px;
         color: white;
         width: 300px;
-        background-color: #7aab85;
-        border: 1px solid rgba(213, 120, 120, .2);
+        background-color: #1F92FD54;
+        border: 1px solid rgba(170, 207, 241, 0.1);
         border-radius: 20px / 20px;
     }
 
     .kakao{
-      margin-top: 80px;
-      margin-left: 800px;
+      padding-top: 150px;
+      margin-left: 500px;
     }
 
     .main{
-        background-color: white;
-        height: 775px;
         width: 100%;
+        height: 969px;
+        background-image: linear-gradient(
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1)
+      ), url("../../assets/img/background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
     .name{
       margin-top: 40px;
-      margin-left: 770px;
+      margin-left: 470px;
       font-size: 20px;
     }
 
     .id{
       margin-top: 40px;
-      margin-left: 750px;
+      margin-left: 450px;
       font-size: 20px;
     }
 
     .pwd{
       margin-top: 40px;
-      margin-left: 730px;
+      margin-left: 430px;
       font-size: 20px;
     }
 
     .pwdCheck{
       margin-top: 40px;
-      margin-left: 680px;
+      margin-left: 380px;
       font-size: 20px;
     }
 
     .email{
       margin-top: 40px;
-      margin-left: 750px;
+      margin-left: 450px;
       font-size: 20px;
     }
 
     .title{
       margin-top: 40px;
-      margin-left: 930px;
+      margin-left: 630px;
       color: black;
       font-size: 20px;
       font-weight: 550;
@@ -382,7 +388,7 @@ export default {
     }
 
     .idDuplicate{
-      margin-left: 940px;
+      margin-left: 640px;
       margin-top: 30px;
       color: red;
     }

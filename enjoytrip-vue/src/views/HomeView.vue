@@ -36,7 +36,7 @@ export default{
 <style scoped>
     .mainImage {
         width: 100%;
-        height: 1000px;
+        height: 969px;
         background-image: url("../assets/img/background.jpg");
         background-size: cover;
         background-repeat: no-repeat;

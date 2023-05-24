@@ -105,7 +105,7 @@ export default {
     .loginBtn{
         height: 40px;
         width: 300px;
-        background-color: #7aab75;
+        background-color: #1F92FD54;
         border-radius: 10px / 10px;
         border: 1px solid rgba(213, 120, 120, .2);
     }
@@ -129,7 +129,7 @@ export default {
 
     .main{
         width: 100%;
-        height: 850px;
+        height: 970px;
         background-image: url("../../assets/img/background.jpg");
         background-size: cover;
         background-repeat: no-repeat;

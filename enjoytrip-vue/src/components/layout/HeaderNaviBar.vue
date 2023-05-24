@@ -34,7 +34,7 @@ const userStore = "userStore";
 export default{
     name: "HeaderNaviBar",
     data(){
-        return{
+        return{ 
         }
     },
     computed: {
@@ -44,6 +44,7 @@ export default{
     methods:{
         ...mapActions(userStore, ["userLogout"]),
         logout(){
+            console.log(this.userInfo.user_id);
             this.userLogout(this.userInfo.user_id);
             sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
             sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
