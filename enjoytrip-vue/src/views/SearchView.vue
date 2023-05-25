@@ -273,8 +273,10 @@ export default {
 
     let randomNumber = 2;
     randomNumber = Math.floor(Math.random() * 42) + 1;
+    // console.log(randomNumber);
     http.get(`/mChild/${randomNumber}`).then(({ data }) => {
       this.mChild = data;
+      // console.log(this.mChild);
     })
   },
   watch: {
