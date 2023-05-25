@@ -11,6 +11,8 @@ import java.util.StringTokenizer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -23,11 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.enjoytrip.data.model.ChildAttractionDTO;
 import com.ssafy.enjoytrip.data.model.MissingChildDTO;
 import com.ssafy.enjoytrip.data.model.service.DataService;
+import com.ssafy.enjoytrip.user.controller.UserControllerREST;
 
 @RestController
 @RequestMapping("/api")
 public class DataControllerREST {
 
+	public static final Logger logger = LoggerFactory.getLogger(UserControllerREST.class);
+	
 	@Autowired
 	@Qualifier("DataServiceImpl")
 	private DataService service;
@@ -175,12 +180,15 @@ public class DataControllerREST {
 	
 	
 	@GetMapping("/mChild/{child_idx}")
-	public ResponseEntity<MissingChildDTO> getChildInfo(@PathVariable("child_idx") String child_idx){
+	public ResponseEntity<MissingChildDTO> getChildInfo(@PathVariable("child_idx") int child_idx){
 		
+		//logger.info(String.valueOf(child_idx));
 		MissingChildDTO missingChildDto = null;
 		
 		try {
-			missingChildDto = service.getMissingChild(Integer.parseInt(child_idx));
+			//logger.info("into getMChild logic");
+			missingChildDto = service.getMissingChild(child_idx);
+			//logger.info(missingChildDto.toString());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
