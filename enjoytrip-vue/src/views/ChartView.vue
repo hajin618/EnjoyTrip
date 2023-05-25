@@ -174,9 +174,11 @@ export default {
           this.attractionLabel[i] = this.attraction[i].attraction_name;
           this.attractionCount[i] = this.attraction[i].cnt;
         }
-        this.fillData();
         console.log(this.attractionLabel);
         console.log(this.attractionCount);
+
+        setTimeout(() => this.fillData(), 200);
+        
       }
     })
     .catch((error) =>{

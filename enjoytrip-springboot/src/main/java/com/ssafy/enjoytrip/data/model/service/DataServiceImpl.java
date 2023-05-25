@@ -28,6 +28,8 @@ public class DataServiceImpl implements DataService{
 
 	@Override
 	public MissingChildDTO getMissingChild(int child_idx) throws Exception {
+		//System.out.println("service: child_idx" + child_idx);
+		//System.out.println("service: " + dataMapper.getMissingChild(child_idx).toString());
 		return dataMapper.getMissingChild(child_idx);
 	}
 
