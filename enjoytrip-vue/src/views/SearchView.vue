@@ -170,41 +170,54 @@
           
 
           <div class="address">
-            <strong>주소:</strong> {{ modalSelectedItem.address }}
+            <strong>주소 :</strong> {{ modalSelectedItem.address }}
           </div>
 
           <div class="category">
-            <strong>카테고리:</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
+            <strong>카테고리 :</strong> {{ modalSelectedItem.category1 }}, {{ modalSelectedItem.category2 }}
           </div>
 
           <div class="phone-number">
-            <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
+            <strong>전화번호 :</strong> {{ modalSelectedItem.phone_number }}
           </div>
 
           <div class="homepage">
-            <strong>homepage:</strong>
+            <strong>homepage :</strong>
             <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
           </div>
 
           <div class="operating-time">
-            <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
+            <strong>운영시간 :</strong> {{ modalSelectedItem.operating_time }}
           </div>
 
           <div class="closed-day">
-            <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
+            <strong>휴무일 :</strong> {{ modalSelectedItem.closed_day }}
           </div>
 
           <div class="stroller">
-            <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
+            <strong>유모차 대여 여부 :</strong> {{ modalSelectedItem.stroller }}
           </div>
 
           <div class="nursing-room">
-            <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
+            <strong>수유실 여부 : </strong> {{ modalSelectedItem.nursing_room }}
           </div>
 
           <div class="admission-fee">
-            <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
+            <strong>입장료 : </strong> {{ modalSelectedItem.admission_fee }}
           </div>
+
+          <div class="kid_zone">
+            <strong>유아 동반 여부 : </strong> {{ modalSelectedItem.kid_zone }}
+          </div>
+
+          <div class="free_parking">
+            <strong>무료 주차 여부 : </strong> {{ modalSelectedItem.free_parking }}
+          </div>
+
+          <div class="paid_parking">
+            <strong>유료 주차 여부 : </strong> {{ modalSelectedItem.paid_parking }}
+          </div>
+
         </div>
       </div>
     </div>
@@ -790,7 +803,10 @@ export default {
 .closed-day,
 .stroller,
 .nursing-room,
-.admission-fee {
+.admission-fee,
+.kid_zone,
+.free_parking,
+.paid_parking {
   margin-bottom: 10px;
 }
 
