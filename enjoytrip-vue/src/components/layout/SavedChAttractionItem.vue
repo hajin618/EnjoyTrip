@@ -1,6 +1,6 @@
 <template lang="">
     <div class="main">
-        <img class="img" width="200px" height="200px" src="@/assets/img/childAttraction.jpg" alt="">
+        <img class="img" width="200px" height="200px" :src="randomImagePath" alt="">
         <div>
         <span class="itemName">
             {{attraction_name}}
@@ -15,6 +15,23 @@
 <script>
 export default {
     name: "SavedChAttractionItem",
+    data(){
+        return{
+            imagePaths: [
+                require('@/assets/img/childAttraction1.jpg'),
+                require('@/assets/img/childAttraction2.jpg'),
+                require('@/assets/img/childAttraction3.jpg'),
+                require('@/assets/img/childAttraction4.jpg'),
+                require('@/assets/img/childAttraction5.jpg'),
+                require('@/assets/img/childAttraction6.jpg'),
+                require('@/assets/img/childAttraction7.jpg'),
+                require('@/assets/img/childAttraction8.jpg'),
+                require('@/assets/img/childAttraction9.jpg'),
+                require('@/assets/img/childAttraction10.jpg'),
+            ],
+            randomImagePath: '',
+        }
+    },
     props: {
         attraction_idx: Number,
         attraction_name: String,
@@ -27,7 +44,15 @@ export default {
         },
         searchAnother(){
             this.$emit("searchAnother");
-        }
+        },
+        setRandomImagePath(){
+            const randomIndex = Math.floor(Math.random() * this.imagePaths.length);
+            this.randomImagePath = this.imagePaths[randomIndex];
+            console.log(this.randomImagePath);
+        },
+    },
+    created(){
+        this.setRandomImagePath();
     }
 }
 </script>
