@@ -1,7 +1,7 @@
 <template lang="">
     <div class="main">
         <div v-if="first_image == ''">
-            <img width="200px" height="200px" src="@/assets/img/mainPageImg.png" alt="">
+            <img width="200px" height="200px" src="@/assets/img/attractionNone.jpg" alt="">
         </div>
         <div v-else>
             <img width="200px" height="200px" :src="first_image" alt="">

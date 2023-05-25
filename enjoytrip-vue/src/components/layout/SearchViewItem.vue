@@ -1,7 +1,7 @@
 <template>
   <b-tr>
     <b-td v-if="first_image == ''">
-      <img width="100px" height="100px" src="@/assets/img/mainPageImg.png" alt="">
+      <img width="100px" height="100px" src="@/assets/img/attractionNone.jpg" alt="">
     </b-td>
     <b-td v-else>
       <img width="100px" height="100px" :src="first_image" alt="">
