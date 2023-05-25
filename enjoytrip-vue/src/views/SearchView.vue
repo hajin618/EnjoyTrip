@@ -139,6 +139,7 @@
 
     <div v-if="showModal2" class="modal">
       <div class="modal-content">
+
         <div class="modal-header">
           <h4 class="modal-title">{{ modal2SelectedItem.title }}</h4>
           <button class="close-modal-btn" v-on:click="closeModal2">x</button>
@@ -152,47 +153,22 @@
            <div class="category">
             <strong>설명:</strong> {{ modal2SelectedItemDesc.overview }}
           </div>
-<!--
-          <div class="phone-number">
-            <strong>전화번호:</strong> {{ modalSelectedItem.phone_number }}
-          </div>
 
-          <div class="homepage">
-            <strong>homepage:</strong>
-            <a style="color: black; word-break: break-word;" :href="modalSelectedItem.homepage" target="_blank">{{ modalSelectedItem.homepage }}</a>
-          </div>
-
-          <div class="operating-time">
-            <strong>운영시간:</strong> {{ modalSelectedItem.operating_time }}
-          </div>
-
-          <div class="closed-day">
-            <strong>휴무일:</strong> {{ modalSelectedItem.closed_day }}
-          </div>
-
-          <div class="stroller">
-            <strong>유모차 대여 여부:</strong> {{ modalSelectedItem.stroller }}
-          </div>
-
-          <div class="nursing-room">
-            <strong>수유실 여부:</strong> {{ modalSelectedItem.nursing_room }}
-          </div>
-
-          <div class="admission-fee">
-            <strong>입장료:</strong> {{ modalSelectedItem.admission_fee }}
-          </div> -->
         </div>
       </div>
     </div>
 
     <div v-if="showModal" class="modal">
       <div class="modal-content">
+        
         <div class="modal-header">
           <h4 class="modal-title">{{ modalSelectedItem.attraction_name }}</h4>
           <button class="close-modal-btn" v-on:click="closeModal">x</button>
         </div>
 
         <div class="modal-body">
+          
+
           <div class="address">
             <strong>주소:</strong> {{ modalSelectedItem.address }}
           </div>
@@ -267,6 +243,7 @@ export default {
       modalSelectedItem: null,   // 어린이 모달 선택한 항목 데이터
       modal2SelectedItem: null,  // 어른 모달 선택한 항목 데이터
       modal2SelectedItemDesc: null, // 어른 모달 선택한 항목 데이터 description
+      modalImg: null,
       searchWord: null,
       sidoSelected: null,
       sidoList: [],
@@ -314,7 +291,8 @@ export default {
             this.$refs.children.style.backgroundColor = "#1F92FD54";
           });
         }
-      }
+      },
+      
     },
   methods: {
     getGuGun(){
@@ -472,7 +450,10 @@ export default {
       for(var i=0; i<this.attractions.length; i++){
         if(this.attractions[i].content_id == content_id){
           this.modal2SelectedItem = this.attractions[i];
-          //console.log(this.modal2SelectedItem);
+          console.log(this.modal2SelectedItem);
+          this.modalImg = this.modal2SelectedItem.first_img;
+          console.log(this.modal2SelectedItem.first_img);
+          console.log(this.modalImg);
         }
       }
 
@@ -798,6 +779,7 @@ export default {
   margin-top: 10px;
 }
 
+.img,
 .address,
 .category,
 .phone-number,
